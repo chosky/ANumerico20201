@@ -1,13 +1,15 @@
-# Análisis Numérico 2020-1
+# Análisis Numérico
+
+Ingeniería de Sistemas
+
+Universidad EAFIT
+2020 - 1
+
 
 Docente: Francisco Jose Correa Zabala
 
 Integrantes del grupo:
-
-Tomás Alavarez Gomez
-
-Smith Alexis Carvajal Orozco
-
-Alejandro Taborda Diaz
-
-José David Henao Ocampo
+1. Tomás Alavarez Gomez
+2. Smith Alexis Carvajal Orozco
+3. Alejandro Taborda Diaz
+4. José David Henao Ocampo

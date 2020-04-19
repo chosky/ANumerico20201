@@ -1,5 +1,8 @@
 package anumericofinalproject;
 
+import GUI.Inicio;
+import java.awt.Color;
+
 /**
  *
  * @authors Jose David Henao Ocampo
@@ -13,7 +16,8 @@ public class ANumericoFinalProject {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Inicio inicio = new Inicio();
+        inicio.setVisible(true);
     }
     
 }

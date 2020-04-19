@@ -6,8 +6,6 @@
 package Parser;
 
 import org.nfunk.jep.JEP;
-import org.nfunk.jep.type.Complex;
-
 /**
  *
  * @author Jose David Henao Ocampo

@@ -9,26 +9,23 @@ import java.awt.geom.*;
 import org.nfunk.jep.*;  
 import org.nfunk.jep.type.*;
 
-
+/**
+ * 
+ * @author Smith Alexis Carvajal
+ */
 public class PlotterManual extends JPanel {
     //VARIABLES PARA EL EVALUADOR DE FUNCIONES
-    private JEP miEvaluador,miEvaluadorDerivadas;
-    Node nodin;
+    private JEP miEvaluador;
     
     boolean errorEnExpresion; //si hay error de sintaxis en la función
-    boolean errorEnNumero   ; //si hay error de sintaxis en la función
-    boolean visible=true;
     
     //TIPOS DE FUENTE
-    Font ft10 = new Font("Arial",Font.PLAIN,10);
-    Font ft12 = new Font("Arial",Font.PLAIN,12);
-    Font ft7  = new Font("Arial",Font.PLAIN,10);//funte de los numeros
+    Font ft10 = new Font("Lato Black",Font.PLAIN,10);
+    Font ft7  = new Font("Lato",Font.PLAIN,10);//funte de los numeros
         
     //CAMPOS DE TEXTO
     JTextField campoFuncion;
    
- //   JTextField campoDerivada;
-    
     JLabel Mensaje;
     JLabel etiquetaA;
 
@@ -43,25 +40,21 @@ public class PlotterManual extends JPanel {
     int puntosInt;
     
     //PANELES
-    //JPanel panelEscalas; //Panel para las escalas
     JPanel panelGrafico; //Aqu’ va la Zona grafica
     JPanel panelControles ; //panel para botones y campos de texto,etc
     JPanel DisplayPanel1 = new JPanel(); //Panel grande para la grafica
     JPanel DisplayPanel2 = new JPanel(); //panel grande para todos los controles   
-    JFrame fFrame; //ventana de ayuda
     
-    int Galto,Gancho;       //dimesiones de la zona de graficación
-    int    x0,y0;           //origen
-    int    escalaX,escalaY;
-    int aumento1,aumento2;   
-    int intervaloA=-100;
+    int Galto, Gancho;       //dimesiones de la zona de graficación
+    int x0, y0;           //origen
+    int escalaX, escalaY;
+    int aumento1, aumento2;   
+    int intervaloA = -100;
     int intervaloB = 100;
-    int numeroDeInteraciones;
-    double xmin,xmax,imgx;
+    double xmin, xmax;
 
-    
     //VARIABLES PARA GROSOR DE LAS LINEAS
-    final static BasicStroke grosor1 = new BasicStroke(1.5f); //thickness
+    final static BasicStroke grosor1 = new BasicStroke(1.5f);
     final static float dash1[] = {5.0f};
     final static BasicStroke dashed = new BasicStroke(1.0f,
                                                       BasicStroke.CAP_BUTT, 
@@ -71,12 +64,14 @@ public class PlotterManual extends JPanel {
     
     public PlotterManual(Container Contenedor,JFrame fra, String funcion) {
         //CREANDO BOTONES
-        BtnGraficar = new JButton("Graficar");
+        BtnGraficar = new JButton("GRAFICAR");
         BtnGraficar.setBounds(20, 10, 100, 20);  
+        BtnGraficar.setBackground(new Color(0,149,136));
+        this.add(BtnGraficar);
         
-        
-        Btnsalir = new JButton("Salir");
+        Btnsalir = new JButton("ATRAS");
         Btnsalir.setBounds(140, 10, 100, 20); 
+        Btnsalir.setBackground(new Color(26,118,210));
         this.add(Btnsalir);
         
         Btnsalir.addActionListener(new java.awt.event.ActionListener() {
@@ -89,8 +84,6 @@ public class PlotterManual extends JPanel {
         campoFuncion.setBounds(100, 40, 200, 20);
         this.add(campoFuncion);
         
-        //COLUMNA 1 <-------------------------------
-        
         //COLUMNA 4
         Mensaje = new JLabel("",JLabel.LEFT);
         
@@ -99,26 +92,21 @@ public class PlotterManual extends JPanel {
         
         Gancho = 900-10;
         Galto = 550;
-        //Galto = 70*690/100;
      
-        panelGrafico = new ZonaGrafica(); //zona grafica
+        panelGrafico = new ZonaGrafica();
         panelControles = new JPanel();
         
-        scrollPane = new JScrollPane(panelGrafico);///////
+        scrollPane = new JScrollPane(panelGrafico);
         
         DisplayPanel1.setLayout(new BorderLayout());
-        DisplayPanel1.add(scrollPane, BorderLayout.CENTER);//panelGrafico
+        DisplayPanel1.add(scrollPane, BorderLayout.CENTER);
 	    
         panelControles.setLayout(new GridLayout(4,2));
-        //panelControles.add(campoFuncion);
-        this.add(campoFuncion);
-        //panelControles.add(BtnGraficar);
-        this.add(BtnGraficar);
-
+        
         panelControles.add(Mensaje);
         setLayout(null);
         JPanel miniPanelintervalos = new JPanel();//mini panel para intervalos a y b
-        etiquetaA = new JLabel("Ecuación: ");
+        etiquetaA = new JLabel("f(x) = ");
         etiquetaA.setBounds(20, 30, 100, 40);
         
         miniPanelintervalos.setLayout(new GridLayout(1,6));
@@ -153,14 +141,6 @@ public class PlotterManual extends JPanel {
         miEvaluador.addVariable("x", 0);
         miEvaluador.setImplicitMul(true); //permite 2x en vez de 2*x
         
-        miEvaluadorDerivadas = new JEP();
-        miEvaluadorDerivadas.addStandardFunctions();  //agrega las funciones matematicas comunes
-        miEvaluadorDerivadas.addStandardConstants();
-        miEvaluadorDerivadas.addComplex();
-        miEvaluadorDerivadas.addFunction("sen", new org.nfunk.jep.function.Sine());//habilitar 'sen'
-        miEvaluadorDerivadas.addVariable("x", 0);
-        miEvaluadorDerivadas.setImplicitMul(true); //permite 2x en vez de 2*x
-        
         escalaX=30;
         escalaY=30;
         x0=Gancho/2;
@@ -172,6 +152,10 @@ public class PlotterManual extends JPanel {
         BtnGraficar.addActionListener(ManejadorDevt);
     }
 
+    private void BtnsalirActionPerformed(java.awt.event.ActionEvent evt,JFrame fra) {
+        fra.setVisible(false);
+    } 
+    
     
 //////// CLASE PARA EL MANEJO DE LOS EVENTOS ///////////////////////////////////
 private class ManejadorDeEvento implements ActionListener {
@@ -183,11 +167,7 @@ private class ManejadorDeEvento implements ActionListener {
         }
     }
 }
-    private void BtnsalirActionPerformed(java.awt.event.ActionEvent evt,JFrame fra) {
-        System.out.println("Este metodo deberia cerrar");
-        fra.setVisible(false);     
-    }   
-    
+      
 /////// CLASE QUE DE LA ZONA GRçFICA ///////////////////////////////////////////
 public class ZonaGrafica extends JPanel  implements MouseListener, MouseMotionListener, MouseWheelListener {
     int offsetX, offsetY;
@@ -246,8 +226,8 @@ public class ZonaGrafica extends JPanel  implements MouseListener, MouseMotionLi
  
     //METODO QUE PINTA TODA LA GRçFICA
     void Graficar(Graphics ap, int xg, int yg) {
-        //setBackground(new Color(36,85,102)); //COLOR FONDO/////////////////////////////////////////////////
-        int xi=0,yi=0,xi1=0,yi1=0,numPuntos=1;
+        setBackground(new Color(0,0,0));
+        int xi=0, yi=0, xi1=0, yi1=0, numPuntos=1;
         int cxmin,cxmax,cymin,cymax;
         double valxi=0.0, valxi1=0.0, valyi=0.0,valyi1=0.0;
         Thread animation;
@@ -316,7 +296,7 @@ public class ZonaGrafica extends JPanel  implements MouseListener, MouseMotionLi
             }
         }
         
-        g.setPaint(new Color(29,220,248));//COLOR DE LA FUNCION
+        g.setPaint(new Color(255,0,0));//COLOR DE LA FUNCION
         
         g.setStroke(grosor1);
   
@@ -328,9 +308,7 @@ public class ZonaGrafica extends JPanel  implements MouseListener, MouseMotionLi
         if(!errorEnExpresion) {
             campoFuncion.setForeground(Color.black);
             
-            //CICLO QUE PINTA LA FUNCIîN
-            for(int i=(xg+intervaloA*escalaX);i<(xg+intervaloB*escalaY)-1;i++)//numPuntos
-            {
+            for(int i=(xg + intervaloA * escalaX);i < (xg+intervaloB*escalaY)-1; i++) {
                 valxi =xmin +i*1.0/escalaX;
                 valxi1=xmin+(i+1)*1.0/escalaX;
                 miEvaluador.addVariable("x", valxi);
@@ -346,20 +324,18 @@ public class ZonaGrafica extends JPanel  implements MouseListener, MouseMotionLi
                 //control de puntos
                 if(i%(100-puntosInt)==0){
                     Complex valC = miEvaluador.getComplexValue();
-                    //System.out.println("valc "+valC);
                     double imgx = (double)Math.abs(valC.im()); 
-                    if(dist(valxi,valyi,valxi1,valyi1)< 1000 && imgx==0)
-                    {
+                    if(dist(valxi,valyi,valxi1,valyi1)< 1000 && imgx==0) {
                         g.draw(new Line2D.Double(xg+xi,yg-yi,xg+xi1,yg-yi1)); 
                     }
                 }
-            }//fin del for 
+            }
         } else {
             Mensaje.setText(":. Hay un error.");
             campoFuncion.setForeground(Color.red);
         }
         
-    }//Graficar
+    }
  
     double dist(double xA,double yA, double xB,double yB) {
         return (xA - xB)*(xA - xB)+(yA - yB)*(yA - yB);

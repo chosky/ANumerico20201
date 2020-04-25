@@ -10,15 +10,18 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
  */
 public class PlotterVisual extends JFrame {
     
-    PlotterVisual(String funcion){
+    PlotterVisual(String function){
+      initPlotter(function);
+    }
+    private void initPlotter(String function){
         setSize(800,690);//500,350
         setTitle("GRAFICADOR");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
     
         Container Contenedor = getContentPane();
-        PlotterManual mipanel = new PlotterManual(Contenedor,this, funcion);
+        PlotterManual mipanel = new PlotterManual(Contenedor,this, function);
         this.add(mipanel);
-        setVisible(true);         
+        setVisible(true);   
     }
 }

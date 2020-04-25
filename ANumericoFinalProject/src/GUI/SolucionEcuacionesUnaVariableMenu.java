@@ -122,17 +122,17 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
         newtonBtn.setForeground(new java.awt.Color(1, 1, 1));
         newtonBtn.setText("NEWTON");
         newtonBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
-        newtonBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newtonBtnActionPerformed(evt);
-            }
-        });
 
         secanteBtn.setBackground(new java.awt.Color(0, 149, 136));
         secanteBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
         secanteBtn.setForeground(new java.awt.Color(1, 1, 1));
         secanteBtn.setText("SECANTE");
         secanteBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        secanteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                secanteBtnActionPerformed(evt);
+            }
+        });
 
         raicesMultiplesBtn.setBackground(new java.awt.Color(0, 149, 136));
         raicesMultiplesBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
@@ -272,11 +272,11 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
         biseccion.setVisible(true);
     }//GEN-LAST:event_biseccionBtnActionPerformed
 
-    private void newtonBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newtonBtnActionPerformed
+
+    private void newtonBtnActionPerformed(java.awt.event.ActionEvent evt) {                                          
         Newton newton = new Newton();
         newton.setVisible(true);
-        System.out.println("puta llegue");
-    }//GEN-LAST:event_newtonBtnActionPerformed
+    }                                         
 
     private void puntoFijoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_puntoFijoBtnActionPerformed
         PuntoFijo puntoFijo = new PuntoFijo();
@@ -292,6 +292,11 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
         ReglaFalsa reglaFalsa = new ReglaFalsa();
         reglaFalsa.setVisible(true);
     }//GEN-LAST:event_reglaFalsaBtnActionPerformed
+
+    private void secanteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secanteBtnActionPerformed
+        Secante secante = new Secante();
+        secante.setVisible(true);
+    }//GEN-LAST:event_secanteBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;

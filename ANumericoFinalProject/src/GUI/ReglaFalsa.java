@@ -174,14 +174,11 @@ public class ReglaFalsa extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2)
-                        .addContainerGap())
+                    .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
                         .addGap(18, 18, 18)
-                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(limpiarBtn)
@@ -190,10 +187,9 @@ public class ReglaFalsa extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(toleranciaLbl)
-                                        .addGap(5, 5, 5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(0, 0, Short.MAX_VALUE)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(33, 33, 33)
                                                 .addComponent(iteracionesLbl)
@@ -201,7 +197,6 @@ public class ReglaFalsa extends javax.swing.JFrame {
                                                 .addComponent(iteracionesTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(24, 24, 24))
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addGap(0, 0, Short.MAX_VALUE)
                                                 .addComponent(titleLbl)
                                                 .addGap(117, 117, 117)))
                                         .addGap(129, 129, 129))
@@ -213,7 +208,8 @@ public class ReglaFalsa extends javax.swing.JFrame {
                                         .addComponent(valorFinalLbl)
                                         .addGap(49, 49, 49)
                                         .addComponent(valorFinalTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(212, 212, 212)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -240,12 +236,12 @@ public class ReglaFalsa extends javax.swing.JFrame {
                     .addComponent(valorInicialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(valorFinalTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(toleranciaLbl)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(iteracionesTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(iteracionesLbl)
-                        .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(toleranciaLbl))
                 .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(functionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -335,22 +331,22 @@ public class ReglaFalsa extends javax.swing.JFrame {
     }
     
     private boolean controlEntradaDatos() {
-        if(this.valorInicialTxt.getText().isBlank() || this.valorInicialTxt.getText().isEmpty() || 
+        if(this.valorInicialTxt.getText().equals(" ") || this.valorInicialTxt.getText().isEmpty() || 
            valorTieneCaracterNoValido(this.valorInicialTxt.getText())) {
             showErrorMessage("El campo del valor inicial está vacio o mal escrito");
             return false;
         }
-        if(this.valorFinalTxt.getText().isBlank() || this.valorFinalTxt.getText().isEmpty() || 
+        if(this.valorFinalTxt.getText().equals(" ") || this.valorFinalTxt.getText().isEmpty() || 
            valorTieneCaracterNoValido(this.valorFinalTxt.getText())) {
             showErrorMessage("El campo del valor final está vacio o mal escrito");
             return false;
         }
-        if(this.toleranciaTxt.getText().isBlank() || this.toleranciaTxt.getText().isEmpty() || 
+        if(this.toleranciaTxt.getText().equals(" ") || this.toleranciaTxt.getText().isEmpty() || 
            valorTieneCaracterNoValido(this.toleranciaTxt.getText())) {
             showErrorMessage("El campo de la tolerancia está vacio o mal escrito");
             return false;
         }
-        if(this.iteracionesTxt.getText().isBlank() || this.iteracionesTxt.getText().isEmpty() || 
+        if(this.iteracionesTxt.getText().equals(" ") || this.iteracionesTxt.getText().isEmpty() || 
            valorTieneCaracterNoValido(this.iteracionesTxt.getText())) {
             showErrorMessage("El campo de las iteraciones está vacio o mal escrito");
             return false;

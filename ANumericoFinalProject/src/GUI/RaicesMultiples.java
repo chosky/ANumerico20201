@@ -409,17 +409,17 @@ public class RaicesMultiples extends javax.swing.JFrame {
     }
     
     private boolean controlEntradaDatos() {
-        if(this.valorInicialTxt.getText().isBlank() || this.valorInicialTxt.getText().isEmpty() || 
+        if(this.valorInicialTxt.getText().equals(" ") || this.valorInicialTxt.getText().isEmpty() || 
            valorTieneCaracterNoValido(this.valorInicialTxt.getText())) {
             showErrorMessage("El campo del valor inicial está vacio o mal escrito");
             return false;
         }
-        if(this.toleranciaTxt.getText().isBlank() || this.toleranciaTxt.getText().isEmpty() || 
+        if(this.toleranciaTxt.getText().equals(" ") || this.toleranciaTxt.getText().isEmpty() || 
            valorTieneCaracterNoValido(this.toleranciaTxt.getText())) {
             showErrorMessage("El campo de la tolerancia está vacio o mal escrito");
             return false;
         }
-        if(this.iteracionesTxt.getText().isBlank() || this.iteracionesTxt.getText().isEmpty() || 
+        if(this.iteracionesTxt.getText().equals(" ") || this.iteracionesTxt.getText().isEmpty() || 
            valorTieneCaracterNoValido(this.iteracionesTxt.getText())) {
             showErrorMessage("El campo de las iteraciones está vacio o mal escrito");
             return false;

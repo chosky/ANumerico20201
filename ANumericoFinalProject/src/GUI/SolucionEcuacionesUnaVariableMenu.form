@@ -59,7 +59,7 @@
                                           <Component id="evaluatorBtn" min="-2" pref="125" max="-2" attributes="0"/>
                                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                               <Component id="puntoFijoBtn" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jButton9" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
+                                              <Component id="raicesMultiplesBtn" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -99,7 +99,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="newtonBtn" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
                   <Component id="secanteBtn" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
-                  <Component id="jButton9" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
+                  <Component id="raicesMultiplesBtn" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
               <Component id="jButton10" min="-2" pref="55" max="-2" attributes="0"/>
@@ -217,6 +217,9 @@
           </Border>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reglaFalsaBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="puntoFijoBtn">
       <Properties>
@@ -236,6 +239,9 @@
           </Border>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="puntoFijoBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="newtonBtn">
       <Properties>
@@ -278,7 +284,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton9">
+    <Component class="javax.swing.JButton" name="raicesMultiplesBtn">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="88" green="95" red="0" type="rgb"/>
@@ -296,6 +302,9 @@
           </Border>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="raicesMultiplesBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton10">
       <Properties>

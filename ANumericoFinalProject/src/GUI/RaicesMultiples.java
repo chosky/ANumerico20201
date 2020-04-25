@@ -3,6 +3,7 @@ package GUI;
 import Parser.MathFunctionsParser;
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -10,15 +11,21 @@ import javax.swing.JOptionPane;
  */
 public class RaicesMultiples extends javax.swing.JFrame {
 
-    MathFunctionsParser functionFx = new MathFunctionsParser();
-    MathFunctionsParser functionFdx = new MathFunctionsParser();
-    MathFunctionsParser functionF2dx = new MathFunctionsParser();
-    
+    private double _xi;
+    private double _tolerance;
+    private int _n;
+    private MathFunctionsParser functionFx;
+    private MathFunctionsParser functionFdx;
+    private MathFunctionsParser functionF2dx;
     
     /**
      * Creates new form RaicesMultiples
      */
     public RaicesMultiples() {
+        functionFx = new MathFunctionsParser();
+        functionFdx = new MathFunctionsParser();
+        functionF2dx = new MathFunctionsParser();
+        
         this.setTitle("Raíces Múltiples");
         this.getContentPane().setBackground(Color.WHITE);
         initComponents();
@@ -35,7 +42,6 @@ public class RaicesMultiples extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         observacionesTxt = new javax.swing.JTextArea();
         backBtn = new javax.swing.JButton();
-        valorFinalLbl = new javax.swing.JLabel();
         titleLbl = new javax.swing.JLabel();
         iteracionesLbl = new javax.swing.JLabel();
         functionLbl = new javax.swing.JLabel();
@@ -45,12 +51,15 @@ public class RaicesMultiples extends javax.swing.JFrame {
         limpiarBtn = new javax.swing.JButton();
         valorInicialTxt = new javax.swing.JTextField();
         toleranciaTxt = new javax.swing.JTextField();
-        valorFinalTxt = new javax.swing.JTextField();
         iteracionesTxt = new javax.swing.JTextField();
         functionFdxLbl = new javax.swing.JLabel();
         functionF2dxLbl = new javax.swing.JLabel();
         functionFdxTxt = new javax.swing.JTextField();
         functionF2dxTxt = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        raicesMultiplesTable = new javax.swing.JTable();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         valorInicialLbl.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         valorInicialLbl.setForeground(new java.awt.Color(1, 1, 1));
@@ -77,10 +86,6 @@ public class RaicesMultiples extends javax.swing.JFrame {
                 backBtnActionPerformed(evt);
             }
         });
-
-        valorFinalLbl.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
-        valorFinalLbl.setForeground(new java.awt.Color(1, 1, 1));
-        valorFinalLbl.setText("Valor final (xu):");
 
         titleLbl.setBackground(new java.awt.Color(254, 254, 254));
         titleLbl.setFont(new java.awt.Font("Lato Black", 1, 35)); // NOI18N
@@ -149,6 +154,33 @@ public class RaicesMultiples extends javax.swing.JFrame {
 
         functionF2dxTxt.setForeground(new java.awt.Color(1, 1, 1));
 
+        raicesMultiplesTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "n", "xn", "f(x)", "f'(x)", "f''(x)", "deno", "Error"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Long.class, java.lang.Long.class, java.lang.Long.class, java.lang.Long.class, java.lang.Long.class, java.lang.Long.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        raicesMultiplesTable.setColumnSelectionAllowed(true);
+        raicesMultiplesTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(raicesMultiplesTable);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -156,60 +188,54 @@ public class RaicesMultiples extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(valorInicialLbl)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(valorInicialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(valorFinalLbl)
-                        .addGap(49, 49, 49)
-                        .addComponent(valorFinalTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30))
-                    .addGroup(layout.createSequentialGroup()
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 726, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(231, 231, 231)
-                                .addComponent(iteracionesLbl))
-                            .addComponent(toleranciaLbl))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(iteracionesTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(30, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(limpiarBtn)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(graficarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(calcularBtn))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(functionLbl)
+                                            .addComponent(functionFdxLbl)
+                                            .addComponent(functionF2dxLbl))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(functionF2dxTxt)
+                                            .addComponent(functionFdxTxt)
+                                            .addComponent(functionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(119, 119, 119))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(limpiarBtn)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(graficarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(calcularBtn)
-                        .addGap(56, 56, 56))))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(67, 67, 67)
-                .addComponent(titleLbl)
+                .addGap(155, 155, 155)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(valorInicialLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(valorInicialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(125, 125, 125)
+                        .addComponent(toleranciaLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(iteracionesLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(iteracionesTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(93, 93, 93)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(functionLbl)
-                    .addComponent(functionFdxLbl)
-                    .addComponent(functionF2dxLbl))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(functionF2dxTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(functionFdxTxt)
-                        .addComponent(functionTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(titleLbl)
+                .addGap(207, 207, 207))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,20 +243,18 @@ public class RaicesMultiples extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(titleLbl)
                 .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(valorInicialLbl)
-                    .addComponent(valorFinalLbl)
-                    .addComponent(valorInicialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(valorFinalTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(valorInicialLbl)
+                        .addComponent(valorInicialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(toleranciaLbl)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(toleranciaLbl)
-                        .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(iteracionesTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(iteracionesLbl)))
-                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(iteracionesTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(iteracionesLbl))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(functionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(functionLbl))
@@ -242,17 +266,18 @@ public class RaicesMultiples extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(functionF2dxLbl)
                     .addComponent(functionF2dxTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
+                        .addGap(29, 29, 29)
                         .addComponent(limpiarBtn))
                     .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(graficarBtn)
-                            .addComponent(calcularBtn))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 336, Short.MAX_VALUE)
+                            .addComponent(calcularBtn))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(backBtn, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -281,7 +306,7 @@ public class RaicesMultiples extends javax.swing.JFrame {
             if(controlEntradaFuncionFdx()) {
                 if(controlEntradaFuncionF2dx()) {
                     if (controlEntradaDatos()) {
-                        metodoRaicesMultiples();
+                        metodoRaicesMultiples(_xi, _tolerance, _n);
                     } else {
                         showErrorMessage("Error en los datos de entrada");
                     }
@@ -294,16 +319,21 @@ public class RaicesMultiples extends javax.swing.JFrame {
 
     private void limpiarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarBtnActionPerformed
         this.valorInicialTxt.setText("");
-        this.valorFinalTxt.setText("");
         this.toleranciaTxt.setText("");
         this.iteracionesTxt.setText("");
         this.functionTxt.setText("");
         this.functionFdxTxt.setText("");
         this.functionF2dxTxt.setText("");
+        this.clearTable();
         this.observacionesTxt.setText("OBSERVACIONES:");
     }//GEN-LAST:event_limpiarBtnActionPerformed
 
-    public boolean controlEntradaFuncionFx() {
+    private void clearTable() {
+        DefaultTableModel bisectionTableModel = (DefaultTableModel) raicesMultiplesTable.getModel();
+        bisectionTableModel.setRowCount(0);
+    }
+    
+    private boolean controlEntradaFuncionFx() {
         try {
             functionFx.parserFunction(this.functionTxt.getText());
             
@@ -328,7 +358,7 @@ public class RaicesMultiples extends javax.swing.JFrame {
         }
     }
     
-    public boolean controlEntradaFuncionFdx() {
+    private boolean controlEntradaFuncionFdx() {
         try {
             functionFdx.parserFunction(this.functionFdxTxt.getText());
             
@@ -353,7 +383,7 @@ public class RaicesMultiples extends javax.swing.JFrame {
         }
     }
     
-    public boolean controlEntradaFuncionF2dx() {
+    private boolean controlEntradaFuncionF2dx() {
         try {
             functionF2dx.parserFunction(this.functionF2dxTxt.getText());
             
@@ -378,15 +408,10 @@ public class RaicesMultiples extends javax.swing.JFrame {
         }
     }
     
-    public boolean controlEntradaDatos() {
+    private boolean controlEntradaDatos() {
         if(this.valorInicialTxt.getText().isBlank() || this.valorInicialTxt.getText().isEmpty() || 
            valorTieneCaracterNoValido(this.valorInicialTxt.getText())) {
             showErrorMessage("El campo del valor inicial está vacio o mal escrito");
-            return false;
-        }
-        if(this.valorFinalTxt.getText().isBlank() || this.valorFinalTxt.getText().isEmpty() || 
-           valorTieneCaracterNoValido(this.valorFinalTxt.getText())) {
-            showErrorMessage("El campo del valor final está vacio o mal escrito");
             return false;
         }
         if(this.toleranciaTxt.getText().isBlank() || this.toleranciaTxt.getText().isEmpty() || 
@@ -399,10 +424,15 @@ public class RaicesMultiples extends javax.swing.JFrame {
             showErrorMessage("El campo de las iteraciones está vacio o mal escrito");
             return false;
         }
+        
+        this._xi = Double.parseDouble(this.valorInicialTxt.getText());
+        this._tolerance = Double.parseDouble(this.toleranciaTxt.getText());
+        this._n = Integer.parseInt(this.iteracionesTxt.getText());
+        
         return true;
     }
     
-    public boolean valorTieneCaracterNoValido(String cadena) {
+    private boolean valorTieneCaracterNoValido(String cadena) {
             char[] chars = cadena.toCharArray();
         boolean letra = false;
         int contPunto = 0;
@@ -421,49 +451,77 @@ public class RaicesMultiples extends javax.swing.JFrame {
         return letra;
     }
     
-    public void showErrorMessage(String message) {
+    private void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
     
-    public void metodoRaicesMultiples() {
-        
+    private void fillTable (int n, double xn, double fx, double fdx, double f2dx, double deno, double err) {
+        DefaultTableModel bisectionTableModel = (DefaultTableModel) raicesMultiplesTable.getModel();
+        Object[] row = new Object[7];
+        row[0] = n;
+        row[1] = xn;
+        row[2] = fx;
+        row[3] = fdx;
+        row[4] = f2dx;
+        row[5] = deno;
+        row[6] = err;
+        bisectionTableModel.addRow(row);
     }
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RaicesMultiples.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RaicesMultiples.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RaicesMultiples.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RaicesMultiples.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RaicesMultiples().setVisible(true);
-            }
-        });
+    private double f(double x) {
+        this.functionFx.function.addVariable("x", x);
+        return functionFx.function.getValue();
     }
-
+    
+    private double fdx(double x) {
+        this.functionFdx.function.addVariable("x", x);
+        return functionFdx.function.getValue();
+    }
+    
+    private double f2dx(double x) {
+        this.functionF2dx.function.addVariable("x", x);
+        return functionF2dx.function.getValue();
+    }
+    
+    private void metodoRaicesMultiples(double xi, double tole, int iter) {
+        if (iter <= 0) {
+            this.observacionesTxt.setText("Las iteraciones deben ser positivas");
+        } else if (tole < 0) {
+            this.observacionesTxt.setText("La tolerancia debe ser mayor o igual a cero");
+        } else {
+            
+            double fx = f(xi);
+            double fdx = fdx(xi);
+            double f2dx = f2dx(xi);
+            double deno = Math.pow(fx, 2) - (fx*f2dx);
+            int count = 1;
+            double error = tole + 1;
+            
+            fillTable(0, xi, fx, fdx, f2dx, deno, error);
+            double xn;
+            while (fx != 0 && error > tole && deno != 0 && count < iter) {
+                xn = xi - ((fx * fdx)/ deno);
+                fx = f(xn);
+                fdx = fdx(xn);
+                f2dx = f2dx(xn);
+                deno = Math.pow(fx, 2) - (fx*f2dx);
+                error = Math.abs(xn - xi);
+                xi = xn;
+                count++;
+                fillTable(count, xi, fx, fdx, f2dx, deno, error);
+            }
+            if(fx == 0) {
+                this.observacionesTxt.setText(fx + " es una raiz");
+            } else if(error < tole){
+                this.observacionesTxt.setText(fx + " se aproxima a una raíz debido a que el error es menor o igual a la tolerancia");
+            } else if(deno == 0) {
+                this.observacionesTxt.setText("El denominador es igual a 0");
+            } else {
+                this.observacionesTxt.setText("Falló en "+ count + " iteraciones");
+            }
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
     private javax.swing.JButton calcularBtn;
@@ -477,13 +535,13 @@ public class RaicesMultiples extends javax.swing.JFrame {
     private javax.swing.JLabel iteracionesLbl;
     private javax.swing.JTextField iteracionesTxt;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton limpiarBtn;
     private javax.swing.JTextArea observacionesTxt;
+    private javax.swing.JTable raicesMultiplesTable;
     private javax.swing.JLabel titleLbl;
     private javax.swing.JLabel toleranciaLbl;
     private javax.swing.JTextField toleranciaTxt;
-    private javax.swing.JLabel valorFinalLbl;
-    private javax.swing.JTextField valorFinalTxt;
     private javax.swing.JLabel valorInicialLbl;
     private javax.swing.JTextField valorInicialTxt;
     // End of variables declaration//GEN-END:variables

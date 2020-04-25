@@ -42,7 +42,7 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
         puntoFijoBtn = new javax.swing.JButton();
         newtonBtn = new javax.swing.JButton();
         secanteBtn = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        raicesMultiplesBtn = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         backBtn = new javax.swing.JButton();
         title1Lbl = new javax.swing.JLabel();
@@ -100,12 +100,22 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
         reglaFalsaBtn.setForeground(new java.awt.Color(1, 1, 1));
         reglaFalsaBtn.setText("REGLA FALSA");
         reglaFalsaBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        reglaFalsaBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reglaFalsaBtnActionPerformed(evt);
+            }
+        });
 
         puntoFijoBtn.setBackground(new java.awt.Color(0, 149, 136));
         puntoFijoBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
         puntoFijoBtn.setForeground(new java.awt.Color(1, 1, 1));
         puntoFijoBtn.setText("PUNTO FIJO");
         puntoFijoBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        puntoFijoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                puntoFijoBtnActionPerformed(evt);
+            }
+        });
 
         newtonBtn.setBackground(new java.awt.Color(0, 149, 136));
         newtonBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
@@ -124,11 +134,16 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
         secanteBtn.setText("SECANTE");
         secanteBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
 
-        jButton9.setBackground(new java.awt.Color(0, 149, 136));
-        jButton9.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(1, 1, 1));
-        jButton9.setText("RAÍCES MÚLT");
-        jButton9.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        raicesMultiplesBtn.setBackground(new java.awt.Color(0, 149, 136));
+        raicesMultiplesBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
+        raicesMultiplesBtn.setForeground(new java.awt.Color(1, 1, 1));
+        raicesMultiplesBtn.setText("RAÍCES MÚLT");
+        raicesMultiplesBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        raicesMultiplesBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                raicesMultiplesBtnActionPerformed(evt);
+            }
+        });
 
         jButton10.setBackground(new java.awt.Color(0, 149, 136));
         jButton10.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
@@ -193,7 +208,7 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
                                             .addComponent(evaluatorBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                 .addComponent(puntoFijoBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jButton9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                .addComponent(raicesMultiplesBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(title1Lbl)))
                     .addComponent(backgroundImg))
@@ -221,7 +236,7 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(newtonBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(secanteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(raicesMultiplesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
                 .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
@@ -252,21 +267,31 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
         busquedaIncremental.setVisible(true);
     }//GEN-LAST:event_busquedaIncrementalBtnActionPerformed
 
-
-    private void newtonBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newtonBtnActionPerformed
-        Newton newton = new Newton();
-        newton.setVisible(true);
-        System.out.println("puta llegue");
-
     private void biseccionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_biseccionBtnActionPerformed
         Biseccion biseccion = new Biseccion();
         biseccion.setVisible(true);
     }//GEN-LAST:event_biseccionBtnActionPerformed
 
     private void newtonBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newtonBtnActionPerformed
-        // TODO add your handling code here:
-
+        Newton newton = new Newton();
+        newton.setVisible(true);
+        System.out.println("puta llegue");
     }//GEN-LAST:event_newtonBtnActionPerformed
+
+    private void puntoFijoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_puntoFijoBtnActionPerformed
+        PuntoFijo puntoFijo = new PuntoFijo();
+        puntoFijo.setVisible(true);
+    }//GEN-LAST:event_puntoFijoBtnActionPerformed
+
+    private void raicesMultiplesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_raicesMultiplesBtnActionPerformed
+        RaicesMultiples raicesMultiples = new RaicesMultiples();
+        raicesMultiples.setVisible(true);
+    }//GEN-LAST:event_raicesMultiplesBtnActionPerformed
+
+    private void reglaFalsaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reglaFalsaBtnActionPerformed
+        ReglaFalsa reglaFalsa = new ReglaFalsa();
+        reglaFalsa.setVisible(true);
+    }//GEN-LAST:event_reglaFalsaBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
@@ -275,10 +300,10 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
     private javax.swing.JButton busquedaIncrementalBtn;
     private javax.swing.JButton evaluatorBtn;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton9;
     private javax.swing.JButton newtonBtn;
     private javax.swing.JButton plotterBtn;
     private javax.swing.JButton puntoFijoBtn;
+    private javax.swing.JButton raicesMultiplesBtn;
     private javax.swing.JButton reglaFalsaBtn;
     private javax.swing.JButton secanteBtn;
     private javax.swing.JLabel title1Lbl;

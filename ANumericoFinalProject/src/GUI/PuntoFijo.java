@@ -3,6 +3,7 @@ package GUI;
 import Parser.MathFunctionsParser;
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -10,13 +11,19 @@ import javax.swing.JOptionPane;
  */
 public class PuntoFijo extends javax.swing.JFrame {
 
-    MathFunctionsParser functionFx = new MathFunctionsParser();
-    MathFunctionsParser functionGx = new MathFunctionsParser();
+    private double _xi;
+    private double _tolerance;
+    private int _n;
+    private MathFunctionsParser functionFx;
+    private MathFunctionsParser functionGx;
     
     /**
      * Creates new form PuntoFijo
      */
     public PuntoFijo() {
+        this.functionFx = new MathFunctionsParser();
+        this.functionGx = new MathFunctionsParser();
+        
         this.setTitle("Punto Fijo");
         this.getContentPane().setBackground(Color.WHITE);
         initComponents();
@@ -43,8 +50,12 @@ public class PuntoFijo extends javax.swing.JFrame {
         valorInicialTxt = new javax.swing.JTextField();
         toleranciaTxt = new javax.swing.JTextField();
         iteracionesTxt = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        functionGxLbl = new javax.swing.JLabel();
         functionGxTxt = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        puntoFijoTable = new javax.swing.JTable();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         valorInicialLbl.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         valorInicialLbl.setForeground(new java.awt.Color(1, 1, 1));
@@ -127,11 +138,38 @@ public class PuntoFijo extends javax.swing.JFrame {
 
         iteracionesTxt.setForeground(new java.awt.Color(1, 1, 1));
 
-        jLabel1.setFont(new java.awt.Font("Lato Black", 1, 20)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(1, 1, 1));
-        jLabel1.setText("g(x) = ");
+        functionGxLbl.setFont(new java.awt.Font("Lato Black", 1, 20)); // NOI18N
+        functionGxLbl.setForeground(new java.awt.Color(1, 1, 1));
+        functionGxLbl.setText("g(x) = ");
 
         functionGxTxt.setForeground(new java.awt.Color(1, 1, 1));
+
+        puntoFijoTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "n", "xn", "f(xn)", "Error"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Long.class, java.lang.Long.class, java.lang.Long.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        puntoFijoTable.setColumnSelectionAllowed(true);
+        puntoFijoTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(puntoFijoTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -141,53 +179,61 @@ public class PuntoFijo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(titleLbl)
-                        .addGap(129, 129, 129))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(limpiarBtn)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(valorInicialLbl)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(valorInicialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(toleranciaLbl)
-                            .addComponent(iteracionesLbl))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(iteracionesTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(30, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(graficarFxBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(calcularBtn)
-                .addGap(58, 58, 58))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(functionLbl)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(functionGxTxt)
-                    .addComponent(functionFxTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(231, 231, 231)
+                                .addComponent(titleLbl)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jScrollPane1)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 135, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(functionLbl)
+                                                    .addComponent(functionGxLbl))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                    .addComponent(functionGxTxt)
+                                                    .addComponent(functionFxTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(valorInicialLbl)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(valorInicialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(61, 61, 61)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(toleranciaLbl)
+                                                    .addComponent(iteracionesLbl)))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(graficarFxBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(calcularBtn)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(iteracionesTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(108, 108, 108))
+                                    .addComponent(backBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap())))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(titleLbl)
-                .addGap(32, 32, 32)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(valorInicialLbl)
                     .addComponent(valorInicialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,15 +243,15 @@ public class PuntoFijo extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(iteracionesTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(iteracionesLbl))
-                .addGap(20, 20, 20)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(functionFxTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(functionLbl))
                 .addGap(2, 2, 2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(functionGxLbl)
                     .addComponent(functionGxTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(graficarFxBtn)
                     .addComponent(calcularBtn))
@@ -216,6 +262,11 @@ public class PuntoFijo extends javax.swing.JFrame {
                     .addComponent(backBtn, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(309, 309, 309)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(139, Short.MAX_VALUE)))
         );
 
         pack();
@@ -239,7 +290,7 @@ public class PuntoFijo extends javax.swing.JFrame {
         if(controlEntradaFuncionFx()) {
             if(controlEntradaFuncionGx()) {
                 if (controlEntradaDatos()) {
-                    metodoPuntoFijo();
+                    metodoPuntoFijo(_xi, _tolerance, _n);
                 } else {
                     showErrorMessage("Error en los datos de entrada");
                 }
@@ -255,10 +306,16 @@ public class PuntoFijo extends javax.swing.JFrame {
         this.iteracionesTxt.setText("");
         this.functionFxTxt.setText("");
         this.functionGxTxt.setText("");
+        this.clearTable();
         this.observacionesTxt.setText("OBSERVACIONES:");
     }//GEN-LAST:event_limpiarBtnActionPerformed
 
-    public boolean controlEntradaFuncionFx() {
+    private void clearTable() {
+        DefaultTableModel bisectionTableModel = (DefaultTableModel) puntoFijoTable.getModel();
+        bisectionTableModel.setRowCount(0);
+    }
+    
+    private boolean controlEntradaFuncionFx() {
         try {
             functionFx.parserFunction(this.functionFxTxt.getText());
             
@@ -283,7 +340,7 @@ public class PuntoFijo extends javax.swing.JFrame {
         }
     }
     
-    public boolean controlEntradaFuncionGx() {
+    private boolean controlEntradaFuncionGx() {
         try {
             functionGx.parserFunction(this.functionGxTxt.getText());
             
@@ -308,7 +365,7 @@ public class PuntoFijo extends javax.swing.JFrame {
         }
     }
     
-    public boolean controlEntradaDatos() {
+    private boolean controlEntradaDatos() {
         if(this.valorInicialTxt.getText().isBlank() || this.valorInicialTxt.getText().isEmpty() || 
            valorTieneCaracterNoValido(this.valorInicialTxt.getText())) {
             showErrorMessage("El campo del valor inicial está vacio o mal escrito");
@@ -324,10 +381,15 @@ public class PuntoFijo extends javax.swing.JFrame {
             showErrorMessage("El campo de las iteraciones está vacio o mal escrito");
             return false;
         }
+        
+        this._xi = Double.parseDouble(this.valorInicialTxt.getText());
+        this._tolerance = Double.parseDouble(this.toleranciaTxt.getText());
+        this._n = Integer.parseInt(this.iteracionesTxt.getText());
+        
         return true;
     }
     
-    public boolean valorTieneCaracterNoValido(String cadena) {
+    private boolean valorTieneCaracterNoValido(String cadena) {
         char[] chars = cadena.toCharArray();
         boolean letra = false;
         int contPunto = 0;
@@ -346,62 +408,78 @@ public class PuntoFijo extends javax.swing.JFrame {
         return letra;
     }
     
-    public void showErrorMessage(String message) {
+    private void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
     
-    public void metodoPuntoFijo() {
-        
+    private void fillTable(int n, double xn, double fxn, double err) {
+        DefaultTableModel bisectionTableModel = (DefaultTableModel) puntoFijoTable.getModel();
+        Object[] row = new Object[4];
+        row[0] = n;
+        row[1] = xn;
+        row[2] = fxn;
+        row[3] = err;
+        bisectionTableModel.addRow(row);
     }
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PuntoFijo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PuntoFijo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PuntoFijo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PuntoFijo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PuntoFijo().setVisible(true);
-            }
-        });
+    private double f(double x) {
+        this.functionFx.function.addVariable("x", x);
+        return functionFx.function.getValue();
     }
-
+    
+    private double g(double x) {
+        this.functionGx.function.addVariable("x", x);
+        return functionGx.function.getValue();
+    }
+    
+    private void metodoPuntoFijo(double x0, double tole, int iter) {
+        double fx = f(x0);
+        if(fx == 0) {
+            this.observacionesTxt.setText(x0 + " es una raiz");
+        } else if (iter <= 0) {
+            this.observacionesTxt.setText("Las iteraciones deben ser positivas");
+        } else if (tole < 0) {
+            this.observacionesTxt.setText("La tolerancia debe ser mayor o igual a cero");
+        } else {
+            
+            double xn;
+            int count = 1;
+            double error = tole + 1;
+            fillTable(0, x0, fx, error);
+            
+            while (fx != 0 && error > tole && count < iter) {
+                xn = g(x0);
+                fx = f(xn);
+                error = Math.abs(xn - x0);
+                x0 = xn;
+                count++;
+                fillTable(count, xn, fx, error);
+            }
+            if(fx == 0) {
+                this.observacionesTxt.setText(fx + " es una raiz");
+            } else if(error < tole){
+                this.observacionesTxt.setText(fx + " se aproxima a una raíz debido a que el error es menor o igual a la tolerancia");
+            } else {
+                this.observacionesTxt.setText("Falló en "+ count + " iteraciones");
+            }
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
     private javax.swing.JButton calcularBtn;
     private javax.swing.JTextField functionFxTxt;
+    private javax.swing.JLabel functionGxLbl;
     private javax.swing.JTextField functionGxTxt;
     private javax.swing.JLabel functionLbl;
     private javax.swing.JButton graficarFxBtn;
     private javax.swing.JLabel iteracionesLbl;
     private javax.swing.JTextField iteracionesTxt;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton limpiarBtn;
     private javax.swing.JTextArea observacionesTxt;
+    private javax.swing.JTable puntoFijoTable;
     private javax.swing.JLabel titleLbl;
     private javax.swing.JLabel toleranciaLbl;
     private javax.swing.JTextField toleranciaTxt;

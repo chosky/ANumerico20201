@@ -3,6 +3,7 @@ package GUI;
 import Parser.MathFunctionsParser;
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -10,12 +11,17 @@ import javax.swing.JOptionPane;
  */
 public class ReglaFalsa extends javax.swing.JFrame {
 
-    MathFunctionsParser function = new MathFunctionsParser();
+    private double _xi;
+    private double _xs;
+    private double _tolerance;
+    private int _n;
+    private MathFunctionsParser function;
     
     /**
      * Creates new form ReglaFalsa
      */
     public ReglaFalsa() {
+        this.function = new MathFunctionsParser();
         this.setTitle("Regla Falsa");
         this.getContentPane().setBackground(Color.WHITE);
         initComponents();
@@ -44,6 +50,10 @@ public class ReglaFalsa extends javax.swing.JFrame {
         iteracionesTxt = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         observacionesTxt = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        reglaFalsaTable = new javax.swing.JTable();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         backBtn.setBackground(new java.awt.Color(26, 118, 210));
         backBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
@@ -130,60 +140,93 @@ public class ReglaFalsa extends javax.swing.JFrame {
         observacionesTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(64, 187, 181)));
         jScrollPane1.setViewportView(observacionesTxt);
 
+        reglaFalsaTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "n", "xi", "xs", "xm", "f(xm)", "Error"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Long.class, java.lang.Long.class, java.lang.Long.class, java.lang.Long.class, java.lang.Long.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        reglaFalsaTable.setColumnSelectionAllowed(true);
+        reglaFalsaTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(reglaFalsaTable);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addGap(18, 18, 18)
+                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(limpiarBtn)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(174, 174, 174)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(toleranciaLbl)
+                                        .addGap(5, 5, 5)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(33, 33, 33)
+                                                .addComponent(iteracionesLbl)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(iteracionesTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(24, 24, 24))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addComponent(titleLbl)
+                                                .addGap(117, 117, 117)))
+                                        .addGap(129, 129, 129))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(valorInicialLbl)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(valorInicialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(33, 33, 33)
+                                        .addComponent(valorFinalLbl)
+                                        .addGap(49, 49, 49)
+                                        .addComponent(valorFinalTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(212, 212, 212)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(93, 93, 93)
                         .addComponent(functionLbl)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(functionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(graficarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(calcularBtn)))
-                .addContainerGap(58, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(titleLbl))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(valorInicialLbl)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(valorInicialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(valorFinalLbl)))
-                        .addGap(49, 49, 49)
-                        .addComponent(valorFinalTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(231, 231, 231)
-                                .addComponent(iteracionesLbl))
-                            .addComponent(toleranciaLbl))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(iteracionesTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(limpiarBtn)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,14 +240,13 @@ public class ReglaFalsa extends javax.swing.JFrame {
                     .addComponent(valorInicialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(valorFinalTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(toleranciaLbl)
-                        .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(toleranciaLbl)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(iteracionesTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(iteracionesLbl)))
-                .addGap(20, 20, 20)
+                        .addComponent(iteracionesLbl)
+                        .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(functionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(functionLbl))
@@ -212,9 +254,11 @@ public class ReglaFalsa extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(calcularBtn)
                     .addComponent(graficarBtn))
-                .addGap(38, 38, 38)
+                .addGap(13, 13, 13)
                 .addComponent(limpiarBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 362, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(backBtn, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -241,7 +285,7 @@ public class ReglaFalsa extends javax.swing.JFrame {
     private void calcularBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularBtnActionPerformed
         if(controlEntradaFuncion()) {
             if (controlEntradaDatos()) {
-                metodoReglaFalsa();
+                metodoReglaFalsa(_xi, _xs, _tolerance, _n);
             } else {
                 showErrorMessage("Error en los datos de entrada");
             }
@@ -256,10 +300,16 @@ public class ReglaFalsa extends javax.swing.JFrame {
         this.toleranciaTxt.setText("");
         this.iteracionesTxt.setText("");
         this.functionTxt.setText("");
+        this.clearTable();
         this.observacionesTxt.setText("OBSERVACIONES:");
     }//GEN-LAST:event_limpiarBtnActionPerformed
 
-    public boolean controlEntradaFuncion() {
+    private void clearTable() {
+        DefaultTableModel bisectionTableModel = (DefaultTableModel) reglaFalsaTable.getModel();
+        bisectionTableModel.setRowCount(0);
+    }
+    
+    private boolean controlEntradaFuncion() {
         try {
             function.parserFunction(this.functionTxt.getText());
             
@@ -284,7 +334,7 @@ public class ReglaFalsa extends javax.swing.JFrame {
         }
     }
     
-    public boolean controlEntradaDatos() {
+    private boolean controlEntradaDatos() {
         if(this.valorInicialTxt.getText().isBlank() || this.valorInicialTxt.getText().isEmpty() || 
            valorTieneCaracterNoValido(this.valorInicialTxt.getText())) {
             showErrorMessage("El campo del valor inicial está vacio o mal escrito");
@@ -305,10 +355,16 @@ public class ReglaFalsa extends javax.swing.JFrame {
             showErrorMessage("El campo de las iteraciones está vacio o mal escrito");
             return false;
         }
+        
+        this._xi = Double.parseDouble(this.valorInicialTxt.getText());
+        this._xs = Double.parseDouble(this.valorFinalTxt.getText());
+        this._tolerance = Double.parseDouble(this.toleranciaTxt.getText());
+        this._n = Integer.parseInt(this.iteracionesTxt.getText());
+        
         return true;
     }
     
-    public boolean valorTieneCaracterNoValido(String cadena) {
+    private boolean valorTieneCaracterNoValido(String cadena) {
         char[] chars = cadena.toCharArray();
         boolean letra = false;
         int contPunto = 0;
@@ -327,47 +383,69 @@ public class ReglaFalsa extends javax.swing.JFrame {
         return letra;
     }
     
-    public void showErrorMessage(String message) {
+    private void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
     
-    public void metodoReglaFalsa() {
-        System.out.println("metodito");
+    private void fillTable(int n, double xi, double xs, double xm, double ym, double err) {
+        DefaultTableModel bisectionTableModel = (DefaultTableModel) reglaFalsaTable.getModel();
+        Object[] row = new Object[6];
+        row[0] = n;
+        row[1] = xi;
+        row[2] = xs;
+        row[3] = xm;
+        row[4] = ym;
+        row[5] = err;
+        bisectionTableModel.addRow(row);
     }
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+    private double f(double x) {
+        this.function.function.addVariable("x", x);
+        return function.function.getValue();
+    }
+    
+    private void metodoReglaFalsa(double xi, double xs, double tole, int n) {
+        double yi = f(xi);
+        double ys = f(xs);
+        if(yi == 0) {
+            this.observacionesTxt.setText(xi + " es una raiz");
+        } else if(ys == 0){
+            this.observacionesTxt.setText(xs + " es una raiz");
+        } else if (yi * ys > 0) {
+            this.observacionesTxt.setText("Intervalo incorrecto");
+        } else if (n <= 0) {
+            this.observacionesTxt.setText("Las iteraciones deben ser positivas");
+        } else if (tole < 0) {
+            this.observacionesTxt.setText("La tolerancia debe ser mayor o igual a cero");
+        } else {
+            double xm = xi-((yi*(xi-xs))/(yi-ys));
+            double ym = f(xm);
+            int count = 1;
+            double error = tole + 1;
+            fillTable(0, xi, xs, xm, ym, error);
+            
+            while (ym != 0 && error > tole && count < n) {
+                if (yi * ym < 0) {
+                  xs = xm;
+                } else {
+                  xi = xm;
+                  yi = ym;
                 }
+                double lastXm = xm;
+                xm = xi-((yi*(xi-xs))/(yi-ys));
+                ym = f(xm);
+                error = Math.abs(xm - lastXm);
+                count++;
+                fillTable(count, xi, xs, xm, ym, error);
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ReglaFalsa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ReglaFalsa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ReglaFalsa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ReglaFalsa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            if(ym == 0) {
+                this.observacionesTxt.setText(xm + " es una raiz");
+            } else if(error < tole){
+                this.observacionesTxt.setText(xm + " se aproxima a una raíz debido a que el error es menor o igual a la tolerancia");
+            } else {
+                this.observacionesTxt.setText("Falló en "+ count + " iteraciones");
+            }
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ReglaFalsa().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -379,8 +457,10 @@ public class ReglaFalsa extends javax.swing.JFrame {
     private javax.swing.JLabel iteracionesLbl;
     private javax.swing.JTextField iteracionesTxt;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton limpiarBtn;
     private javax.swing.JTextArea observacionesTxt;
+    private javax.swing.JTable reglaFalsaTable;
     private javax.swing.JLabel titleLbl;
     private javax.swing.JLabel toleranciaLbl;
     private javax.swing.JTextField toleranciaTxt;

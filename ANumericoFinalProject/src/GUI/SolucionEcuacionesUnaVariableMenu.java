@@ -87,8 +87,13 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
         biseccionBtn.setBackground(new java.awt.Color(0, 149, 136));
         biseccionBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
         biseccionBtn.setForeground(new java.awt.Color(1, 1, 1));
-        biseccionBtn.setText("BESECCIÓN");
+        biseccionBtn.setText("BISECCIÓN");
         biseccionBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        biseccionBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                biseccionBtnActionPerformed(evt);
+            }
+        });
 
         reglaFalsaBtn.setBackground(new java.awt.Color(0, 149, 136));
         reglaFalsaBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
@@ -247,10 +252,19 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
         busquedaIncremental.setVisible(true);
     }//GEN-LAST:event_busquedaIncrementalBtnActionPerformed
 
+
     private void newtonBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newtonBtnActionPerformed
         Newton newton = new Newton();
         newton.setVisible(true);
         System.out.println("puta llegue");
+
+    private void biseccionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_biseccionBtnActionPerformed
+        Biseccion biseccion = new Biseccion();
+        biseccion.setVisible(true);
+    }//GEN-LAST:event_biseccionBtnActionPerformed
+
+    private void newtonBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newtonBtnActionPerformed
+        // TODO add your handling code here:
 
     }//GEN-LAST:event_newtonBtnActionPerformed
 

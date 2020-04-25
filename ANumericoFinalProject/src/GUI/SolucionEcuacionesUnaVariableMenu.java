@@ -265,7 +265,6 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
     private void newtonBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newtonBtnActionPerformed
         Newton newton = new Newton();
         newton.setVisible(true);
-        System.out.println("puta llegue");
     }//GEN-LAST:event_newtonBtnActionPerformed
 
     private void secanteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secanteBtnActionPerformed

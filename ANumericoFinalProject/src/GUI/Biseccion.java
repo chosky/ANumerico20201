@@ -37,7 +37,6 @@ public class Biseccion extends javax.swing.JFrame {
     private void initComponents() {
 
         titleLbl = new javax.swing.JLabel();
-        cleanBtn = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         initialValueLbl = new javax.swing.JLabel();
         xiInput = new javax.swing.JTextField();
@@ -51,6 +50,7 @@ public class Biseccion extends javax.swing.JFrame {
         nInput = new javax.swing.JTextField();
         plotterBtn = new javax.swing.JButton();
         calculateBtn = new javax.swing.JButton();
+        cleanBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         bisectionTable = new javax.swing.JTable();
         backBtn = new javax.swing.JButton();
@@ -65,11 +65,6 @@ public class Biseccion extends javax.swing.JFrame {
         titleLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titleLbl.setText("BISECCIÓN");
         titleLbl.setToolTipText("");
-
-        cleanBtn.setBackground(new java.awt.Color(0, 149, 136));
-        cleanBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
-        cleanBtn.setForeground(new java.awt.Color(1, 1, 1));
-        cleanBtn.setText("LIMPIAR");
 
         initialValueLbl.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         initialValueLbl.setForeground(new java.awt.Color(1, 1, 1));
@@ -112,6 +107,11 @@ public class Biseccion extends javax.swing.JFrame {
         plotterBtn.setForeground(new java.awt.Color(1, 1, 1));
         plotterBtn.setText("GRAFICAR");
         plotterBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        plotterBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                plotterBtnActionPerformed(evt);
+            }
+        });
 
         calculateBtn.setBackground(new java.awt.Color(0, 149, 136));
         calculateBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
@@ -121,6 +121,17 @@ public class Biseccion extends javax.swing.JFrame {
         calculateBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 calculateBtnActionPerformed(evt);
+            }
+        });
+
+        cleanBtn.setBackground(new java.awt.Color(0, 149, 136));
+        cleanBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
+        cleanBtn.setForeground(new java.awt.Color(1, 1, 1));
+        cleanBtn.setText("LIMPIAR");
+        cleanBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        cleanBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cleanBtnActionPerformed(evt);
             }
         });
 
@@ -158,7 +169,9 @@ public class Biseccion extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(nInput, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(197, 197, 197)
+                        .addGap(51, 51, 51)
+                        .addComponent(cleanBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
                         .addComponent(plotterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -186,8 +199,9 @@ public class Biseccion extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(plotterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(38, Short.MAX_VALUE))
+                    .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cleanBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38))
         );
 
         bisectionTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -248,12 +262,9 @@ public class Biseccion extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
                                 .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(cleanBtn)
-                                .addGap(0, 651, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(8, 8, 8)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -267,9 +278,7 @@ public class Biseccion extends javax.swing.JFrame {
                 .addComponent(titleLbl)
                 .addGap(26, 26, 26)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addComponent(cleanBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(59, 59, 59)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,19 +331,24 @@ public class Biseccion extends javax.swing.JFrame {
         bisectionTableModel.addRow(row);
     }
     
+    private void clearTable() {
+        DefaultTableModel bisectionTableModel = (DefaultTableModel) bisectionTable.getModel();
+        bisectionTableModel.setRowCount(0);
+    }
+    
     private void bisectionMethod(double xi, double xs, double tolerance, int n){
     double yi = f(xi);
     double ys = f(xs);
     if(yi == 0) {
-        System.out.println(xi + " is root");
+        this.observations.setText(xi + " es una raiz");
     } else if(ys == 0){
-        System.out.println(xs + " is root");
+        this.observations.setText(xs + " es una raiz");
     } else if (yi * ys > 0) {
-        System.out.println("Incorrect interval");
+        this.observations.setText("Intervalo incorrecto");
     } else if (n <= 0) {
-        System.out.println("Iterations should be positives");
+        this.observations.setText("Las iteraciones deben ser positivas");
     } else if (tolerance < 0) {
-        System.out.println("Tolerance should be greater or equal to cero");
+        this.observations.setText("La tolerancia debe ser mayor o igual a cero");
     } else {
       double xm = (xi + xs) / 2;
       double ym = f(xm);
@@ -356,11 +370,11 @@ public class Biseccion extends javax.swing.JFrame {
         fillTable(count, xi, xs, xm, ym, error);
       }
       if(ym == 0) {
-          System.out.println(xm + " is root");
+          this.observations.setText(xm + " es una raiz");
       } else if(error < tolerance){
-          System.out.println(xm + " is close to root due to tolerance");
+          this.observations.setText(xm + " se aproxima a una raíz debido a que el error es menor o igual a la tolerancia");
       } else {
-          System.out.println("Failed in " + count + " iterations");
+          this.observations.setText("Falló en "+ count + " iteraciones");
       }
     }
   }
@@ -371,34 +385,20 @@ public class Biseccion extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_calculateBtnActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Biseccion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        
-        //</editor-fold>
+    private void plotterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plotterBtnActionPerformed
+        PlotterVisual fra = new PlotterVisual(functionInput.getText());
+        fra.setVisible(true);
+    }//GEN-LAST:event_plotterBtnActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new Biseccion().setVisible(true);
-        });
-    }
+    private void cleanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanBtnActionPerformed
+        this.xiInput.setText("");
+        this.xsInput.setText("");
+        this.nInput.setText("");
+        this.toleranceInput.setText("");
+        this.functionInput.setText("");
+        this.clearTable();
+        this.observations.setText("OBSERVACIONES:");
+    }//GEN-LAST:event_cleanBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;

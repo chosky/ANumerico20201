@@ -13,23 +13,18 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author jhenaoo
+ * @author Usuario
  */
-public class BusquedasIncrementales extends javax.swing.JFrame {
+public class NewtonGUI extends javax.swing.JPanel {
 
     /**
-     * Creates new form BusquedasIncrementales
+     * Creates new form NewtonGUI
      */
-    public BusquedasIncrementales() {
-        
-        this.setTitle("Búsquedas Incrementales");
-        this.setResizable(false);
-        this.getContentPane().setBackground(Color.WHITE);
+    public NewtonGUI() {
+       //this.setTitle("Búsquedas Incrementales");
+        //this.setResizable(false);
+        //this.getContentPane().setBackground(Color.WHITE);
         initComponents();
-        DefaultTableModel model = new DefaultTableModel();
-        Object[] columns = {"N","X","f(x)"};
-        model.setColumnIdentifiers(columns);
-        table.setModel(model);
     }
 
     /**
@@ -42,7 +37,10 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
     private void initComponents() {
 
         titleLbl = new javax.swing.JLabel();
+        iterTxt = new javax.swing.JTextField();
         backBtn = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
         functionLbl = new javax.swing.JLabel();
         functionTxt = new javax.swing.JTextField();
         initialValueLbl = new javax.swing.JLabel();
@@ -51,15 +49,18 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
         cleanBtn = new javax.swing.JButton();
         deltaLbl = new javax.swing.JLabel();
         iterLbl = new javax.swing.JLabel();
-        deltaTxt = new javax.swing.JTextField();
-        iterTxt = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
+        toleranciaTxt = new javax.swing.JTextField();
+        functionLbl1 = new javax.swing.JLabel();
+        derivadatxt = new javax.swing.JTextField();
 
         titleLbl.setBackground(new java.awt.Color(254, 254, 254));
         titleLbl.setFont(new java.awt.Font("Lato Black", 1, 35)); // NOI18N
         titleLbl.setForeground(new java.awt.Color(1, 1, 1));
-        titleLbl.setText("BÚSQUEDAS INCREMENTALES");
+        titleLbl.setText("Newton");
+
+        iterTxt.setBackground(new java.awt.Color(254, 254, 254));
+        iterTxt.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
+        iterTxt.setForeground(new java.awt.Color(1, 1, 1));
 
         backBtn.setBackground(new java.awt.Color(26, 118, 210));
         backBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
@@ -72,12 +73,30 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
             }
         });
 
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(table);
+
         functionLbl.setFont(new java.awt.Font("Lato Black", 1, 20)); // NOI18N
         functionLbl.setForeground(new java.awt.Color(1, 1, 1));
         functionLbl.setText("f(x) = ");
 
         functionTxt.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         functionTxt.setForeground(new java.awt.Color(1, 1, 1));
+        functionTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                functionTxtActionPerformed(evt);
+            }
+        });
 
         initialValueLbl.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         initialValueLbl.setForeground(new java.awt.Color(1, 1, 1));
@@ -94,7 +113,7 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
         calculateBtn.setBackground(new java.awt.Color(0, 149, 136));
         calculateBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
         calculateBtn.setForeground(new java.awt.Color(1, 1, 1));
-        calculateBtn.setText("CALCULAR");
+        calculateBtn.setText("EVALUAR");
         calculateBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
         calculateBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,96 +125,88 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
         cleanBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
         cleanBtn.setForeground(new java.awt.Color(1, 1, 1));
         cleanBtn.setText("LIMPIAR");
-        cleanBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cleanBtnActionPerformed(evt);
-            }
-        });
 
         deltaLbl.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         deltaLbl.setForeground(new java.awt.Color(1, 1, 1));
-        deltaLbl.setText("Delta:");
+        deltaLbl.setText("Tolerancia:");
 
         iterLbl.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         iterLbl.setForeground(new java.awt.Color(1, 1, 1));
         iterLbl.setText("Cant. iteraciones (n):");
 
-        deltaTxt.setBackground(new java.awt.Color(254, 254, 254));
-        deltaTxt.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
-        deltaTxt.setForeground(new java.awt.Color(1, 1, 1));
+        toleranciaTxt.setBackground(new java.awt.Color(254, 254, 254));
+        toleranciaTxt.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
+        toleranciaTxt.setForeground(new java.awt.Color(1, 1, 1));
 
-        iterTxt.setBackground(new java.awt.Color(254, 254, 254));
-        iterTxt.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
-        iterTxt.setForeground(new java.awt.Color(1, 1, 1));
+        functionLbl1.setFont(new java.awt.Font("Lato Black", 1, 20)); // NOI18N
+        functionLbl1.setForeground(new java.awt.Color(1, 1, 1));
+        functionLbl1.setText("f'(x) = ");
 
-        table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {},
-                {},
-                {},
-                {}
-            },
-            new String [] {
-
+        derivadatxt.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
+        derivadatxt.setForeground(new java.awt.Color(1, 1, 1));
+        derivadatxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                derivadatxtActionPerformed(evt);
             }
-        ));
-        jScrollPane2.setViewportView(table);
+        });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(459, Short.MAX_VALUE)
+                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(33, 33, 33)
-                                    .addComponent(initialValueLbl)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(initialValueTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(deltaLbl)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(deltaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(iterLbl)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(iterTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(99, 99, 99)
-                                    .addComponent(functionLbl)
-                                    .addGap(2, 2, 2)
-                                    .addComponent(functionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(110, 110, 110)
-                                .addComponent(cleanBtn)
+                        .addGap(110, 110, 110)
+                        .addComponent(cleanBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addComponent(initialValueLbl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(initialValueTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(deltaLbl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(iterLbl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(iterTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(54, 54, 54)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(78, 78, 78)
+                                        .addComponent(functionLbl1))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(functionLbl)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(derivadatxt, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(functionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addComponent(titleLbl)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deltaLbl)
-                    .addComponent(deltaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(iterLbl)
                     .addComponent(initialValueTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(iterTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -204,74 +215,63 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(functionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(functionLbl))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(functionLbl1)
+                    .addComponent(derivadatxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cleanBtn)
                     .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14)
                 .addComponent(backBtn)
                 .addContainerGap())
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         this.setVisible(false);
-        this.dispose();
+        //this.dispose();
     }//GEN-LAST:event_backBtnActionPerformed
-
-    private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
-        // TODO add your handling code here:
-        String func = functionTxt.getText();
-        double valorinicial = Double.valueOf(initialValueTxt.getText());
-        double incremento = Double.valueOf(deltaTxt.getText());
-        int totaliteraciones = Integer.valueOf(iterTxt.getText());
-       
-        busquedasIncrementales(valorinicial,incremento,totaliteraciones,func);
-    }//GEN-LAST:event_calculateBtnActionPerformed
 
     private void initialValueTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_initialValueTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_initialValueTxtActionPerformed
 
-    private void cleanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanBtnActionPerformed
+    private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
         // TODO add your handling code here:
-        Object[] columns = {"N","X","f(x)"};
-        table.setModel(new DefaultTableModel(null,columns));
-    }//GEN-LAST:event_cleanBtnActionPerformed
+        String func = functionTxt.getText();
+        String derivadafun = derivadatxt.getText();
+        double valorinicial = Double.valueOf(initialValueTxt.getText());
+        double tolerancia = Double.valueOf(toleranciaTxt.getText());
+        int totaliteraciones = Integer.valueOf(iterTxt.getText());
+        DefaultTableModel model = new DefaultTableModel();
+        Object[] columns = {"N","X","f(x)","f1(x)"};
+        model.setColumnIdentifiers(columns);
+        table.setModel(model);
+        newton(valorinicial,totaliteraciones,tolerancia,func,derivadafun);
+    }//GEN-LAST:event_calculateBtnActionPerformed
+
+    private void functionTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_functionTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_functionTxtActionPerformed
+
+    private void derivadatxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_derivadatxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_derivadatxtActionPerformed
+
     
-    public void busquedasIncrementales(double valorinicial,double incremento,int totaliteraciones, String func){
+    public void newton(double x0, int iteraciones, double tolerancia,String fun,String derivadafun){
+        double fx = evaluarfuncion(x0, fun);
+        double dfx = evaluarfuncion(x0,derivadafun);
         
-        double fx0 = evaluarfuncion(valorinicial,func);
-        if(totaliteraciones <= 0){
-            showErrorMessage("La cantidad de iteraciones debe ser mayor a 0");
-        }else if(fx0 == 0){
-            showErrorMessage(valorinicial + "es una raiz");
-        }else{
-            double x1 = valorinicial + incremento;
-            int contador = 1;
-            double fx1=evaluarfuncion(x1, func);
-            pintartabla(contador, x1, fx1);
-            while((fx0*fx1 > 0) && (contador < totaliteraciones)){
-                valorinicial = x1;
-                fx0 = fx1;
-                x1 = valorinicial + incremento;
-                fx1 = evaluarfuncion(x1, func);
-                contador++;
-                pintartabla(contador, x1, fx1);
-            }
-            if(fx1 == 0){
-                showErrorMessage(x1 + " es raiz");
-            }else if(fx0*fx1<0){
-                showErrorMessage("Hay una raiz en el intervalo: " + valorinicial + "," + x1);
-            }else{
-                showErrorMessage("No se encuentran intervalos ni raices en " + totaliteraciones + " iteraciones");
-            }
+        if(fx == 0){
+            showErrorMessage(x0 + " Es una raiz");
+        }else if (tolerancia < 0){
+            showErrorMessage(tolerancia + " Mala entrada  de la tolerancia");
         }
-        //pintartabla(valores);
         
     }
     
@@ -297,24 +297,15 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
     public void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
-    
-    public void pintartabla(int n, double xn, double fx ){
-        DefaultTableModel buscinc = (DefaultTableModel)table.getModel();
-        Object [] row = new Object[3];
-        row[0] = n;
-        row[1] = xn;
-        row[2] = fx;
-        buscinc.addRow(row);
-    }
-   
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
     private javax.swing.JButton calculateBtn;
     private javax.swing.JButton cleanBtn;
     private javax.swing.JLabel deltaLbl;
-    private javax.swing.JTextField deltaTxt;
+    private javax.swing.JTextField derivadatxt;
     private javax.swing.JLabel functionLbl;
+    private javax.swing.JLabel functionLbl1;
     private javax.swing.JTextField functionTxt;
     private javax.swing.JLabel initialValueLbl;
     private javax.swing.JTextField initialValueTxt;
@@ -323,5 +314,6 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable table;
     private javax.swing.JLabel titleLbl;
+    private javax.swing.JTextField toleranciaTxt;
     // End of variables declaration//GEN-END:variables
 }

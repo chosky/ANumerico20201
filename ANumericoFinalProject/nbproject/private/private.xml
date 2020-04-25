@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/ANumerico20201/ANumericoFinalProject/src/anumericofinalproject/ANumericoFinalProject.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/ANumerico20201/ANumericoFinalProject/src/Parser/MathFunctionsParser.java</file>
-            <file>file:/C:/Users/Usuario/Documents/GitHub/ANumerico20201/ANumericoFinalProject/src/methods/busquedasincrementales/BusquedasIncrementales.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ANumerico20201/ANumericoFinalProject/src/GUI/Evaluator.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ANumerico20201/ANumericoFinalProject/src/methods/newton/Newton.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ANumerico20201/ANumericoFinalProject/src/anumericofinalproject/BusquedasIncrementales.java</file>
+            <file>file:/C:/Users/Usuario/Documents/GitHub/ANumerico20201/ANumericoFinalProject/src/GUI/BusquedasIncrementales.java</file>
         </group>
     </open-files>
 </project-private>

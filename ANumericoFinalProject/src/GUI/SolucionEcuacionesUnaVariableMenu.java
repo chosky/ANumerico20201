@@ -252,6 +252,12 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
         busquedaIncremental.setVisible(true);
     }//GEN-LAST:event_busquedaIncrementalBtnActionPerformed
 
+
+    private void newtonBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newtonBtnActionPerformed
+        Newton newton = new Newton();
+        newton.setVisible(true);
+        System.out.println("puta llegue");
+
     private void biseccionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_biseccionBtnActionPerformed
         Biseccion biseccion = new Biseccion();
         biseccion.setVisible(true);
@@ -259,6 +265,7 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
 
     private void newtonBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newtonBtnActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_newtonBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

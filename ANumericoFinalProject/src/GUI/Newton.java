@@ -57,6 +57,7 @@ public class Newton extends javax.swing.JFrame {
         table = new javax.swing.JTable();
         functionLbl1 = new javax.swing.JLabel();
         derivatefunctiontxt = new javax.swing.JTextField();
+        observations = new java.awt.TextArea();
 
         titleLbl.setBackground(new java.awt.Color(254, 254, 254));
         titleLbl.setFont(new java.awt.Font("Lato Black", 1, 35)); // NOI18N
@@ -96,7 +97,7 @@ public class Newton extends javax.swing.JFrame {
         calculateBtn.setBackground(new java.awt.Color(0, 149, 136));
         calculateBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
         calculateBtn.setForeground(new java.awt.Color(1, 1, 1));
-        calculateBtn.setText("Evaluar");
+        calculateBtn.setText("CALCULAR");
         calculateBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
         calculateBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,27 +123,23 @@ public class Newton extends javax.swing.JFrame {
         iterLbl.setForeground(new java.awt.Color(1, 1, 1));
         iterLbl.setText("Cant. iteraciones (n):");
 
-        toleranciaTxt.setBackground(new java.awt.Color(254, 254, 254));
         toleranciaTxt.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         toleranciaTxt.setForeground(new java.awt.Color(1, 1, 1));
 
-        iterTxt.setBackground(new java.awt.Color(254, 254, 254));
         iterTxt.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         iterTxt.setForeground(new java.awt.Color(1, 1, 1));
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         table.setCellSelectionEnabled(true);
         jScrollPane2.setViewportView(table);
+        table.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         functionLbl1.setFont(new java.awt.Font("Lato Black", 1, 20)); // NOI18N
         functionLbl1.setForeground(new java.awt.Color(1, 1, 1));
@@ -161,44 +158,46 @@ public class Newton extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(33, 33, 33)
-                                .addComponent(initialValueLbl)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(initialValueTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(deltaLbl)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(iterLbl)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(iterTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(70, 70, 70)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(functionLbl1)
-                                    .addComponent(functionLbl))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(derivatefunctiontxt, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(functionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(117, 117, 117)
-                                .addComponent(cleanBtn)
-                                .addGap(157, 157, 157)
-                                .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(33, 33, 33)
+                                    .addComponent(initialValueLbl)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(initialValueTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(deltaLbl)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(iterLbl)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(iterTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(70, 70, 70)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(functionLbl1)
+                                        .addComponent(functionLbl))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(derivatefunctiontxt, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(functionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(117, 117, 117)
+                                    .addComponent(cleanBtn)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(214, 214, 214))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addComponent(observations, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,9 +224,11 @@ public class Newton extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cleanBtn)
                     .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(observations, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backBtn)
                 .addGap(8, 8, 8))
         );
@@ -249,6 +250,8 @@ public class Newton extends javax.swing.JFrame {
         int totaliteraciones = Integer.valueOf(iterTxt.getText());
         Object[] columns = {"N","X","f(x)","f1(x)","Error"};
         table.setModel(new DefaultTableModel(null,columns)); 
+        observations.setForeground(Color.black);
+        observations.setText("OBSERVACIONES:");
         newton(valorinicial,totaliteraciones,tolerancia,func,derivadafun);
     }//GEN-LAST:event_calculateBtnActionPerformed
 
@@ -267,13 +270,13 @@ public class Newton extends javax.swing.JFrame {
         double dfx = evaluarfuncion(x0,derivadafun);
         
         if(fx == 0){
-            showErrorMessage(x0 + " Es una raiz");
+            observations.setText(x0 + " Es una raiz");
         } else if (dfx ==0){
-            showErrorMessage(x0 + " Es una posible raiz multiple");
+            observations.setText(x0 + " Es una posible raiz multiple");
         } else if (tolerancia < 0){
-            showErrorMessage(tolerancia + " Mala entrada  de la tolerancia");
+            observations.setText(tolerancia + " Mala entrada  de la tolerancia");
         } else if (iteraciones <1){
-            showErrorMessage(iteraciones + " Mal iterador");
+            observations.setText(iteraciones + " Mal iterador");
         } else {
             int contador = 0;
             double error = tolerancia + 1;
@@ -289,13 +292,13 @@ public class Newton extends javax.swing.JFrame {
                 pintartabla(contador, x0, fx, dfx, error);
             }
             if (fx == 0){
-                showErrorMessage(x0 + " Es una raiz");
+                observations.setText(x0 + " Es una raiz");
             } else if (dfx == 0){
-                showErrorMessage(x0 + " es una posible raiz multiple");
+                observations.setText(x0 + " es una posible raiz multiple");
             } else if (error <  tolerancia){
-                showErrorMessage(x0 + " se aproxima a la tolerancia");
+                observations.setText(x0 + " se aproxima a la tolerancia");
             } else {
-                showErrorMessage("El metodo fracaso en " + iteraciones + " iteraciones");
+                observations.setText("El metodo fracaso en " + iteraciones + " iteraciones");
             }
         }
         
@@ -355,6 +358,7 @@ public class Newton extends javax.swing.JFrame {
     private javax.swing.JLabel iterLbl;
     private javax.swing.JTextField iterTxt;
     private javax.swing.JScrollPane jScrollPane2;
+    private java.awt.TextArea observations;
     private javax.swing.JTable table;
     private javax.swing.JLabel titleLbl;
     private javax.swing.JTextField toleranciaTxt;

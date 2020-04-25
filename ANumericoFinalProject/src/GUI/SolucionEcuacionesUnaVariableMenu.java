@@ -107,6 +107,11 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
         newtonBtn.setForeground(new java.awt.Color(1, 1, 1));
         newtonBtn.setText("NEWTON");
         newtonBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        newtonBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newtonBtnActionPerformed(evt);
+            }
+        });
 
         secanteBtn.setBackground(new java.awt.Color(0, 149, 136));
         secanteBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
@@ -241,6 +246,13 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
         BusquedasIncrementales busquedaIncremental = new BusquedasIncrementales();
         busquedaIncremental.setVisible(true);
     }//GEN-LAST:event_busquedaIncrementalBtnActionPerformed
+
+    private void newtonBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newtonBtnActionPerformed
+        Newton newton = new Newton();
+        newton.setVisible(true);
+        System.out.println("puta llegue");
+
+    }//GEN-LAST:event_newtonBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;

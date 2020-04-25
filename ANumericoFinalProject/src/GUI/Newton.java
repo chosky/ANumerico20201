@@ -13,18 +13,23 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Usuario
+ * @author jhenaoo
  */
-public class NewtonGUI extends javax.swing.JPanel {
+public class Newton extends javax.swing.JFrame {
 
     /**
-     * Creates new form NewtonGUI
+     * Creates new form BusquedasIncrementales
      */
-    public NewtonGUI() {
-       //this.setTitle("Búsquedas Incrementales");
-        //this.setResizable(false);
-        //this.getContentPane().setBackground(Color.WHITE);
+    public Newton() {
+        
+        this.setTitle("Newton");
+        this.setResizable(false);
+        this.getContentPane().setBackground(Color.WHITE);
         initComponents();
+        DefaultTableModel model = new DefaultTableModel();
+        Object[] columns = {"N","X","f(x)","f1(x)","Error"};
+        model.setColumnIdentifiers(columns);
+        table.setModel(model);
     }
 
     /**
@@ -37,10 +42,7 @@ public class NewtonGUI extends javax.swing.JPanel {
     private void initComponents() {
 
         titleLbl = new javax.swing.JLabel();
-        iterTxt = new javax.swing.JTextField();
         backBtn = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
         functionLbl = new javax.swing.JLabel();
         functionTxt = new javax.swing.JTextField();
         initialValueLbl = new javax.swing.JLabel();
@@ -50,17 +52,16 @@ public class NewtonGUI extends javax.swing.JPanel {
         deltaLbl = new javax.swing.JLabel();
         iterLbl = new javax.swing.JLabel();
         toleranciaTxt = new javax.swing.JTextField();
+        iterTxt = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
         functionLbl1 = new javax.swing.JLabel();
-        derivadatxt = new javax.swing.JTextField();
+        derivatefunctiontxt = new javax.swing.JTextField();
 
         titleLbl.setBackground(new java.awt.Color(254, 254, 254));
         titleLbl.setFont(new java.awt.Font("Lato Black", 1, 35)); // NOI18N
         titleLbl.setForeground(new java.awt.Color(1, 1, 1));
-        titleLbl.setText("Newton");
-
-        iterTxt.setBackground(new java.awt.Color(254, 254, 254));
-        iterTxt.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
-        iterTxt.setForeground(new java.awt.Color(1, 1, 1));
+        titleLbl.setText("BÚSQUEDAS INCREMENTALES");
 
         backBtn.setBackground(new java.awt.Color(26, 118, 210));
         backBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
@@ -73,30 +74,12 @@ public class NewtonGUI extends javax.swing.JPanel {
             }
         });
 
-        table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(table);
-
         functionLbl.setFont(new java.awt.Font("Lato Black", 1, 20)); // NOI18N
         functionLbl.setForeground(new java.awt.Color(1, 1, 1));
         functionLbl.setText("f(x) = ");
 
         functionTxt.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         functionTxt.setForeground(new java.awt.Color(1, 1, 1));
-        functionTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                functionTxtActionPerformed(evt);
-            }
-        });
 
         initialValueLbl.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         initialValueLbl.setForeground(new java.awt.Color(1, 1, 1));
@@ -113,7 +96,7 @@ public class NewtonGUI extends javax.swing.JPanel {
         calculateBtn.setBackground(new java.awt.Color(0, 149, 136));
         calculateBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
         calculateBtn.setForeground(new java.awt.Color(1, 1, 1));
-        calculateBtn.setText("EVALUAR");
+        calculateBtn.setText("Evaluar");
         calculateBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
         calculateBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,10 +108,15 @@ public class NewtonGUI extends javax.swing.JPanel {
         cleanBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
         cleanBtn.setForeground(new java.awt.Color(1, 1, 1));
         cleanBtn.setText("LIMPIAR");
+        cleanBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cleanBtnActionPerformed(evt);
+            }
+        });
 
         deltaLbl.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         deltaLbl.setForeground(new java.awt.Color(1, 1, 1));
-        deltaLbl.setText("Tolerancia:");
+        deltaLbl.setText("Tolerancia");
 
         iterLbl.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         iterLbl.setForeground(new java.awt.Color(1, 1, 1));
@@ -138,35 +126,41 @@ public class NewtonGUI extends javax.swing.JPanel {
         toleranciaTxt.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         toleranciaTxt.setForeground(new java.awt.Color(1, 1, 1));
 
+        iterTxt.setBackground(new java.awt.Color(254, 254, 254));
+        iterTxt.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
+        iterTxt.setForeground(new java.awt.Color(1, 1, 1));
+
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        table.setCellSelectionEnabled(true);
+        jScrollPane2.setViewportView(table);
+
         functionLbl1.setFont(new java.awt.Font("Lato Black", 1, 20)); // NOI18N
         functionLbl1.setForeground(new java.awt.Color(1, 1, 1));
         functionLbl1.setText("f'(x) = ");
 
-        derivadatxt.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
-        derivadatxt.setForeground(new java.awt.Color(1, 1, 1));
-        derivadatxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                derivadatxtActionPerformed(evt);
-            }
-        });
+        derivatefunctiontxt.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
+        derivatefunctiontxt.setForeground(new java.awt.Color(1, 1, 1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(459, Short.MAX_VALUE)
-                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap()
+                        .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(cleanBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(33, 33, 33)
@@ -182,28 +176,36 @@ public class NewtonGUI extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(iterTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(54, 54, 54)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(78, 78, 78)
-                                        .addComponent(functionLbl1))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(functionLbl)))
+                                .addGap(70, 70, 70)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(functionLbl1)
+                                    .addComponent(functionLbl))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(derivadatxt, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(functionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(derivatefunctiontxt, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(functionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(117, 117, 117)
+                                .addComponent(cleanBtn)
+                                .addGap(157, 157, 157)
+                                .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(214, 214, 214))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addContainerGap()
                 .addComponent(titleLbl)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deltaLbl)
                     .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -216,52 +218,49 @@ public class NewtonGUI extends javax.swing.JPanel {
                     .addComponent(functionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(functionLbl))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(functionLbl1)
-                    .addComponent(derivadatxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                    .addComponent(derivatefunctiontxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cleanBtn)
                     .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
                 .addComponent(backBtn)
-                .addContainerGap())
+                .addGap(8, 8, 8))
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         this.setVisible(false);
-        //this.dispose();
+        this.dispose();
     }//GEN-LAST:event_backBtnActionPerformed
+
+    private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
+        // TODO add your handling code here:
+        String func = functionTxt.getText();
+        String derivadafun = derivatefunctiontxt.getText();
+        double valorinicial = Double.valueOf(initialValueTxt.getText());
+        double tolerancia = Double.valueOf(toleranciaTxt.getText());
+        int totaliteraciones = Integer.valueOf(iterTxt.getText());
+        Object[] columns = {"N","X","f(x)","f1(x)","Error"};
+        table.setModel(new DefaultTableModel(null,columns)); 
+        newton(valorinicial,totaliteraciones,tolerancia,func,derivadafun);
+    }//GEN-LAST:event_calculateBtnActionPerformed
 
     private void initialValueTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_initialValueTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_initialValueTxtActionPerformed
 
-    private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
+    private void cleanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanBtnActionPerformed
         // TODO add your handling code here:
-        String func = functionTxt.getText();
-        String derivadafun = derivadatxt.getText();
-        double valorinicial = Double.valueOf(initialValueTxt.getText());
-        double tolerancia = Double.valueOf(toleranciaTxt.getText());
-        int totaliteraciones = Integer.valueOf(iterTxt.getText());
-        DefaultTableModel model = new DefaultTableModel();
-        Object[] columns = {"N","X","f(x)","f1(x)"};
-        model.setColumnIdentifiers(columns);
-        table.setModel(model);
-        newton(valorinicial,totaliteraciones,tolerancia,func,derivadafun);
-    }//GEN-LAST:event_calculateBtnActionPerformed
-
-    private void functionTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_functionTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_functionTxtActionPerformed
-
-    private void derivadatxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_derivadatxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_derivadatxtActionPerformed
-
+            Object[] columns = {"N","X","f(x)","f1(x)","Error"};
+            table.setModel(new DefaultTableModel(null,columns));    
+    }//GEN-LAST:event_cleanBtnActionPerformed
     
     public void newton(double x0, int iteraciones, double tolerancia,String fun,String derivadafun){
         double fx = evaluarfuncion(x0, fun);
@@ -269,8 +268,35 @@ public class NewtonGUI extends javax.swing.JPanel {
         
         if(fx == 0){
             showErrorMessage(x0 + " Es una raiz");
-        }else if (tolerancia < 0){
+        } else if (dfx ==0){
+            showErrorMessage(x0 + " Es una posible raiz multiple");
+        } else if (tolerancia < 0){
             showErrorMessage(tolerancia + " Mala entrada  de la tolerancia");
+        } else if (iteraciones <1){
+            showErrorMessage(iteraciones + " Mal iterador");
+        } else {
+            int contador = 0;
+            double error = tolerancia + 1;
+            double xn;
+            pintartabla(contador, x0, fx, dfx, 0);
+            while ( (error > tolerancia) && (fx != 0) && (dfx != 0) && (contador < iteraciones)){
+                xn = x0 - (fx/dfx);
+                fx = evaluarfuncion(xn, fun);
+                dfx = evaluarfuncion(xn, derivadafun);
+                error = Math.abs(xn - x0);
+                x0 = xn;
+                contador++;
+                pintartabla(contador, x0, fx, dfx, error);
+            }
+            if (fx == 0){
+                showErrorMessage(x0 + " Es una raiz");
+            } else if (dfx == 0){
+                showErrorMessage(x0 + " es una posible raiz multiple");
+            } else if (error <  tolerancia){
+                showErrorMessage(x0 + " se aproxima a la tolerancia");
+            } else {
+                showErrorMessage("El metodo fracaso en " + iteraciones + " iteraciones");
+            }
         }
         
     }
@@ -294,16 +320,33 @@ public class NewtonGUI extends javax.swing.JPanel {
          return tmp;
     }
     
+    public void pintartabla(int n, double xn, double fx,double f1x, double error ){
+        DefaultTableModel buscinc = (DefaultTableModel)table.getModel();
+        Object [] row = new Object[5];
+        row[0] = n;
+        row[1] = xn;
+        row[2] = fx;
+        row[3] = f1x;
+        row[4] = error;
+        buscinc.addRow(row);
+    }
+    
     public void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
-
+    
+    public void pintartabla(double[] valores){
+        
+        
+    }
+   
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
     private javax.swing.JButton calculateBtn;
     private javax.swing.JButton cleanBtn;
     private javax.swing.JLabel deltaLbl;
-    private javax.swing.JTextField derivadatxt;
+    private javax.swing.JTextField derivatefunctiontxt;
     private javax.swing.JLabel functionLbl;
     private javax.swing.JLabel functionLbl1;
     private javax.swing.JTextField functionTxt;

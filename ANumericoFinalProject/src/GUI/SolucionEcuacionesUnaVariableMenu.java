@@ -123,6 +123,11 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
         secanteBtn.setForeground(new java.awt.Color(1, 1, 1));
         secanteBtn.setText("SECANTE");
         secanteBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        secanteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                secanteBtnActionPerformed(evt);
+            }
+        });
 
         jButton9.setBackground(new java.awt.Color(0, 149, 136));
         jButton9.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
@@ -260,6 +265,11 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
     private void newtonBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newtonBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_newtonBtnActionPerformed
+
+    private void secanteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secanteBtnActionPerformed
+        Secante secante = new Secante();
+        secante.setVisible(true);
+    }//GEN-LAST:event_secanteBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;

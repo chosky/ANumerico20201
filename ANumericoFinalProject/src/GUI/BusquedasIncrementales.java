@@ -55,6 +55,7 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
         iterTxt = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
+        observations = new java.awt.TextArea();
 
         titleLbl.setBackground(new java.awt.Color(254, 254, 254));
         titleLbl.setFont(new java.awt.Font("Lato Black", 1, 35)); // NOI18N
@@ -120,11 +121,10 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
         iterLbl.setForeground(new java.awt.Color(1, 1, 1));
         iterLbl.setText("Cant. iteraciones (n):");
 
-        deltaTxt.setBackground(new java.awt.Color(254, 254, 254));
         deltaTxt.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         deltaTxt.setForeground(new java.awt.Color(1, 1, 1));
 
-        iterTxt.setBackground(new java.awt.Color(254, 254, 254));
+        iterTxt.setBackground(new java.awt.Color(255, 255, 255));
         iterTxt.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         iterTxt.setForeground(new java.awt.Color(1, 1, 1));
 
@@ -183,8 +183,10 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(observations, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -208,9 +210,11 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cleanBtn)
                     .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(observations, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                .addGap(50, 50, 50)
                 .addComponent(backBtn)
                 .addContainerGap())
         );
@@ -229,7 +233,8 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
         double valorinicial = Double.valueOf(initialValueTxt.getText());
         double incremento = Double.valueOf(deltaTxt.getText());
         int totaliteraciones = Integer.valueOf(iterTxt.getText());
-       
+        observations.setForeground(Color.black);
+        observations.setText("OBSERVACIONES:");
         busquedasIncrementales(valorinicial,incremento,totaliteraciones,func);
     }//GEN-LAST:event_calculateBtnActionPerformed
 
@@ -247,9 +252,9 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
         
         double fx0 = evaluarfuncion(valorinicial,func);
         if(totaliteraciones <= 0){
-            showErrorMessage("La cantidad de iteraciones debe ser mayor a 0");
+            observations.setText("La cantidad de iteraciones debe ser mayor a 0");
         }else if(fx0 == 0){
-            showErrorMessage(valorinicial + "es una raiz");
+            observations.setText(valorinicial + "es una raiz");
         }else{
             double x1 = valorinicial + incremento;
             int contador = 1;
@@ -264,11 +269,11 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
                 pintartabla(contador, x1, fx1);
             }
             if(fx1 == 0){
-                showErrorMessage(x1 + " es raiz");
+                observations.setText(x1 + " es raiz");
             }else if(fx0*fx1<0){
-                showErrorMessage("Hay una raiz en el intervalo: " + valorinicial + "," + x1);
+                observations.setText("Hay una raiz en el intervalo: [" + valorinicial + "," + x1+"]");
             }else{
-                showErrorMessage("No se encuentran intervalos ni raices en " + totaliteraciones + " iteraciones");
+                observations.setText("No se encuentran intervalos ni raices en " + totaliteraciones + " iteraciones");
             }
         }
         //pintartabla(valores);
@@ -321,6 +326,7 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
     private javax.swing.JLabel iterLbl;
     private javax.swing.JTextField iterTxt;
     private javax.swing.JScrollPane jScrollPane2;
+    private java.awt.TextArea observations;
     private javax.swing.JTable table;
     private javax.swing.JLabel titleLbl;
     // End of variables declaration//GEN-END:variables

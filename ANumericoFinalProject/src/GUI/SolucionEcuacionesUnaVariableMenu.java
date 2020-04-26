@@ -122,11 +122,6 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
         newtonBtn.setForeground(new java.awt.Color(1, 1, 1));
         newtonBtn.setText("NEWTON");
         newtonBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
-        newtonBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newtonBtnActionPerformed(evt);
-            }
-        });
 
         secanteBtn.setBackground(new java.awt.Color(0, 149, 136));
         secanteBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
@@ -155,6 +150,11 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
         jButton10.setForeground(new java.awt.Color(1, 1, 1));
         jButton10.setText("VALOR AGG");
         jButton10.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         backBtn.setBackground(new java.awt.Color(26, 118, 210));
         backBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
@@ -303,6 +303,11 @@ public class SolucionEcuacionesUnaVariableMenu extends javax.swing.JFrame {
          Newton newton = new Newton();
         newton.setVisible(true);
     }//GEN-LAST:event_newtonBtnActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        Muller muller = new Muller();
+        muller.setVisible(true);
+    }//GEN-LAST:event_jButton10ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;

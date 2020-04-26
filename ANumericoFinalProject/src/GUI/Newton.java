@@ -20,6 +20,10 @@ public class Newton extends javax.swing.JFrame {
     /**
      * Creates new form BusquedasIncrementales
      */
+    
+    MathFunctionsParser function = new MathFunctionsParser();
+    MathFunctionsParser derivatefunction = new MathFunctionsParser();
+    
     public Newton() {
         
         this.setTitle("Newton");
@@ -243,16 +247,22 @@ public class Newton extends javax.swing.JFrame {
 
     private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
         // TODO add your handling code here:
-        String func = functionTxt.getText();
-        String derivadafun = derivatefunctiontxt.getText();
-        double valorinicial = Double.valueOf(initialValueTxt.getText());
-        double tolerancia = Double.valueOf(toleranciaTxt.getText());
-        int totaliteraciones = Integer.valueOf(iterTxt.getText());
         Object[] columns = {"N","X","f(x)","f1(x)","Error"};
         table.setModel(new DefaultTableModel(null,columns)); 
         observations.setForeground(Color.black);
         observations.setText("OBSERVACIONES:");
-        newton(valorinicial,totaliteraciones,tolerancia,func,derivadafun);
+        String func = functionTxt.getText();
+        String derivadafun = derivatefunctiontxt.getText();
+        if((evaluarfuncion(func, "f(x)")) && (evaluarfuncion(derivadafun, "f'(x)"))){
+            function.parserFunction(func);
+            derivatefunction.parserFunction(derivadafun);
+            double valorinicial = Double.valueOf(initialValueTxt.getText());
+            double tolerancia = Double.valueOf(toleranciaTxt.getText());
+            int totaliteraciones = Integer.valueOf(iterTxt.getText());
+            newton(valorinicial,totaliteraciones,tolerancia);
+        } else {
+            showErrorMessage("Porfavor verificar los datos de entrada");
+        }
     }//GEN-LAST:event_calculateBtnActionPerformed
 
     private void initialValueTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_initialValueTxtActionPerformed
@@ -265,9 +275,11 @@ public class Newton extends javax.swing.JFrame {
             table.setModel(new DefaultTableModel(null,columns));    
     }//GEN-LAST:event_cleanBtnActionPerformed
     
-    public void newton(double x0, int iteraciones, double tolerancia,String fun,String derivadafun){
-        double fx = evaluarfuncion(x0, fun);
-        double dfx = evaluarfuncion(x0,derivadafun);
+    public void newton(double x0, int iteraciones, double tolerancia){
+        function.function.addVariable("x", x0);
+        double fx = function.function.getValue();
+        derivatefunction.function.addVariable("x", x0);
+        double dfx = derivatefunction.function.getValue();
         
         if(fx == 0){
             observations.setText(x0 + " Es una raiz");
@@ -284,18 +296,21 @@ public class Newton extends javax.swing.JFrame {
             pintartabla(contador, x0, fx, dfx, 0);
             while ( (error > tolerancia) && (fx != 0) && (dfx != 0) && (contador < iteraciones)){
                 xn = x0 - (fx/dfx);
-                fx = evaluarfuncion(xn, fun);
-                dfx = evaluarfuncion(xn, derivadafun);
+                function.function.addVariable("x", xn);
+                fx = function.function.getValue();
+                derivatefunction.function.addVariable("x", xn);
+                dfx = derivatefunction.function.getValue();
                 error = Math.abs(xn - x0);
                 x0 = xn;
                 contador++;
                 pintartabla(contador, x0, fx, dfx, error);
             }
             if (fx == 0){
-                observations.setText(x0 + " Es una raiz");
+                observations.setText(x0 + " es una raiz");
             } else if (dfx == 0){
                 observations.setText(x0 + " es una posible raiz multiple");
             } else if (error <  tolerancia){
+                //pintartabla(contador+1, x0, fx, dfx, error);
                 observations.setText(x0 + " se aproxima a la tolerancia");
             } else {
                 observations.setText("El metodo fracaso en " + iteraciones + " iteraciones");
@@ -304,23 +319,28 @@ public class Newton extends javax.swing.JFrame {
         
     }
     
-    public double evaluarfuncion(double x,String func){
-         MathFunctionsParser function = new MathFunctionsParser();
-         double tmp = -1;
+    public boolean evaluarfuncion(String func,String fun){
+        MathFunctionsParser temp = new MathFunctionsParser();
          try{
-             function.parserFunction(func);
-             function.function.addVariable("x", x);
-             tmp = function.function.getValue();
-             if(tmp == -1){
-                 showErrorMessage("Error al evaluar la funcion");
-             }
+             temp.parserFunction(func);
+             temp.function.addVariable("x", 1);
+             String tmp = Double.toString(temp.function.getValue());
+             if (this.functionTxt.getText().equals("") || this.functionTxt.getText().equals(" ")) {
+                showErrorMessage("El campo de la función está vacio");
+                return false;
+            } else if(tmp.equals("NaN")) {
+                showErrorMessage("Error en la lectura de la función " + fun + " \n ¿La incongita buscada es x?");
+                return false;
+            } else {
+                return true;
+            }
          } catch (NumberFormatException nfe) {
             showErrorMessage(nfe.getMessage());
+            return false;
         } catch (Exception e) {
             showErrorMessage(e.getMessage());
+            return false;
         }
-         
-         return tmp;
     }
     
     public void pintartabla(int n, double xn, double fx,double f1x, double error ){

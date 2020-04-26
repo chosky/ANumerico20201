@@ -365,7 +365,7 @@ public class ReglaFalsa extends javax.swing.JFrame {
         boolean letra = false;
         int contPunto = 0;
         for(char c : chars) {
-            if(Character.isDigit(c)) {
+            if(Character.isDigit(c) || c == '-') {
                 letra = false;
             } else if (c == '.') {
                 contPunto++;

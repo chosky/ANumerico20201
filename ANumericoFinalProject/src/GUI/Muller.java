@@ -110,6 +110,8 @@ public class Muller extends javax.swing.JFrame {
         titleLbl.setText("MÜLLER");
         titleLbl.setToolTipText("");
 
+        jPanel1.setBackground(new java.awt.Color(254, 254, 254));
+
         toleranceLbl.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         toleranceLbl.setForeground(new java.awt.Color(1, 1, 1));
         toleranceLbl.setText("Tolerancia:");
@@ -280,13 +282,14 @@ public class Muller extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(titleLbl)
                 .addGap(43, 43, 43)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dato0Lbl)
-                    .addComponent(dato1Lbl)
-                    .addComponent(dato1Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dato2Lbl)
-                    .addComponent(dato2Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dato0Txt))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dato0Txt)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(dato0Lbl)
+                        .addComponent(dato1Lbl)
+                        .addComponent(dato1Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dato2Lbl)
+                        .addComponent(dato2Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -411,7 +414,7 @@ public class Muller extends javax.swing.JFrame {
         boolean letra = false;
         int contPunto = 0;
         for(char c : chars) {
-            if(Character.isDigit(c)) {
+            if(Character.isDigit(c) || c == '-') {
                 letra = false;
             } else if (c == '.') {
                 contPunto++;
@@ -464,21 +467,31 @@ public class Muller extends javax.swing.JFrame {
             this.observacionesTxt.setText("Las iteraciones deben ser positivas");
         } else {
             int count = 1;
-            double error = Math.abs(x1-x0);
-            double deno = fx1 - fx0;
-            //fillTable(1, x1, fx1, den, error);
-            //fillTable(2, x1, fx1, den, error);
-            //fillTable(3, x1, fx1, den, error);
+            int iterTabla = 3;
+            double error = Math.abs(x1 - x0);
+            double error1 = Math.abs(x2 - x1);
+            double deno = (x0 - x2)*(x1 - x2)*(x0 - x1);
+            double a = (((x1 - x2)*(fx0 - fx2)) - ((x0 - x2)*(fx1 - fx2)))/deno;
+            double b = (Math.pow((x0 - x2), 2)*(fx1 - fx2) - Math.pow((x1 - x2), 2)*(fx0 - fx2))/deno;
+            double c = fx2;
+            fillTable(1, x0, fx0, deno, 0, 0, 0, 0);
+            fillTable(2, x1, fx1, deno, 0, 0, 0, error);
+            fillTable(3, x2, fx2, deno, a, b, c, error1);
             while (fx1 != 0 && error > tole && deno != 0 && count < n){
-                //double x2 = x1 - fx1*(x1-x0)/den;
-                error = Math.abs(x2 - x1);
                 x0 = x1;
-                fx0 = fx1;
                 x1 = x2;
+                x2 = x2+((-2*c)/(b+Math.signum(b)*Math.sqrt(Math.pow(b, 2)-4*a*c)));
+                fx0 = f(x0);
                 fx1 = f(x1);
-                deno = fx1 - fx0;
+                fx2 = f(x2);
+                deno = (x0 - x2)*(x1 - x2)*(x0 - x1);
+                a = ((x1 - x2)*(fx0 - fx2) - (x0 - x2)*(fx1 - fx2))/deno;
+                b = ((x0*x0 - 2*x0*x2 + x2*x2)*(fx1 - fx2) - Math.pow((x1 - x2), 2)*(fx0 - fx2))/deno;
+                c = fx2;
+                error = Math.abs(x2 - x1);
                 count++;
-                //fillTable(count, x1, fx1, den, error);
+                iterTabla++;
+                fillTable(iterTabla, x2, fx2, deno, a, b, c, error);
             }
             
             if (fx1 == 0) {

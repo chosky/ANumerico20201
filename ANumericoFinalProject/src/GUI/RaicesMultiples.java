@@ -22,9 +22,9 @@ public class RaicesMultiples extends javax.swing.JFrame {
      * Creates new form RaicesMultiples
      */
     public RaicesMultiples() {
-        functionFx = new MathFunctionsParser();
-        functionFdx = new MathFunctionsParser();
-        functionF2dx = new MathFunctionsParser();
+        this.functionFx = new MathFunctionsParser();
+        this.functionFdx = new MathFunctionsParser();
+        this.functionF2dx = new MathFunctionsParser();
         
         this.setTitle("Raíces Múltiples");
         this.getContentPane().setBackground(Color.WHITE);
@@ -433,7 +433,7 @@ public class RaicesMultiples extends javax.swing.JFrame {
     }
     
     private boolean valorTieneCaracterNoValido(String cadena) {
-            char[] chars = cadena.toCharArray();
+        char[] chars = cadena.toCharArray();
         boolean letra = false;
         int contPunto = 0;
         for(char c : chars) {
@@ -493,7 +493,7 @@ public class RaicesMultiples extends javax.swing.JFrame {
             double fx = f(xi);
             double fdx = fdx(xi);
             double f2dx = f2dx(xi);
-            double deno = Math.pow(fx, 2) - (fx*f2dx);
+            double deno = Math.pow(fdx, 2) - (fx*f2dx);
             int count = 1;
             double error = tole + 1;
             
@@ -504,7 +504,7 @@ public class RaicesMultiples extends javax.swing.JFrame {
                 fx = f(xn);
                 fdx = fdx(xn);
                 f2dx = f2dx(xn);
-                deno = Math.pow(fx, 2) - (fx*f2dx);
+                deno = Math.pow(fdx, 2) - (fx*f2dx);
                 error = Math.abs(xn - xi);
                 xi = xn;
                 count++;

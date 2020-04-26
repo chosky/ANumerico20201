@@ -20,6 +20,9 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
     /**
      * Creates new form BusquedasIncrementales
      */
+    
+    MathFunctionsParser function = new MathFunctionsParser();
+    
     public BusquedasIncrementales() {
         
         this.setTitle("Búsquedas Incrementales");
@@ -229,13 +232,19 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
 
     private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
         // TODO add your handling code here:
-        String func = functionTxt.getText();
-        double valorinicial = Double.valueOf(initialValueTxt.getText());
-        double incremento = Double.valueOf(deltaTxt.getText());
-        int totaliteraciones = Integer.valueOf(iterTxt.getText());
         observations.setForeground(Color.black);
         observations.setText("OBSERVACIONES:");
-        busquedasIncrementales(valorinicial,incremento,totaliteraciones,func);
+        Object[] columns = {"N","X","f(x)"};
+        table.setModel(new DefaultTableModel(null,columns));
+        String func = functionTxt.getText();
+        if(evaluarfuncion(func)){
+            double valorinicial = Double.valueOf(initialValueTxt.getText());
+            double incremento = Double.valueOf(deltaTxt.getText());
+            int totaliteraciones = Integer.valueOf(iterTxt.getText());
+            busquedasIncrementales(valorinicial,incremento,totaliteraciones);
+        } else {
+            showErrorMessage("Favor corregir los datos ingresados");
+        }
     }//GEN-LAST:event_calculateBtnActionPerformed
 
     private void initialValueTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_initialValueTxtActionPerformed
@@ -248,55 +257,59 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
         table.setModel(new DefaultTableModel(null,columns));
     }//GEN-LAST:event_cleanBtnActionPerformed
     
-    public void busquedasIncrementales(double valorinicial,double incremento,int totaliteraciones, String func){
-        
-        double fx0 = evaluarfuncion(valorinicial,func);
+    public void busquedasIncrementales(double valorinicial,double incremento,int totaliteraciones){
+        function.function.addVariable("x", valorinicial);
+        double fx0 = function.function.getValue();
         if(totaliteraciones <= 0){
             observations.setText("La cantidad de iteraciones debe ser mayor a 0");
-        }else if(fx0 == 0){
+        } else if(fx0 == 0){
             observations.setText(valorinicial + "es una raiz");
-        }else{
+        } else {
             double x1 = valorinicial + incremento;
             int contador = 1;
-            double fx1=evaluarfuncion(x1, func);
+            function.function.addVariable("x", x1);
+            double fx1=function.function.getValue();
             pintartabla(contador, x1, fx1);
             while((fx0*fx1 > 0) && (contador < totaliteraciones)){
                 valorinicial = x1;
                 fx0 = fx1;
                 x1 = valorinicial + incremento;
-                fx1 = evaluarfuncion(x1, func);
+                function.function.addVariable("x", x1);
+                fx1 = function.function.getValue();
                 contador++;
                 pintartabla(contador, x1, fx1);
             }
             if(fx1 == 0){
                 observations.setText(x1 + " es raiz");
-            }else if(fx0*fx1<0){
+            } else if(fx0*fx1<0){
                 observations.setText("Hay una raiz en el intervalo: [" + valorinicial + "," + x1+"]");
-            }else{
+            } else {
                 observations.setText("No se encuentran intervalos ni raices en " + totaliteraciones + " iteraciones");
             }
-        }
-        //pintartabla(valores);
-        
+        }        
     }
     
-    public double evaluarfuncion(double x,String func){
-         MathFunctionsParser function = new MathFunctionsParser();
-         double tmp = -1;
+    public boolean evaluarfuncion(String func){
          try{
              function.parserFunction(func);
-             function.function.addVariable("x", x);
-             tmp = function.function.getValue();
-             if(tmp == -1){
-                 showErrorMessage("Error al evaluar la funcion");
-             }
+             function.function.addVariable("x", 1);
+             String tmp = Double.toString(function.function.getValue());
+             if (this.functionTxt.getText().equals("") || this.functionTxt.getText().equals(" ")) {
+                showErrorMessage("El campo de la función está vacio");
+                return false;
+            } else if(tmp.equals("NaN")) {
+                showErrorMessage("Error en la lectura de la función f(x) \n ¿La incongita buscada es x?");
+                return false;
+            } else {
+                return true;
+            }
          } catch (NumberFormatException nfe) {
             showErrorMessage(nfe.getMessage());
+            return false;
         } catch (Exception e) {
             showErrorMessage(e.getMessage());
+            return false;
         }
-         
-         return tmp;
     }
     
     public void showErrorMessage(String message) {

@@ -84,6 +84,11 @@ public class Inicio extends javax.swing.JFrame {
         informationBtn.setText("info");
         informationBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         informationBtn.setBorderPainted(false);
+        informationBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                informationBtnActionPerformed(evt);
+            }
+        });
 
         backgroundImg.setBackground(new java.awt.Color(0, 0, 0));
         backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/fondoInicio.PNG"))); // NOI18N
@@ -152,6 +157,11 @@ public class Inicio extends javax.swing.JFrame {
         SolucionEcuacionesUnaVariableMenu solEcuVar = new SolucionEcuacionesUnaVariableMenu();
         solEcuVar.setVisible(true);
     }//GEN-LAST:event_solEcuOneVarBtnActionPerformed
+
+    private void informationBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_informationBtnActionPerformed
+        Informacion info = new Informacion();
+        info.setVisible(true);
+    }//GEN-LAST:event_informationBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel backgroundImg;

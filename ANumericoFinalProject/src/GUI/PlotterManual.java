@@ -65,12 +65,12 @@ public class PlotterManual extends JPanel {
     public PlotterManual(Container Contenedor,JFrame fra, String funcion) {
         //CREANDO BOTONES
         BtnGraficar = new JButton("GRAFICAR");
-        BtnGraficar.setBounds(20, 10, 100, 20);  
+        BtnGraficar.setBounds(280, 20, 100, 20);  
         BtnGraficar.setBackground(new Color(0,149,136));
         this.add(BtnGraficar);
         
         Btnsalir = new JButton("ATRAS");
-        Btnsalir.setBounds(140, 10, 100, 20); 
+        Btnsalir.setBounds(680, 100, 100, 20); 
         Btnsalir.setBackground(new Color(26,118,210));
         this.add(Btnsalir);
         
@@ -81,7 +81,7 @@ public class PlotterManual extends JPanel {
         });
         
         campoFuncion = new JTextField(funcion);
-        campoFuncion.setBounds(100, 40, 200, 20);
+        campoFuncion.setBounds(70, 20, 200, 20);
         this.add(campoFuncion);
         
         //COLUMNA 4
@@ -107,7 +107,7 @@ public class PlotterManual extends JPanel {
         setLayout(null);
         JPanel miniPanelintervalos = new JPanel();//mini panel para intervalos a y b
         etiquetaA = new JLabel("f(x) = ");
-        etiquetaA.setBounds(20, 30, 100, 40);
+        etiquetaA.setBounds(20, 8, 100, 40);
         
         miniPanelintervalos.setLayout(new GridLayout(1,6));
         this.add(etiquetaA);
@@ -123,10 +123,10 @@ public class PlotterManual extends JPanel {
         //BORDES
         Border colorline = BorderFactory.createLineBorder(new Color(220,220,220));
         DisplayPanel1.setBorder(colorline);
-        DisplayPanel1.setPreferredSize( new Dimension(Gancho,Galto-20));
+        DisplayPanel1.setPreferredSize( new Dimension(Gancho,Galto -20)); ////// esta es la pocicion del panel de la funcion 
 	
         DisplayPanel2.setLayout(new BorderLayout(1,1));
-        DisplayPanel2.add("Center", panelControles);
+       // DisplayPanel2.add("Center", panelControles)  /// aca se agrega el panel de el error 
      
         Contenedor.setLayout(new BorderLayout());
         Contenedor.add("North",DisplayPanel1);
@@ -226,7 +226,7 @@ public class ZonaGrafica extends JPanel  implements MouseListener, MouseMotionLi
  
     //METODO QUE PINTA TODA LA GRçFICA
     void Graficar(Graphics ap, int xg, int yg) {
-        setBackground(new Color(0,0,0));
+        setBackground(new Color(213,219,219)); ////////////// aca esta el color de fondo de la cuadricula 
         int xi=0, yi=0, xi1=0, yi1=0, numPuntos=1;
         int cxmin,cxmax,cymin,cymax;
         double valxi=0.0, valxi1=0.0, valyi=0.0,valyi1=0.0;
@@ -236,7 +236,7 @@ public class ZonaGrafica extends JPanel  implements MouseListener, MouseMotionLi
         Graphics2D g = (Graphics2D) ap;
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
-        g.setFont(ft10); 
+        //  g.setFont(ft10); 
         //g.setPaint(new Color(130,216,245));// color ejes
 
         //PINTAMOS EL EJE X Y EL EJE Y
@@ -255,24 +255,24 @@ public class ZonaGrafica extends JPanel  implements MouseListener, MouseMotionLi
 
         numPuntos=Gancho; //num pixels
 
-        g.setPaint(new Color(49,173,215)); //COLOR CUADRICULA
-        g.setFont(ft7);
+       // g.setPaint(new Color(49,173,215)); //COLOR CUADRICULA
+       // g.setFont(ft7);
 
         //PINTAMOS TODOS LOS EJES PARA FORMAR LA CUADRICULA
         if(escalaX>5) {
             for(int i=cxmin;i<=cxmax;i++) {   
                 //EJES PARALELOS AL EJE Y
-                g.setPaint(new Color(49,173,215)); //COLOR CUADRICULA
+                g.setPaint(new Color(33,150,243)); ////////////COLOR CUADRICULA LINEAS VERTICALES 
                 g.draw(new Line2D.Double(xg+i*escalaX, yg-2, xg+i*escalaX , yg+2));
                 if( (xg+i*escalaX) != xg )
                     g.draw(new Line2D.Double(xg+i*escalaX, 10, xg+i*escalaX, Galto-10));
                 
                 if(i>0){
-                    g.setPaint(new Color(255,255,255));//COLOR NUMEROS
+                    g.setPaint(new Color(0,0,0));////////////COLOR NUMEROS SOLO LOS POSITIVOS EN X
                     g.drawString(""+i, xg+i*escalaX-aumento1, yg+12);
                 }
                 if(i<0){
-                    g.setPaint(new Color(255,255,255));//COLOR NUMEROS
+                    g.setPaint(new Color(0,0,0));////////////COLOR NUMEROS SOLO LOS NEGATIVOS EN X
                     g.drawString(""+i, xg+i*escalaX-8, yg+12);
                 }
             }
@@ -281,30 +281,30 @@ public class ZonaGrafica extends JPanel  implements MouseListener, MouseMotionLi
         if(escalaY>5) {
             for(int i=cymin+1;i<cymax;i++)
             {   //EJES PARALELOS AL EJE X
-                g.setPaint(new Color(49,173,215)); //COLOR CUADRICULA
+                g.setPaint(new Color(33,150,243)); ////////////COLOR CUADRICULA LINEAS HORIZONTALES 
                 g.draw(new Line2D.Double(xg-2, yg-i*escalaY, xg+2 , yg-i*escalaY));
                 if( (yg-i*escalaY) != yg )
                     g.draw(new Line2D.Double(10, yg-i*escalaY, Gancho-10, yg-i*escalaY));
                 if(i>0){
-                    g.setPaint(new Color(255,255,255));//COLOR NUMEROS
+                    g.setPaint(new Color(0,0,0));////////////COLOR NUMEROS POSITIVOS EN Y
                     g.drawString(""+i, xg-12,yg-i*escalaY+8 );
                 }
                 if(i<0){
-                    g.setPaint(new Color(255,255,255));//COLOR NUMEROS
+                    g.setPaint(new Color(0,0,0));////////////COLOR NUMEROS NEGATIVOS EN Y
                     g.drawString(""+i, xg-14,yg-i*escalaY+8 );
                 }
             }
         }
         
-        g.setPaint(new Color(255,0,0));//COLOR DE LA FUNCION
+        g.setPaint(new Color(255,0,0));////////////////COLOR DE LA LINEA DE LA FUNCION 
         
         g.setStroke(grosor1);
   
         miEvaluador.parseExpression(campoFuncion.getText());
         errorEnExpresion = miEvaluador.hasError(); //hay error?
         
-        String derivada = "";
-
+        //String derivada = "";
+       
         if(!errorEnExpresion) {
             campoFuncion.setForeground(Color.black);
             
@@ -333,6 +333,7 @@ public class ZonaGrafica extends JPanel  implements MouseListener, MouseMotionLi
         } else {
             Mensaje.setText(":. Hay un error.");
             campoFuncion.setForeground(Color.red);
+            
         }
         
     }

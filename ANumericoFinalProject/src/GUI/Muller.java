@@ -207,7 +207,7 @@ public class Muller extends javax.swing.JFrame {
 
         dato0Txt.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         dato0Txt.setForeground(new java.awt.Color(1, 1, 1));
-        dato0Txt.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        dato0Txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         dato1Lbl.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         dato1Lbl.setForeground(new java.awt.Color(1, 1, 1));

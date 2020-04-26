@@ -334,7 +334,11 @@ public class Secante extends javax.swing.JFrame {
     
     private double f(double x) {
         this.function.function.addVariable("x", x);
-        return function.function.getValue();
+        Double result = function.function.getValue();
+        if(Double.isNaN(result)){
+            throw new ArithmeticException("Por favor verifica que el campo de la funcion este correctamente redactado y en funcion de x");
+        }
+        return result;
     }
     
     private void secantMethod(double x0, double x1, double tolerance, int n){
@@ -380,7 +384,12 @@ public class Secante extends javax.swing.JFrame {
     
     private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
         if(this.validateForm()){
-            secantMethod(_xi, _xs, _tolerance, _n);
+            try {
+                clearTable();
+                secantMethod(_xi, _xs, _tolerance, _n);
+            } catch (Exception e) {
+                observations.setText("Error: " + e.getMessage());
+            }
         }
     }//GEN-LAST:event_calculateBtnActionPerformed
 

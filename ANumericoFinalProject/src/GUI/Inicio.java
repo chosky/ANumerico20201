@@ -145,8 +145,7 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
-        this.setVisible(false);
-        this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_exitBtnActionPerformed
 
     private void solSisEcuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solSisEcuBtnActionPerformed

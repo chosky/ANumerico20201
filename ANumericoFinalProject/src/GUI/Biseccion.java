@@ -321,7 +321,11 @@ public class Biseccion extends javax.swing.JFrame {
     
     private double f(double x) {
         this.function.function.addVariable("x", x);
-        return function.function.getValue();
+        Double result = function.function.getValue();
+        if(Double.isNaN(result)){
+            throw new ArithmeticException("Por favor verifica que el campo de la funcion este correctamente redactado y en funcion de x");
+        }
+        return result;
     }
     
     private void fillTable (int n, double xi, double xs, double xm, double ym, double err) {
@@ -342,51 +346,56 @@ public class Biseccion extends javax.swing.JFrame {
     }
     
     private void bisectionMethod(double xi, double xs, double tolerance, int n){
-    double yi = f(xi);
-    double ys = f(xs);
-    if(yi == 0) {
-        this.observations.setText(xi + " es una raiz");
-    } else if(ys == 0){
-        this.observations.setText(xs + " es una raiz");
-    } else if (yi * ys > 0) {
-        this.observations.setText("Intervalo incorrecto");
-    } else if (n <= 0) {
-        this.observations.setText("Las iteraciones deben ser positivas");
-    } else if (tolerance < 0) {
-        this.observations.setText("La tolerancia debe ser mayor o igual a cero");
-    } else {
-      double xm = (xi + xs) / 2;
-      double ym = f(xm);
-      int count = 1;
-      double error = tolerance + 1;
-      fillTable(0, xi, xs, xm, ym, error);
-      while (ym != 0 && error > tolerance && count < n) {
-        if (yi * ym < 0) {
-          xs = xm;
+        double yi = f(xi);
+        double ys = f(xs);
+        if(yi == 0) {
+            this.observations.setText(xi + " es una raiz");
+        } else if(ys == 0){
+            this.observations.setText(xs + " es una raiz");
+        } else if (yi * ys > 0) {
+            this.observations.setText("Intervalo incorrecto");
+        } else if (n <= 0) {
+            this.observations.setText("Las iteraciones deben ser positivas");
+        } else if (tolerance < 0) {
+            this.observations.setText("La tolerancia debe ser mayor o igual a cero");
         } else {
-          xi = xm;
-          yi = ym;
+          double xm = (xi + xs) / 2;
+          double ym = f(xm);
+          int count = 1;
+          double error = tolerance + 1;
+          fillTable(0, xi, xs, xm, ym, error);
+          while (ym != 0 && error > tolerance && count < n) {
+            if (yi * ym < 0) {
+              xs = xm;
+            } else {
+              xi = xm;
+              yi = ym;
+            }
+            double lastXm = xm;
+            xm = (xi + xs) / 2;
+            ym = f(xm);
+            error = Math.abs(xm - lastXm);
+            count++;
+            fillTable(count, xi, xs, xm, ym, error);
+          }
+          if(ym == 0) {
+              this.observations.setText(xm + " es una raiz");
+          } else if(error < tolerance){
+              this.observations.setText(xm + " se aproxima a una raíz debido a que el error " + error + " es menor o igual a la tolerancia " + tolerance);
+          } else {
+              this.observations.setText("Falló en "+ count + " iteraciones");
+          }
         }
-        double lastXm = xm;
-        xm = (xi + xs) / 2;
-        ym = f(xm);
-        error = Math.abs(xm - lastXm);
-        count++;
-        fillTable(count, xi, xs, xm, ym, error);
       }
-      if(ym == 0) {
-          this.observations.setText(xm + " es una raiz");
-      } else if(error < tolerance){
-          this.observations.setText(xm + " se aproxima a una raíz debido a que el error " + error + " es menor o igual a la tolerancia " + tolerance);
-      } else {
-          this.observations.setText("Falló en "+ count + " iteraciones");
-      }
-    }
-  }
     
     private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
         if(this.validateForm()){
-            bisectionMethod(_xi, _xs, _tolerance, _n);
+            try {
+                clearTable();
+                bisectionMethod(_xi, _xs, _tolerance, _n);
+            } catch (Exception e) {
+                observations.setText("Error: " + e.getMessage());
+            }
         }
     }//GEN-LAST:event_calculateBtnActionPerformed
 

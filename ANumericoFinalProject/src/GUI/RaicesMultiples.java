@@ -512,7 +512,7 @@ public class RaicesMultiples extends javax.swing.JFrame {
             }
             if(fx == 0) {
                 this.observacionesTxt.setText(fx + " es una raiz");
-            } else if(error < tole){
+            } else if(error <= tole){
                 this.observacionesTxt.setText(fx + " se aproxima a una raíz debido a que el error es menor o igual a la tolerancia");
             } else if(deno == 0) {
                 this.observacionesTxt.setText("El denominador es igual a 0");

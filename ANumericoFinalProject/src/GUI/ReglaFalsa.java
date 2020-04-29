@@ -435,9 +435,9 @@ public class ReglaFalsa extends javax.swing.JFrame {
                 fillTable(count, xi, xs, xm, ym, error);
             }
             if(ym == 0) {
-                this.observacionesTxt.setText(xm + " es una raiz");
-            } else if(error < tole){
-                this.observacionesTxt.setText(xm + " se aproxima a una raíz debido a que el error es menor o igual a la tolerancia");
+                this.observacionesTxt.setText(ym + " es una raiz");
+            } else if(error <= tole){
+                this.observacionesTxt.setText(ym + " se aproxima a una raíz debido a que el error es menor o igual a la tolerancia");
             } else {
                 this.observacionesTxt.setText("Falló en "+ count + " iteraciones");
             }

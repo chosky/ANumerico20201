@@ -486,7 +486,7 @@ public class Muller extends javax.swing.JFrame {
                 fx2 = f(x2);
                 deno = (x0 - x2)*(x1 - x2)*(x0 - x1);
                 a = ((x1 - x2)*(fx0 - fx2) - (x0 - x2)*(fx1 - fx2))/deno;
-                b = ((x0*x0 - 2*x0*x2 + x2*x2)*(fx1 - fx2) - Math.pow((x1 - x2), 2)*(fx0 - fx2))/deno;
+                b = (Math.pow((x0 - x2), 2)*(fx1 - fx2) - Math.pow((x1 - x2), 2)*(fx0 - fx2))/deno;
                 c = fx2;
                 error = Math.abs(x2 - x1);
                 count++;
@@ -496,7 +496,7 @@ public class Muller extends javax.swing.JFrame {
             
             if (fx1 == 0) {
                 this.observacionesTxt.setText(x1 + " es una raiz");
-            } else if (error < tole) {
+            } else if (error <= tole) {
                 this.observacionesTxt.setText(x1 + " se aproxima a una raíz debido a que el error " + error + " es menor o igual a la tolerancia " + tole);
             } else if (deno == 0) {
                 this.observacionesTxt.setText("Hay una posible raíz multiple");

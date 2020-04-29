@@ -371,7 +371,7 @@ public class Secante extends javax.swing.JFrame {
           if (fx1 == 0) {
             this.observations.setText(x1 + " es una raiz");
           }
-          else if (error < tolerance) {
+          else if (error <= tolerance) {
             this.observations.setText(x1 + " se aproxima a una raíz debido a que el error " + error + " es menor o igual a la tolerancia " + tolerance);
           }
           else if (den == 0) {

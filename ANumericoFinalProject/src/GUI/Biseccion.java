@@ -380,7 +380,7 @@ public class Biseccion extends javax.swing.JFrame {
           }
           if(ym == 0) {
               this.observations.setText(xm + " es una raiz");
-          } else if(error < tolerance){
+          } else if(error <= tolerance){
               this.observations.setText(xm + " se aproxima a una raíz debido a que el error " + error + " es menor o igual a la tolerancia " + tolerance);
           } else {
               this.observations.setText("Falló en "+ count + " iteraciones");

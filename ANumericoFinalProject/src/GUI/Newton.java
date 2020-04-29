@@ -294,7 +294,7 @@ public class Newton extends javax.swing.JFrame {
             double error = tolerancia + 1;
             double xn;
             pintartabla(contador, x0, fx, dfx, 0);
-            while ( (error > tolerancia) && (fx != 0) && (dfx != 0) && (contador < iteraciones)){
+            while ( (error >= tolerancia) && (fx != 0) && (dfx != 0) && (contador < iteraciones)){
                 xn = x0 - (fx/dfx);
                 function.function.addVariable("x", xn);
                 fx = function.function.getValue();

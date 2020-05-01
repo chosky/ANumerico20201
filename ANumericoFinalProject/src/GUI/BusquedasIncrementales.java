@@ -7,6 +7,8 @@ package GUI;
 
 import Parser.MathFunctionsParser;
 import java.awt.Color;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -317,11 +319,12 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
     }
     
     public void pintartabla(int n, double xn, double fx ){
+        NumberFormat numFormat = new DecimalFormat("0.##E0");
         DefaultTableModel buscinc = (DefaultTableModel)table.getModel();
         Object [] row = new Object[3];
         row[0] = n;
-        row[1] = xn;
-        row[2] = fx;
+        row[1] = numFormat.format(xn);
+        row[2] = numFormat.format(fx);
         buscinc.addRow(row);
     }
    

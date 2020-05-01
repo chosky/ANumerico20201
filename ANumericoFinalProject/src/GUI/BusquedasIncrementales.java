@@ -46,6 +46,7 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dialog = new javax.swing.JDialog();
         titleLbl = new javax.swing.JLabel();
         backBtn = new javax.swing.JButton();
         functionLbl = new javax.swing.JLabel();
@@ -61,6 +62,18 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         observations = new java.awt.TextArea();
+        info = new javax.swing.JButton();
+
+        javax.swing.GroupLayout dialogLayout = new javax.swing.GroupLayout(dialog.getContentPane());
+        dialog.getContentPane().setLayout(dialogLayout);
+        dialogLayout.setHorizontalGroup(
+            dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        dialogLayout.setVerticalGroup(
+            dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         titleLbl.setBackground(new java.awt.Color(254, 254, 254));
         titleLbl.setFont(new java.awt.Font("Lato Black", 1, 35)); // NOI18N
@@ -146,6 +159,17 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(table);
 
+        info.setBackground(new java.awt.Color(0, 149, 136));
+        info.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
+        info.setForeground(new java.awt.Color(1, 1, 1));
+        info.setText("?");
+        info.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        info.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                infoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -155,7 +179,7 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
+                            .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -185,13 +209,15 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
                                 .addComponent(cleanBtn)
                                 .addGap(18, 18, 18)
                                 .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(75, 115, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(53, 53, 53)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(observations, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(observations, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -214,7 +240,8 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cleanBtn)
-                    .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
@@ -258,6 +285,11 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
         Object[] columns = {"N","X","f(x)"};
         table.setModel(new DefaultTableModel(null,columns));
     }//GEN-LAST:event_cleanBtnActionPerformed
+
+    private void infoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(dialog, "Busquedas incrementales necesita: \n 1.Un punto de inicio \n 2.Un valor en el cual dicho punto se va a incrementar\n 3.Un total de iteraciones \n 4.Una funcion en la cual evaluar los valores\n tener en cuenta que si la funcion tiene un exponente con mas de 1 variable favor encerrarlo entre parentesis");
+    }//GEN-LAST:event_infoActionPerformed
     
     public void busquedasIncrementales(double valorinicial,double incremento,int totaliteraciones){
         function.function.addVariable("x", valorinicial);
@@ -335,8 +367,10 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
     private javax.swing.JButton cleanBtn;
     private javax.swing.JLabel deltaLbl;
     private javax.swing.JTextField deltaTxt;
+    private javax.swing.JDialog dialog;
     private javax.swing.JLabel functionLbl;
     private javax.swing.JTextField functionTxt;
+    private javax.swing.JButton info;
     private javax.swing.JLabel initialValueLbl;
     private javax.swing.JTextField initialValueTxt;
     private javax.swing.JLabel iterLbl;

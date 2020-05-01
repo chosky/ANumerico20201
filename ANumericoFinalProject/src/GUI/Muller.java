@@ -2,6 +2,8 @@ package GUI;
 
 import Parser.MathFunctionsParser;
 import java.awt.Color;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -57,6 +59,7 @@ public class Muller extends javax.swing.JFrame {
         dato2Lbl = new javax.swing.JLabel();
         dato2Txt = new javax.swing.JTextField();
         cleanBtn = new javax.swing.JButton();
+        infoBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -234,15 +237,22 @@ public class Muller extends javax.swing.JFrame {
             }
         });
 
+        infoBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
+        infoBtn.setForeground(new java.awt.Color(1, 1, 1));
+        infoBtn.setText("?");
+        infoBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 17, 255), 1, true));
+        infoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                infoBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -274,14 +284,23 @@ public class Muller extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                                         .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jScrollPane1))))
-                        .addGap(8, 8, 8)))
+                        .addGap(8, 8, 8))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(infoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(titleLbl)
-                .addGap(43, 43, 43)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(infoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(dato0Txt)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -295,7 +314,7 @@ public class Muller extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cleanBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(backBtn, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -330,7 +349,7 @@ public class Muller extends javax.swing.JFrame {
             }
 
         } else {
-            showErrorMessage("Error en la función, no se pudo graficar");
+            showErrorMessage("Error en la función, no se pudo calcular");
         }
     }//GEN-LAST:event_calculateBtnActionPerformed
 
@@ -342,6 +361,13 @@ public class Muller extends javax.swing.JFrame {
             showErrorMessage("Error en la función, no se pudo graficar");
         }
     }//GEN-LAST:event_plotterBtnActionPerformed
+
+    private void infoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoBtnActionPerformed
+        String informacion = "El método de müller es otro método para encontrar un valor muy cercano a la raíz o la misma raíz,";
+        informacion += "\n este método comienza con 3 valores iniciales, con estos valores hallamos los valores de a,b y c";
+        informacion += "\n los cuales reemplazamos en la ecuación cuadrática para obtener el siguiente valor de xn.";
+        JOptionPane.showMessageDialog(this, informacion);
+    }//GEN-LAST:event_infoBtnActionPerformed
 
     private void clearTable() {
         DefaultTableModel bisectionTableModel = (DefaultTableModel) mullerTable.getModel();
@@ -429,20 +455,21 @@ public class Muller extends javax.swing.JFrame {
     }
     
     private void showErrorMessage(String message) {
-        JOptionPane.showMessageDialog(this, message);
+        this.observacionesTxt.setText(message);
     }
     
     private void fillTable(int n, double xn, double fxn, double deno, double a, double b, double c, double err) {
         DefaultTableModel bisectionTableModel = (DefaultTableModel) mullerTable.getModel();
+        NumberFormat numFormat = new DecimalFormat("0.##E0");
         Object[] row = new Object[8];
         row[0] = n;
         row[1] = xn;
-        row[2] = fxn;
+        row[2] = numFormat.format(fxn);
         row[3] = deno;
         row[4] = a;
         row[5] = b;
         row[6] = c;
-        row[7] = err;
+        row[7] = numFormat.format(err);
         bisectionTableModel.addRow(row);
     }
     
@@ -456,15 +483,15 @@ public class Muller extends javax.swing.JFrame {
         double fx1 = f(x1);
         double fx2 = f(x2);
         if (fx0 == 0) {
-            this.observacionesTxt.setText(x0 + " es una raiz");
+            showErrorMessage(x0 + " es una raiz");
         } else if (fx1 < 0) {
-            this.observacionesTxt.setText(x1 + " es una raiz");
+            showErrorMessage(x1 + " es una raiz");
         } else if (fx2 < 0) {
-            this.observacionesTxt.setText(x2 + " es una raiz");
+            showErrorMessage(x2 + " es una raiz");
         } else if (tole < 0) {
-            this.observacionesTxt.setText("La tolerancia debe ser mayor o igual a cero");
+            showErrorMessage("La tolerancia debe ser mayor o igual a cero");
         } else if (n <= 0) {
-            this.observacionesTxt.setText("Las iteraciones deben ser positivas");
+            showErrorMessage("Las iteraciones deben ser positivas");
         } else {
             int count = 1;
             int iterTabla = 3;
@@ -495,13 +522,13 @@ public class Muller extends javax.swing.JFrame {
             }
             
             if (fx1 == 0) {
-                this.observacionesTxt.setText(x1 + " es una raiz");
+                showErrorMessage("Se encontró una raíz en x =" + x2 + "\n\nIteraciones necesarias: " + iterTabla);
             } else if (error <= tole) {
-                this.observacionesTxt.setText(x1 + " se aproxima a una raíz debido a que el error " + error + " es menor o igual a la tolerancia " + tole);
+                showErrorMessage(x2 + " se aproxima a una raíz debido a que el error " + error + " es menor o igual a la tolerancia " + tole + "\n\n Y fue logrado en " + count + " iteraciones.");
             } else if (deno == 0) {
-                this.observacionesTxt.setText("Hay una posible raíz multiple");
+                showErrorMessage("Hay una posible raíz multiple");
             } else {
-                this.observacionesTxt.setText("El algoritmo fracasó en "+ count + " iteraciones");
+                showErrorMessage("El algoritmo fracasó en "+ count + " iteraciones");
             }
         }
     }
@@ -517,6 +544,7 @@ public class Muller extends javax.swing.JFrame {
     private javax.swing.JTextField dato2Txt;
     private javax.swing.JLabel functionLbl;
     private javax.swing.JTextField functionTxt;
+    private javax.swing.JButton infoBtn;
     private javax.swing.JTextField iteracionesTxt;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

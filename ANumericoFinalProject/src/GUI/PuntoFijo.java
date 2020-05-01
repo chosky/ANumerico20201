@@ -2,6 +2,8 @@ package GUI;
 
 import Parser.MathFunctionsParser;
 import java.awt.Color;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -54,6 +56,7 @@ public class PuntoFijo extends javax.swing.JFrame {
         functionGxTxt = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         puntoFijoTable = new javax.swing.JTable();
+        infoBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -171,6 +174,17 @@ public class PuntoFijo extends javax.swing.JFrame {
         puntoFijoTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(puntoFijoTable);
 
+        infoBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
+        infoBtn.setForeground(new java.awt.Color(1, 1, 1));
+        infoBtn.setText("?");
+        infoBtn.setToolTipText("");
+        infoBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 11, 255), 1, true));
+        infoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                infoBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -214,13 +228,15 @@ public class PuntoFijo extends javax.swing.JFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(calcularBtn)))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(iteracionesTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(iteracionesTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(108, 108, 108))
-                                    .addComponent(backBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(backBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(infoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addContainerGap())))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -231,14 +247,19 @@ public class PuntoFijo extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(titleLbl)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(valorInicialLbl)
-                    .addComponent(valorInicialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(toleranciaLbl)
-                    .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(titleLbl)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(valorInicialLbl)
+                            .addComponent(valorInicialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(toleranciaLbl)
+                            .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addComponent(infoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(iteracionesTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -309,6 +330,15 @@ public class PuntoFijo extends javax.swing.JFrame {
         this.clearTable();
         this.observacionesTxt.setText("OBSERVACIONES:");
     }//GEN-LAST:event_limpiarBtnActionPerformed
+
+    private void infoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoBtnActionPerformed
+        String informacion = "Es un método que busca una aproximación a la raíz por medio de una función g(x) la cual es obtenida despejando una x de la función original,";
+        informacion += "\n para saber si esta función es una buena función debe ser continua y estar definida en el intervalo definido,";
+        informacion += "\n durante este intervalo el valor absoluto de la derivada debe ser menor a uno(1) o en otras palabras debe ser suave,";
+        informacion += "\n los resultados de esta función se deben ir estabilizando (o convergiendo) en un valor el cual cada vez es más cercano a la raíz buscada,";
+        informacion += "\n y el error cada vez va acercándose más a cero (0).";
+        JOptionPane.showMessageDialog(this, informacion);
+    }//GEN-LAST:event_infoBtnActionPerformed
 
     private void clearTable() {
         DefaultTableModel bisectionTableModel = (DefaultTableModel) puntoFijoTable.getModel();
@@ -409,16 +439,18 @@ public class PuntoFijo extends javax.swing.JFrame {
     }
     
     private void showErrorMessage(String message) {
-        JOptionPane.showMessageDialog(this, message);
+        this.observacionesTxt.setText("");
+        this.observacionesTxt.setText(message);
     }
     
     private void fillTable(int n, double xn, double fxn, double err) {
         DefaultTableModel bisectionTableModel = (DefaultTableModel) puntoFijoTable.getModel();
+        NumberFormat numFormat = new DecimalFormat("0.##E0");
         Object[] row = new Object[4];
         row[0] = n;
         row[1] = xn;
-        row[2] = fxn;
-        row[3] = err;
+        row[2] = numFormat.format(fxn);
+        row[3] = numFormat.format(err);
         bisectionTableModel.addRow(row);
     }
     
@@ -435,14 +467,14 @@ public class PuntoFijo extends javax.swing.JFrame {
     private void metodoPuntoFijo(double x0, double tole, int iter) {
         double fx = f(x0);
         if(fx == 0) {
-            this.observacionesTxt.setText(x0 + " es una raiz");
+            showErrorMessage(x0 + " es una raiz");
         } else if (iter <= 0) {
-            this.observacionesTxt.setText("Las iteraciones deben ser positivas");
+            showErrorMessage("Las iteraciones deben ser positivas");
         } else if (tole < 0) {
-            this.observacionesTxt.setText("La tolerancia debe ser mayor o igual a cero");
+            showErrorMessage("La tolerancia debe ser mayor o igual a cero");
         } else {
             
-            double xn;
+            double xn = g(x0);
             int count = 1;
             double error = tole + 1;
             fillTable(0, x0, fx, error);
@@ -456,11 +488,11 @@ public class PuntoFijo extends javax.swing.JFrame {
                 fillTable(count, xn, fx, error);
             }
             if(fx == 0) {
-                this.observacionesTxt.setText(fx + " es una raiz");
+                showErrorMessage("Se encontró una raíz en x =" + xn + "\n\nIteraciones necesarias: " + count);
             } else if(error <= tole){
-                this.observacionesTxt.setText(fx + " se aproxima a una raíz debido a que el error es menor o igual a la tolerancia");
+                showErrorMessage(xn + " se aproxima a una raíz debido a que el error " + error + " es menor o igual a la tolerancia " + tole + "\n\n Y fue logrado en " + count + " iteraciones.");
             } else {
-                this.observacionesTxt.setText("Falló en "+ count + " iteraciones");
+                showErrorMessage("Falló en "+ count + " iteraciones");
             }
         }
     }
@@ -473,6 +505,7 @@ public class PuntoFijo extends javax.swing.JFrame {
     private javax.swing.JTextField functionGxTxt;
     private javax.swing.JLabel functionLbl;
     private javax.swing.JButton graficarFxBtn;
+    private javax.swing.JButton infoBtn;
     private javax.swing.JLabel iteracionesLbl;
     private javax.swing.JTextField iteracionesTxt;
     private javax.swing.JScrollPane jScrollPane1;

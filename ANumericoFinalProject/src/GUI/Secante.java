@@ -7,7 +7,10 @@ package GUI;
 
 import Parser.MathFunctionsParser;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 /**
  *
@@ -37,6 +40,7 @@ public class Secante extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dialog = new javax.swing.JFrame();
         titleLbl = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         initialValueLbl = new javax.swing.JLabel();
@@ -57,6 +61,18 @@ public class Secante extends javax.swing.JFrame {
         backBtn = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         observations = new javax.swing.JTextPane();
+        infoButton = new javax.swing.JButton();
+
+        javax.swing.GroupLayout dialogLayout = new javax.swing.GroupLayout(dialog.getContentPane());
+        dialog.getContentPane().setLayout(dialogLayout);
+        dialogLayout.setHorizontalGroup(
+            dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        dialogLayout.setVerticalGroup(
+            dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -254,6 +270,15 @@ public class Secante extends javax.swing.JFrame {
         observations.setToolTipText("");
         jScrollPane3.setViewportView(observations);
 
+        infoButton.setText("?");
+        infoButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        infoButton.setFocusable(false);
+        infoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                infoButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -262,17 +287,18 @@ public class Secante extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(infoButton))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(8, 8, 8)))
-                .addContainerGap())
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))))
+                .addGap(18, 18, 18))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -281,7 +307,11 @@ public class Secante extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(titleLbl)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(titleLbl)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(infoButton)))
                 .addGap(26, 26, 26)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -321,14 +351,15 @@ public class Secante extends javax.swing.JFrame {
         return true;
     }
     
-    private void fillTable (int n, double xm, double ym, double den, double error) {
+    private void fillTable (int n, double xm, double ym, double den , double error) {
+        NumberFormat numFormat = new DecimalFormat("0.##E0");
         DefaultTableModel bisectionTableModel = (DefaultTableModel) secantTable.getModel();
         Object[] row = new Object[5];
         row[0] = n;
         row[1] = xm;
-        row[2] = ym;
+        row[2] = numFormat.format(ym);
         row[3] = den;
-        row[4] = error;
+        row[4] = numFormat.format(error);
         bisectionTableModel.addRow(row);
     }
     
@@ -369,10 +400,10 @@ public class Secante extends javax.swing.JFrame {
               fillTable(count, x1, fx1, den, error);
           }
           if (fx1 == 0) {
-            this.observations.setText(x1 + " es una raiz");
+            this.observations.setText("Se encontró una raíz en x =" + x1 + "\n\nIteraciones necesarias: " + count);
           }
           else if (error <= tolerance) {
-            this.observations.setText(x1 + " se aproxima a una raíz debido a que el error " + error + " es menor o igual a la tolerancia " + tolerance);
+            this.observations.setText(x1 + " se aproxima a una raíz debido a que el error " + error + " es menor o igual a la tolerancia " + tolerance + "\n\n Y fue logrado en " + count + " iteraciones.");
           }
           else if (den == 0) {
             this.observations.setText("Hay una posible raíz multiple");
@@ -417,12 +448,18 @@ public class Secante extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
 
+    private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
+        JOptionPane.showMessageDialog(dialog, "Este método necesita dos valores iniciales X0 y X1 los cuales son los extremos de un intervalo\nque contiene una raíz.\n\nPero este método no esta clasificado entre los métodos que usa intervalos.\n\nAdemas también recibe iteraciones y tolerancia.\n\nPara calcular Xn en la tercera iteracion se usa la formula:\n\n\tg(Xn) = Xn - (f(Xn)(Xn-Xn-1)/f(Xn) - f(Xn-1)\n\nQue es la variación con respecto al método de newton\ny se puede tener en cuenta como una aproximación a la derivada\n\nAdemas de que este método puede divergir y no es de orden lineal si no super-lineal. ");
+    }//GEN-LAST:event_infoButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
     private javax.swing.JButton calculateBtn;
     private javax.swing.JButton cleanBtn;
+    private javax.swing.JFrame dialog;
     private javax.swing.JTextField functionInput;
     private javax.swing.JLabel functionLbl;
+    private javax.swing.JButton infoButton;
     private javax.swing.JLabel initialValueLbl;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

@@ -7,6 +7,9 @@ package GUI;
 
 import Parser.MathFunctionsParser;
 import java.awt.Color;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,6 +22,7 @@ public class Biseccion extends javax.swing.JFrame {
     private double _tolerance;
     private int _n;
     private final MathFunctionsParser function;
+
     /**
      * Creates new form Biseccion
      */
@@ -37,6 +41,7 @@ public class Biseccion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dialog = new javax.swing.JFrame();
         titleLbl = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         initialValueLbl = new javax.swing.JLabel();
@@ -57,6 +62,20 @@ public class Biseccion extends javax.swing.JFrame {
         backBtn = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         observations = new javax.swing.JTextPane();
+        javax.swing.JButton infoButton = new javax.swing.JButton();
+
+        dialog.setResizable(false);
+
+        javax.swing.GroupLayout dialogLayout = new javax.swing.GroupLayout(dialog.getContentPane());
+        dialog.getContentPane().setLayout(dialogLayout);
+        dialogLayout.setHorizontalGroup(
+            dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        dialogLayout.setVerticalGroup(
+            dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -249,25 +268,33 @@ public class Biseccion extends javax.swing.JFrame {
         observations.setToolTipText("");
         jScrollPane3.setViewportView(observations);
 
+        infoButton.setText("?");
+        infoButton.setFocusable(false);
+        infoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                infoButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
-                                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(8, 8, 8)))
+                .addContainerGap()
+                .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(infoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
+                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(18, 18, 18))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -276,7 +303,11 @@ public class Biseccion extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(titleLbl)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(titleLbl)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(infoButton)))
                 .addGap(26, 26, 26)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(59, 59, 59)
@@ -329,14 +360,15 @@ public class Biseccion extends javax.swing.JFrame {
     }
     
     private void fillTable (int n, double xi, double xs, double xm, double ym, double err) {
+        NumberFormat numFormat = new DecimalFormat("0.##E0");
         DefaultTableModel bisectionTableModel = (DefaultTableModel) bisectionTable.getModel();
         Object[] row = new Object[6];
         row[0] = n;
         row[1] = xi;
         row[2] = xs;
         row[3] = xm;
-        row[4] = ym;
-        row[5] = err;
+        row[4] = numFormat.format(ym);
+        row[5] = numFormat.format(err);
         bisectionTableModel.addRow(row);
     }
     
@@ -379,9 +411,9 @@ public class Biseccion extends javax.swing.JFrame {
             fillTable(count, xi, xs, xm, ym, error);
           }
           if(ym == 0) {
-              this.observations.setText(xm + " es una raiz");
+              this.observations.setText("Se encontró una raíz en x =" + xm + "\n\nIteraciones necesarias: " + count);
           } else if(error <= tolerance){
-              this.observations.setText(xm + " se aproxima a una raíz debido a que el error " + error + " es menor o igual a la tolerancia " + tolerance);
+              this.observations.setText(xm + " se aproxima a una raíz debido a que el error " + error + " es menor o igual a la tolerancia " + tolerance + "\n\n Y fue logrado en " + count + " iteraciones.");
           } else {
               this.observations.setText("Falló en "+ count + " iteraciones");
           }
@@ -414,11 +446,16 @@ public class Biseccion extends javax.swing.JFrame {
         this.observations.setText("OBSERVACIONES:");
     }//GEN-LAST:event_cleanBtnActionPerformed
 
+    private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
+        JOptionPane.showMessageDialog(dialog, "Es un método que busca hallar una raíz en un intervalo cerrado,\ncontinuo y con cambio de signo, que recibe un Xinicial un Xfinal y\ncantidad de iteraciones, ademas se calcula el valor medio entre Xinicial y Xfinal\ny por ultimo recibe una función, con estos datos lo que hace el método\nes dividir en dos partes iguales el intervalo, evaluar en cual mitad esta la raíz,\nesto lo hace evaluando en cual de ellas hay cambio de signo y volviendo mas pequeño\nel intervalo en cada iteración para encontrar la convergencia a un punto.");
+    }//GEN-LAST:event_infoButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
     private javax.swing.JTable bisectionTable;
     private javax.swing.JButton calculateBtn;
     private javax.swing.JButton cleanBtn;
+    private javax.swing.JFrame dialog;
     private javax.swing.JTextField functionInput;
     private javax.swing.JLabel functionLbl;
     private javax.swing.JLabel initialValueLbl;

@@ -4,6 +4,8 @@ import Parser.MathFunctionsParser;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 /**
  *
@@ -52,6 +54,7 @@ public class ReglaFalsa extends javax.swing.JFrame {
         observacionesTxt = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         reglaFalsaTable = new javax.swing.JTable();
+        javax.swing.JButton infoButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -167,6 +170,14 @@ public class ReglaFalsa extends javax.swing.JFrame {
         reglaFalsaTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(reglaFalsaTable);
 
+        infoButton.setText("?");
+        infoButton.setFocusable(false);
+        infoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                infoButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -179,36 +190,34 @@ public class ReglaFalsa extends javax.swing.JFrame {
                         .addComponent(jScrollPane1)
                         .addGap(18, 18, 18)
                         .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(limpiarBtn)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(174, 174, 174)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(limpiarBtn)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(174, 174, 174)
+                                .addComponent(toleranciaLbl)
+                                .addGap(5, 12, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(toleranciaLbl)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(33, 33, 33)
-                                                .addComponent(iteracionesLbl)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(iteracionesTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(24, 24, 24))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(titleLbl)
-                                                .addGap(117, 117, 117)))
-                                        .addGap(129, 129, 129))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(valorInicialLbl)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(valorInicialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(33, 33, 33)
-                                        .addComponent(valorFinalLbl)
-                                        .addGap(49, 49, 49)
-                                        .addComponent(valorFinalTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                        .addComponent(iteracionesLbl)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(iteracionesTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(24, 24, 24))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(titleLbl)
+                                        .addGap(117, 117, 117)))
+                                .addGap(82, 82, 82)
+                                .addComponent(infoButton))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(valorInicialLbl)
+                                .addGap(18, 18, 18)
+                                .addComponent(valorInicialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(33, 33, 33)
+                                .addComponent(valorFinalLbl)
+                                .addGap(49, 49, 49)
+                                .addComponent(valorFinalTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(212, 212, 212)
@@ -228,7 +237,9 @@ public class ReglaFalsa extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(titleLbl)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(titleLbl)
+                    .addComponent(infoButton))
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(valorInicialLbl)
@@ -299,6 +310,17 @@ public class ReglaFalsa extends javax.swing.JFrame {
         this.clearTable();
         this.observacionesTxt.setText("OBSERVACIONES:");
     }//GEN-LAST:event_limpiarBtnActionPerformed
+     
+    private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
+         JOptionPane.showMessageDialog(null,  " Para que el método de Regla falsa se deben asegurar dos cosas:\n \n" +
+                                              " La función debe de ser continua\n" +
+                                              " El intervalo que se va a usar debe de contener un cambio de signo\n\n" +
+                                              " Una vez este esto asegurado el método de regla falsa lo que busca \n es a partir de rectas secantes entre los puntos comienza a buscar \n la raíz convergiendo a esta a partir de la ecuación:\n" +
+                                              "\n" +
+                                              "            xm = xi - (f(xi)(xi-xu))/(f(xi)-f(xu))\n" +
+                                              "\n" +
+                                              " teniendo e cuenta que xi en la primera iteración es el valor inicial \n del intervalo [a] y xu el final del intervalo [b] pero posteriormente \n estas constantes cambian según el cambio de signo \n que se pueda encontrar en los nuevos intervalos.");
+    }//GEN-LAST:event_infoButtonActionPerformed
 
     private void clearTable() {
         DefaultTableModel bisectionTableModel = (DefaultTableModel) reglaFalsaTable.getModel();
@@ -384,14 +406,15 @@ public class ReglaFalsa extends javax.swing.JFrame {
     }
     
     private void fillTable(int n, double xi, double xs, double xm, double ym, double err) {
+        NumberFormat numFormat = new DecimalFormat("0.##E0");
         DefaultTableModel bisectionTableModel = (DefaultTableModel) reglaFalsaTable.getModel();
         Object[] row = new Object[6];
         row[0] = n;
         row[1] = xi;
         row[2] = xs;
         row[3] = xm;
-        row[4] = ym;
-        row[5] = err;
+        row[4] = numFormat.format(ym);
+        row[5] = numFormat.format(err);
         bisectionTableModel.addRow(row);
     }
     

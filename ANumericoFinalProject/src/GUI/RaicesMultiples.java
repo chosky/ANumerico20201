@@ -2,8 +2,10 @@ package GUI;
 
 import Parser.MathFunctionsParser;
 import java.awt.Color;
+import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.text.NumberFormat;
 
 /**
  *
@@ -58,6 +60,7 @@ public class RaicesMultiples extends javax.swing.JFrame {
         functionF2dxTxt = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         raicesMultiplesTable = new javax.swing.JTable();
+        javax.swing.JButton infoButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -181,10 +184,34 @@ public class RaicesMultiples extends javax.swing.JFrame {
         raicesMultiplesTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(raicesMultiplesTable);
 
+        infoButton.setText("?");
+        infoButton.setFocusable(false);
+        infoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                infoButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(155, 155, 155)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(valorInicialLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(valorInicialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(125, 125, 125)
+                        .addComponent(toleranciaLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(iteracionesLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(iteracionesTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,34 +241,21 @@ public class RaicesMultiples extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(titleLbl)
+                        .addGap(154, 154, 154)
+                        .addComponent(infoButton)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(155, 155, 155)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(valorInicialLbl)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(valorInicialTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(125, 125, 125)
-                        .addComponent(toleranciaLbl)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(toleranciaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(iteracionesLbl)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(iteracionesTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(titleLbl)
-                .addGap(207, 207, 207))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(titleLbl)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(titleLbl)
+                    .addComponent(infoButton))
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -327,6 +341,17 @@ public class RaicesMultiples extends javax.swing.JFrame {
         this.clearTable();
         this.observacionesTxt.setText("OBSERVACIONES:");
     }//GEN-LAST:event_limpiarBtnActionPerformed
+
+    private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
+        JOptionPane.showMessageDialog(null, " Para el método de raíces múltiples se basa en la multiplicidad \n de la función, esta se puede ver en el exponente de la función \n una ves esta es factorizada.\n" +
+                                            " Este método también es basado en Punto fijo y hay una variante \n basada en Newton y esta llegan a la conclusión que el cambio de \n g(x) es:\n" +
+                                            "   \n" +
+                                            "    g(x) = x - f(x)f'(x) / [(f'(x))^2 - f(x)f''(x)]\n" +
+                                            "\n" +
+                                            " El método se basa en las derivadas ya que el teorema nos dice que \n por cada vez que se deriva la función y se va reemplazando va \n a llegar un punto en que la n derivada no va a dar 0 gracias a esto \n se halla también la formula anteriormente propuesta.\n" +
+                                            "\n" +
+                                            " El método necesita la función, la derivada y la segunda derivada, \n la cantidad de iteraciones, la tolerancia para saber en que punto \n también parar y el punto inicial. ");
+    }//GEN-LAST:event_infoButtonActionPerformed
 
     private void clearTable() {
         DefaultTableModel bisectionTableModel = (DefaultTableModel) raicesMultiplesTable.getModel();
@@ -456,15 +481,16 @@ public class RaicesMultiples extends javax.swing.JFrame {
     }
     
     private void fillTable (int n, double xn, double fx, double fdx, double f2dx, double deno, double err) {
+        NumberFormat numFormat = new DecimalFormat("0.##E0");
         DefaultTableModel bisectionTableModel = (DefaultTableModel) raicesMultiplesTable.getModel();
         Object[] row = new Object[7];
         row[0] = n;
         row[1] = xn;
-        row[2] = fx;
-        row[3] = fdx;
-        row[4] = f2dx;
+        row[2] = numFormat.format(fx);
+        row[3] = numFormat.format(fdx);
+        row[4] = numFormat.format(f2dx);
         row[5] = deno;
-        row[6] = err;
+        row[6] = numFormat.format(err);
         bisectionTableModel.addRow(row);
     }
     

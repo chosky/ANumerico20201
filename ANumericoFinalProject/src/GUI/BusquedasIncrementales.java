@@ -10,7 +10,6 @@ import java.awt.Color;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,6 +23,7 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
      */
     
     MathFunctionsParser function = new MathFunctionsParser();
+    ContenedorEcuacion contenedor = ContenedorEcuacion.getContenedor();
     
     public BusquedasIncrementales() {
         
@@ -35,6 +35,9 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
         Object[] columns = {"N","X","f(x)"};
         model.setColumnIdentifiers(columns);
         table.setModel(model);
+        if(contenedor.getEcuacion()!=null){
+            functionTxt.setText(contenedor.getEcuacion());
+        }
     }
 
     /**
@@ -258,7 +261,8 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
         this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_backBtnActionPerformed
-
+    
+    
     private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
         // TODO add your handling code here:
         observations.setForeground(Color.black);
@@ -273,6 +277,9 @@ public class BusquedasIncrementales extends javax.swing.JFrame {
             busquedasIncrementales(valorinicial,incremento,totaliteraciones);
         } else {
             showErrorMessage("Favor corregir los datos ingresados");
+        }
+        if(func.equalsIgnoreCase(contenedor.getEcuacion())==false){
+            contenedor.setEcuacion(func);
         }
     }//GEN-LAST:event_calculateBtnActionPerformed
 

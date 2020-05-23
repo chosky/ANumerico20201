@@ -213,6 +213,7 @@ public final class IngresarEcuaciones extends javax.swing.JFrame {
             }
         }
         contenedor.setEcuaciones(ecuaciones);
+        imprimir();
         
         
     }//GEN-LAST:event_calculateBtnActionPerformed
@@ -226,6 +227,13 @@ public final class IngresarEcuaciones extends javax.swing.JFrame {
         creartabla();
     }//GEN-LAST:event_creartablaActionPerformed
     
+    public void imprimir(){
+        for(int filas = 0;filas < numecuaciones ; filas++){
+            for(int columnas = 0;columnas < numecuaciones+1;columnas++){
+                System.out.println(ecuaciones[filas][columnas]);
+            }
+        }
+    }
         
     public void creartabla(){
         panel.setLayout(new GridLayout(numecuaciones,numecuaciones+1));

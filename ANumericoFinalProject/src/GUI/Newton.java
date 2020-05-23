@@ -25,6 +25,7 @@ public class Newton extends javax.swing.JFrame {
     
     MathFunctionsParser function = new MathFunctionsParser();
     MathFunctionsParser derivatefunction = new MathFunctionsParser();
+    ContenedorEcuacion contenedor = ContenedorEcuacion.getContenedor();
     
     public Newton() {
         
@@ -36,6 +37,13 @@ public class Newton extends javax.swing.JFrame {
         Object[] columns = {"N","X","f(x)","f1(x)","Error"};
         model.setColumnIdentifiers(columns);
         table.setModel(model);
+        if(contenedor.getEcuacion()!=null){
+            functionTxt.setText(contenedor.ecuacion);
+       }
+        
+       if(contenedor.derivada1 != null){
+           derivatefunctiontxt.setText(contenedor.derivada1);
+       }
     }
 
     /**
@@ -305,6 +313,14 @@ public class Newton extends javax.swing.JFrame {
         } else {
             showErrorMessage("Porfavor verificar los datos de entrada");
         }
+        
+        if(contenedor.ecuacion.equalsIgnoreCase(func) == false){
+            contenedor.setEcuacion(func);
+        }
+        if(contenedor.derivada1.equalsIgnoreCase(derivadafun) == false){
+            contenedor.setDerivada1(derivadafun);
+        }
+        
     }//GEN-LAST:event_calculateBtnActionPerformed
 
     private void initialValueTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_initialValueTxtActionPerformed

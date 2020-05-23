@@ -149,7 +149,8 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_exitBtnActionPerformed
 
     private void solSisEcuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solSisEcuBtnActionPerformed
-        
+        SolucionDeSistemaDeEcuaciones solucionDeSistemaDeEcuaciones = new SolucionDeSistemaDeEcuaciones();
+        solucionDeSistemaDeEcuaciones.setVisible(true);
     }//GEN-LAST:event_solSisEcuBtnActionPerformed
 
     private void solEcuOneVarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solEcuOneVarBtnActionPerformed

@@ -62,6 +62,11 @@ public class Inicio extends javax.swing.JFrame {
         interpolationBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
         interpolationBtn.setForeground(new java.awt.Color(1, 1, 1));
         interpolationBtn.setText("INTERPOLACIÓN");
+        interpolationBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                interpolationBtnActionPerformed(evt);
+            }
+        });
 
         exitBtn.setBackground(new java.awt.Color(26, 118, 210));
         exitBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
@@ -162,6 +167,11 @@ public class Inicio extends javax.swing.JFrame {
         Informacion info = new Informacion();
         info.setVisible(true);
     }//GEN-LAST:event_informationBtnActionPerformed
+
+    private void interpolationBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_interpolationBtnActionPerformed
+        InterpolacionMenu interpolacion = new InterpolacionMenu();
+        interpolacion.setVisible(true);
+    }//GEN-LAST:event_interpolationBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel backgroundImg;

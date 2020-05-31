@@ -3,9 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/smith/Documentos/Numerico/ANumerico20201/ANumericoFinalProject/src/GUI/ReglaFalsa.java</file>
-            <file>file:/home/smith/Documentos/Numerico/ANumerico20201/ANumericoFinalProject/src/GUI/RaicesMultiples.java</file>
-            <file>file:/home/smith/Documentos/Numerico/ANumerico20201/ANumericoFinalProject/src/GUI/PuntoFijo.java</file>
+            <file>file:/C:/Users/Atabord/Desktop/Alejo/Universidad/20201/AnalisisNumerico/ANumerico20201/ANumericoFinalProject/src/Parser/MathFunctionsParser.java</file>
+            <file>file:/C:/Users/Atabord/Desktop/Alejo/Universidad/20201/AnalisisNumerico/ANumerico20201/ANumericoFinalProject/src/Parser/MathFunction.java</file>
+            <file>file:/C:/Users/Atabord/Desktop/Alejo/Universidad/20201/AnalisisNumerico/ANumerico20201/ANumericoFinalProject/src/GUI/IngresarEcuaciones.java</file>
+            <file>file:/C:/Users/Atabord/Desktop/Alejo/Universidad/20201/AnalisisNumerico/ANumerico20201/ANumericoFinalProject/src/SolucionDeSistemas/GaussMethods.java</file>
+            <file>file:/C:/Users/Atabord/Desktop/Alejo/Universidad/20201/AnalisisNumerico/ANumerico20201/ANumericoFinalProject/src/GUI/ContenedorEcuaciones.java</file>
+            <file>file:/C:/Users/Atabord/Desktop/Alejo/Universidad/20201/AnalisisNumerico/ANumerico20201/ANumericoFinalProject/src/GUI/SolucionDeSistemaDeEcuaciones.java</file>
+            <file>file:/C:/Users/Atabord/Desktop/Alejo/Universidad/20201/AnalisisNumerico/ANumerico20201/ANumericoFinalProject/src/GUI/Inicio.java</file>
+            <file>file:/C:/Users/Atabord/Desktop/Alejo/Universidad/20201/AnalisisNumerico/ANumerico20201/ANumericoFinalProject/src/GUI/TotalEcuaciones.java</file>
+            <file>file:/C:/Users/Atabord/Desktop/Alejo/Universidad/20201/AnalisisNumerico/ANumerico20201/ANumericoFinalProject/src/GUI/Secante.java</file>
+            <file>file:/C:/Users/Atabord/Desktop/Alejo/Universidad/20201/AnalisisNumerico/ANumerico20201/ANumericoFinalProject/src/GUI/GaussianaSimple.java</file>
         </group>
     </open-files>
 </project-private>

@@ -87,7 +87,7 @@ public class SolucionDeSistemaDeEcuaciones extends javax.swing.JFrame {
         biseccionBtn.setBackground(new java.awt.Color(0, 149, 136));
         biseccionBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
         biseccionBtn.setForeground(new java.awt.Color(1, 1, 1));
-        biseccionBtn.setText("BISECCIÓN");
+        biseccionBtn.setText("GAUSSIANA SIMPLE");
         biseccionBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
         biseccionBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -175,12 +175,12 @@ public class SolucionDeSistemaDeEcuaciones extends javax.swing.JFrame {
         title1Lbl.setBackground(new java.awt.Color(254, 254, 254));
         title1Lbl.setFont(new java.awt.Font("Lato Black", 1, 30)); // NOI18N
         title1Lbl.setForeground(new java.awt.Color(1, 1, 1));
-        title1Lbl.setText("SOLUCIÓN DE ECUACIONES");
+        title1Lbl.setText("SOLUCIÓN DE SISTEMAS");
 
         title2Lbl.setBackground(new java.awt.Color(254, 254, 254));
         title2Lbl.setFont(new java.awt.Font("Lato Black", 1, 30)); // NOI18N
         title2Lbl.setForeground(new java.awt.Color(1, 1, 1));
-        title2Lbl.setText("DE UNA VARIABLE");
+        title2Lbl.setText("DE ECUACIONES");
 
         backgroundImg.setForeground(new java.awt.Color(1, 1, 1));
 
@@ -189,37 +189,37 @@ public class SolucionDeSistemaDeEcuaciones extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(99, 99, 99)
-                .addComponent(title2Lbl)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
+                            .addComponent(plotterBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(newtonBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(biseccionBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(plotterBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(newtonBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(biseccionBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(secanteBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(busquedaIncrementalBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(reglaFalsaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(secanteBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(busquedaIncrementalBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(reglaFalsaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(evaluatorBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(puntoFijoBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(raicesMultiplesBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(backBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(title1Lbl)))
-                    .addComponent(backgroundImg))
+                                    .addComponent(evaluatorBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(puntoFijoBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(raicesMultiplesBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(backBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(backgroundImg)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(title1Lbl)))
                 .addGap(0, 36, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(121, 121, 121)
+                .addComponent(title2Lbl)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,24 +259,14 @@ public class SolucionDeSistemaDeEcuaciones extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_backBtnActionPerformed
 
-    private void plotterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plotterBtnActionPerformed
-        TotalEcuaciones totalecuacuaciones = new TotalEcuaciones();
-        totalecuacuaciones.setVisible(true);
-    }//GEN-LAST:event_plotterBtnActionPerformed
-
     private void evaluatorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_evaluatorBtnActionPerformed
         Evaluator evaluator = new Evaluator();
         evaluator.setVisible(true);
     }//GEN-LAST:event_evaluatorBtnActionPerformed
 
-    private void busquedaIncrementalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busquedaIncrementalBtnActionPerformed
-        BusquedasIncrementales busquedaIncremental = new BusquedasIncrementales();
-        busquedaIncremental.setVisible(true);
-    }//GEN-LAST:event_busquedaIncrementalBtnActionPerformed
-
     private void biseccionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_biseccionBtnActionPerformed
-        Biseccion biseccion = new Biseccion();
-        biseccion.setVisible(true);
+        GaussianaSimple gaussianaSimple = new GaussianaSimple();
+        gaussianaSimple.setVisible(true);
     }//GEN-LAST:event_biseccionBtnActionPerformed
                                      
 
@@ -310,6 +300,16 @@ public class SolucionDeSistemaDeEcuaciones extends javax.swing.JFrame {
         Muller muller = new Muller();
         muller.setVisible(true);
     }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void busquedaIncrementalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busquedaIncrementalBtnActionPerformed
+        BusquedasIncrementales busquedaIncremental = new BusquedasIncrementales();
+        busquedaIncremental.setVisible(true);
+    }//GEN-LAST:event_busquedaIncrementalBtnActionPerformed
+
+    private void plotterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plotterBtnActionPerformed
+        TotalEcuaciones totalecuacuaciones = new TotalEcuaciones();
+        totalecuacuaciones.setVisible(true);
+    }//GEN-LAST:event_plotterBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;

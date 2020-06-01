@@ -23,20 +23,15 @@ public final class Escalonado extends javax.swing.JFrame {
     
     
     BigDecimal [][]ecuaciones;
-    List<JTextField>input;
-    int indice,numecuaciones;
-    ContenedorEcuaciones contenedor;
     String print = "";
     int mayoresFilas[];
 
     
     public Escalonado() {
-        this.input = new ArrayList<>();
-        indice = 0;
-        this.setTitle("Lectura de ecuaciones");
+        this.setTitle("Pivoteo Escalonado");
         this.setResizable(true);
         this.getContentPane().setBackground(Color.WHITE);
-        contenedor = ContenedorEcuaciones.getContenedor();
+        ecuaciones = ContenedorEcuaciones.getContenedor().getEcuaciones();
         initComponents();
     }
 
@@ -56,8 +51,6 @@ public final class Escalonado extends javax.swing.JFrame {
         cleanBtn = new javax.swing.JButton();
         info = new javax.swing.JButton();
         PanelContainer = new javax.swing.JScrollPane();
-        panel = new javax.swing.JPanel();
-        creartabla = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         ShowSteps = new javax.swing.JTextPane();
 
@@ -75,7 +68,7 @@ public final class Escalonado extends javax.swing.JFrame {
         titleLbl.setBackground(new java.awt.Color(254, 254, 254));
         titleLbl.setFont(new java.awt.Font("Lato Black", 1, 35)); // NOI18N
         titleLbl.setForeground(new java.awt.Color(1, 1, 1));
-        titleLbl.setText("Lector de ecuaciones");
+        titleLbl.setText("Pivoteo Escalonado");
 
         backBtn.setBackground(new java.awt.Color(26, 118, 210));
         backBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
@@ -91,7 +84,7 @@ public final class Escalonado extends javax.swing.JFrame {
         calculateBtn.setBackground(new java.awt.Color(0, 149, 136));
         calculateBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
         calculateBtn.setForeground(new java.awt.Color(1, 1, 1));
-        calculateBtn.setText("LEER");
+        calculateBtn.setText("Ejecutar");
         calculateBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
         calculateBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,30 +113,6 @@ public final class Escalonado extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
-        panel.setLayout(panelLayout);
-        panelLayout.setHorizontalGroup(
-            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 584, Short.MAX_VALUE)
-        );
-        panelLayout.setVerticalGroup(
-            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
-        );
-
-        PanelContainer.setViewportView(panel);
-
-        creartabla.setBackground(new java.awt.Color(0, 149, 136));
-        creartabla.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
-        creartabla.setForeground(new java.awt.Color(1, 1, 1));
-        creartabla.setText("Crear Tabla");
-        creartabla.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
-        creartabla.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                creartablaActionPerformed(evt);
-            }
-        });
-
         jScrollPane1.setViewportView(ShowSteps);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -151,28 +120,25 @@ public final class Escalonado extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addComponent(PanelContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(creartabla, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane1)
+                                .addGap(6, 6, 6))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
                                 .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(cleanBtn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 221, Short.MAX_VALUE)
                                 .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(41, 41, 41))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(PanelContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jScrollPane1)))
+                                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -181,19 +147,21 @@ public final class Escalonado extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(titleLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PanelContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(creartabla, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cleanBtn))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(PanelContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cleanBtn))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(27, 27, 27))))
         );
 
         pack();
@@ -206,70 +174,18 @@ public final class Escalonado extends javax.swing.JFrame {
 
     private void infoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(dialog, "En la siguiente ventana porfavor dar click en crear tabla para generar las entradas para las variables \n"
-                + "favor tener en cuenta que las variables se ingresan de izquierda a derecha siendo la casilla mas a la \n izquierda el valor de Xn y el de mas a la derecha el valor despues del =");
+        JOptionPane.showMessageDialog(dialog, "Este metodo realiza el pivoteo escalonado con la matriz ingresada en el metodo ingresar matrices");
     }//GEN-LAST:event_infoActionPerformed
 
     private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
-
-        /*for(int i = 0;i<input.size();i++){
-            ecuaciones.add(input.get(i).getText());
-        }*/
-        System.out.println("total ecuaciones: "+input.size()+" tamaño matriz: "+(numecuaciones*(numecuaciones+1)));
-        int cont = 0;
-        for(int filas = 0;filas < numecuaciones ; filas++){
-            for(int columnas = 0;columnas < numecuaciones+1;columnas++){
-                ecuaciones[filas][columnas] = BigDecimal.valueOf(Double.valueOf(input.get(cont).getText()));
-                cont++;
-            }
-        }
-        contenedor.setEcuaciones(ecuaciones);
-        imprimir();
-        
-        
+ 
     }//GEN-LAST:event_calculateBtnActionPerformed
 
     private void cleanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanBtnActionPerformed
-
+        ShowSteps.setText("");
     }//GEN-LAST:event_cleanBtnActionPerformed
-
-    private void creartablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creartablaActionPerformed
-        // TODO add your handling code here:
-        creartabla();
-    }//GEN-LAST:event_creartablaActionPerformed
     
-    public void imprimir(){
-        for(int filas = 0;filas < numecuaciones ; filas++){
-            for(int columnas = 0;columnas < numecuaciones+1;columnas++){
-                if(columnas < 1){
-                    print += String.valueOf(ecuaciones[filas][columnas]+"x"+(numecuaciones-1));
-                }else{
-                    if(columnas <= numecuaciones-1){
-                        print += String.valueOf(" + "+ecuaciones[filas][columnas]+"x"+(numecuaciones-1-columnas));
-                    }else{
-                        print += String.valueOf(" = "+ecuaciones[filas][columnas] +"\n");
-                    }
-                    
-                }
-            }
-        }
-        ShowSteps.setText(print);
-    }
-        
-    public void creartabla(){
-        if(input.isEmpty()){
-            panel.setLayout(new GridLayout(numecuaciones,numecuaciones+1));
-            panel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-            for(int i = 0; i < numecuaciones*(numecuaciones+1);i++){
-                JTextField ecuacion = new JTextField();
-                panel.add(ecuacion);
-                input.add(ecuacion);
-            }
-            panel.updateUI();
-            ecuaciones = new BigDecimal[numecuaciones][numecuaciones+1];
-        }
-        
-    }
+     
     
     public void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
@@ -306,7 +222,7 @@ public final class Escalonado extends javax.swing.JFrame {
     
     public void pivoteoEscalonado(BigDecimal[][]Ab, int n){
         hallarMayoresFilas(Ab, n);
-        for(int i = 0;i<n;i++){
+        for(int i = 0;i<n-1;i++){
             Ab= ordenamientoMatrizPivoteoEscalonado(Ab,n,i);
             Ab = reduccion(Ab,n,i);
         }
@@ -314,8 +230,8 @@ public final class Escalonado extends javax.swing.JFrame {
     public void hallarMayoresFilas(BigDecimal[][]Ab, int n){
         mayoresFilas = new int[n-1];
         int i = 0;
-        for(int r = 0; r < n; r++){
-            for(int s = 0;s<=n;s++){
+        for(int r = 0; r < n-1; r++){
+            for(int s = 0;s<n;s++){
                 if(Math.abs(Ab[r][s].doubleValue())>mayoresFilas[i]){
                     mayoresFilas[i]=Math.abs(Ab[r][s].intValue());
                 }
@@ -342,6 +258,7 @@ public final class Escalonado extends javax.swing.JFrame {
         for(int k = p;p<n-1;k++){
             if(Ab[k][k].intValue()==0){
                 imprimir("El sistema tiene infinitas soluciones");
+                break;
             }
             for(int i = k+1;i<n;i++){
                 multiplicador = Ab[i][k].doubleValue()/Ab[k][k].doubleValue();
@@ -354,7 +271,9 @@ public final class Escalonado extends javax.swing.JFrame {
     }
     
     public void imprimir(String str){
-        
+        print = ShowSteps.getText();
+        print+=str;
+        ShowSteps.setText(print);
     }
    
     
@@ -364,11 +283,9 @@ public final class Escalonado extends javax.swing.JFrame {
     private javax.swing.JButton backBtn;
     private javax.swing.JButton calculateBtn;
     private javax.swing.JButton cleanBtn;
-    private javax.swing.JButton creartabla;
     private javax.swing.JDialog dialog;
     private javax.swing.JButton info;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel panel;
     private javax.swing.JLabel titleLbl;
     // End of variables declaration//GEN-END:variables
 }

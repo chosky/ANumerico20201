@@ -360,7 +360,8 @@ public class SolucionDeSistemaDeEcuaciones extends javax.swing.JFrame {
     }//GEN-LAST:event_croultBtnActionPerformed
 
     private void escalonadoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_escalonadoBtnActionPerformed
-
+        Escalonado escalonado = new Escalonado();
+        escalonado.setVisible(true);
     }//GEN-LAST:event_escalonadoBtnActionPerformed
 
     private void luPivoteoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_luPivoteoBtnActionPerformed

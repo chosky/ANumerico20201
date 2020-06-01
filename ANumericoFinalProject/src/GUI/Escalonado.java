@@ -18,7 +18,7 @@ import javax.swing.JTextField;
  *
  * @author Amboraes 
  */
-public final class IngresarEcuaciones extends javax.swing.JFrame {
+public final class Escalonado extends javax.swing.JFrame {
 
     
     
@@ -27,12 +27,12 @@ public final class IngresarEcuaciones extends javax.swing.JFrame {
     int indice,numecuaciones;
     ContenedorEcuaciones contenedor;
     String print = "";
+    int mayoresFilas[];
 
     
-    public IngresarEcuaciones(int totalecu) {
+    public Escalonado() {
         this.input = new ArrayList<>();
         indice = 0;
-        this.numecuaciones = totalecu;
         this.setTitle("Lectura de ecuaciones");
         this.setResizable(true);
         this.getContentPane().setBackground(Color.WHITE);
@@ -257,7 +257,7 @@ public final class IngresarEcuaciones extends javax.swing.JFrame {
     }
         
     public void creartabla(){
-        if(input.size()==0){
+        if(input.isEmpty()){
             panel.setLayout(new GridLayout(numecuaciones,numecuaciones+1));
             panel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
             for(int i = 0; i < numecuaciones*(numecuaciones+1);i++){
@@ -275,7 +275,87 @@ public final class IngresarEcuaciones extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, message);
     }
     
+    public BigDecimal[][] ordenamientoMatrizPivoteoEscalonado(BigDecimal[][] Ab, int n, int k){
+        int mayorDividido[] = new int[(n-1)-k];
+        for(int i = 0; i < n-1-k;i++){
+            mayorDividido[i] = (int) (Math.abs(Ab[i+k][k].doubleValue())/mayoresFilas[i+k]);
+        }
+        int posmayor = max(mayorDividido);
+        Ab = intercambiarFilas(Ab,posmayor,k);
+        return Ab;
+    }
+    
+    public int max(int[] arr){
+        int max = arr[0];
+        int indice = 0;
+        for(int i = 1 ; i < arr.length;i++){
+            if(arr[i]>max){
+                max = arr[i];
+                indice = i;
+            }
+        }
+        return indice;
+    }
    
+    public BigDecimal[][] intercambiarFilas(BigDecimal[][] Ab,int posmayor, int k){
+        BigDecimal[] filatemporal = Ab[posmayor];
+        Ab[posmayor] = Ab[k];
+        Ab[k] = filatemporal;
+        return Ab;
+    }
+    
+    public void pivoteoEscalonado(BigDecimal[][]Ab, int n){
+        hallarMayoresFilas(Ab, n);
+        for(int i = 0;i<n;i++){
+            Ab= ordenamientoMatrizPivoteoEscalonado(Ab,n,i);
+            Ab = reduccion(Ab,n,i);
+        }
+    }
+    public void hallarMayoresFilas(BigDecimal[][]Ab, int n){
+        mayoresFilas = new int[n-1];
+        int i = 0;
+        for(int r = 0; r < n; r++){
+            for(int s = 0;s<=n;s++){
+                if(Math.abs(Ab[r][s].doubleValue())>mayoresFilas[i]){
+                    mayoresFilas[i]=Math.abs(Ab[r][s].intValue());
+                }
+            }
+            i++;
+        }
+    }
+    
+    public void sustitución(BigDecimal[][]Ab, int n){
+        BigDecimal X[] = new BigDecimal[n];
+        int acumulador;
+        for( int i = n-1;i>0;i--){
+           acumulador = 0;
+           for(int p = i+1;p<n;p++){
+               acumulador += Ab[i][p].intValue()*X[p].intValue();
+           }
+           X[i] = BigDecimal.valueOf((Ab[i][n+1].intValue()-acumulador)/Ab[i][i].intValue());
+           imprimir("X"+(i+1)+"="+X[i]);
+        }
+    }
+    
+    public BigDecimal[][] reduccion(BigDecimal[][]Ab,int n,int p){
+        double multiplicador = 0;
+        for(int k = p;p<n-1;k++){
+            if(Ab[k][k].intValue()==0){
+                imprimir("El sistema tiene infinitas soluciones");
+            }
+            for(int i = k+1;i<n;i++){
+                multiplicador = Ab[i][k].doubleValue()/Ab[k][k].doubleValue();
+                for(int j = k;j<n+1;j++){
+                    Ab[i][j] = BigDecimal.valueOf(Ab[i][j].doubleValue()-multiplicador*Ab[k][j].intValue());
+                }
+            }
+        }
+        return Ab;
+    }
+    
+    public void imprimir(String str){
+        
+    }
    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

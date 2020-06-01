@@ -351,7 +351,8 @@ public class SolucionDeSistemaDeEcuaciones extends javax.swing.JFrame {
                                      
 
     private void doolittleBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doolittleBtnActionPerformed
-
+        Doolittle doolittle = new Doolittle();
+        doolittle.setVisible(true);
     }//GEN-LAST:event_doolittleBtnActionPerformed
 
     private void croultBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_croultBtnActionPerformed

@@ -6,19 +6,14 @@
 package GUI;
 
 import java.awt.Color;
-import java.awt.ComponentOrientation;
-import java.awt.GridLayout;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 /**
  *
  * @author Amboraes 
  */
-public final class Escalonado extends javax.swing.JFrame {
+public final class Doolittle extends javax.swing.JFrame {
 
     
     
@@ -27,8 +22,8 @@ public final class Escalonado extends javax.swing.JFrame {
     int mayoresFilas[];
 
     
-    public Escalonado() {
-        this.setTitle("Pivoteo Escalonado");
+    public Doolittle() {
+        this.setTitle("Doolittle");
         this.setResizable(true);
         this.getContentPane().setBackground(Color.WHITE);
         ecuaciones = ContenedorEcuaciones.getContenedor().getEcuaciones();
@@ -68,7 +63,7 @@ public final class Escalonado extends javax.swing.JFrame {
         titleLbl.setBackground(new java.awt.Color(254, 254, 254));
         titleLbl.setFont(new java.awt.Font("Lato Black", 1, 35)); // NOI18N
         titleLbl.setForeground(new java.awt.Color(1, 1, 1));
-        titleLbl.setText("Pivoteo Escalonado");
+        titleLbl.setText("Doolittle");
 
         backBtn.setBackground(new java.awt.Color(26, 118, 210));
         backBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
@@ -178,12 +173,7 @@ public final class Escalonado extends javax.swing.JFrame {
     }//GEN-LAST:event_infoActionPerformed
 
     private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
-        if(ecuaciones==null){
-            showErrorMessage("Porfavor ingrese primero una matriz en el metodo de ingresar matriz");
-        }else{
-            pivoteoEscalonado(ecuaciones, ecuaciones.length);
-        }
-        
+ 
     }//GEN-LAST:event_calculateBtnActionPerformed
 
     private void cleanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanBtnActionPerformed

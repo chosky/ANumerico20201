@@ -10,7 +10,6 @@ import java.awt.Color;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**

@@ -15,6 +15,10 @@ public class ContenedorEcuacion {
     private static ContenedorEcuacion contenedor;
 
     private ContenedorEcuacion() {
+        ecuacion = "";
+        derivada1 = "";
+        derivada2 = "";
+        derivada3 = "";
     }
 
     public String getEcuacion() {

@@ -4,12 +4,12 @@ package GUI;
  *
  * @author Jose David Henao Ocampo
  */
-public class SplinesLineal extends javax.swing.JFrame {
+public class SplinesCuardado extends javax.swing.JFrame {
 
     /**
      * Creates new form SplinesLineal
      */
-    public SplinesLineal() {
+    public SplinesCuardado() {
         initComponents();
     }
 
@@ -26,7 +26,7 @@ public class SplinesLineal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Spline Lineal");
+        jLabel1.setText("Splina cuadrado");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

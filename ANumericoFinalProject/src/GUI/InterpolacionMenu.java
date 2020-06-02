@@ -15,7 +15,10 @@ public class InterpolacionMenu extends javax.swing.JFrame {
      * Creates new form InterpolacionMenu
      */
     public InterpolacionMenu() {
+        this.setResizable(false);
+        this.setTitle("Interpolación");
         initComponents();
+        
     }
 
     /**
@@ -221,7 +224,8 @@ public class InterpolacionMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_nevilleBtnActionPerformed
 
     private void newtonBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newtonBtnActionPerformed
-        
+        Newton newton = new Newton();
+        newton.setVisible(true);
     }//GEN-LAST:event_newtonBtnActionPerformed
 
     private void cuadraticoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cuadraticoBtnActionPerformed

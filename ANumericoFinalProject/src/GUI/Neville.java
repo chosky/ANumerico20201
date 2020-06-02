@@ -1,16 +1,20 @@
 package GUI;
-
+import SolucionDeSistemas.GaussMethods;
+import java.math.BigDecimal;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Smith Alexis Carvajal Orozco
  */
 public class Neville extends javax.swing.JFrame {
-
+    private final ContenedorEcuaciones contenedor;
     /**
      * Creates new form Neville
      */
     public Neville() {
         initComponents();
+        contenedor = ContenedorEcuaciones.getContenedor();
     }
 
     /**
@@ -22,22 +26,207 @@ public class Neville extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane3 = new javax.swing.JScrollPane();
+        observations = new javax.swing.JTextPane();
+        backBtn = new javax.swing.JButton();
+        cleanBtn = new javax.swing.JButton();
+        titleLbl = new javax.swing.JLabel();
+        infoButton = new javax.swing.JButton();
+        ecuacionesBtn = new javax.swing.JButton();
+        calculateBtn = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        gaussTable = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(675, 610));
+
+        observations.setEditable(false);
+        observations.setText("OBSERVACIONES:");
+        observations.setToolTipText("");
+        jScrollPane3.setViewportView(observations);
+
+        backBtn.setBackground(new java.awt.Color(26, 118, 210));
+        backBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
+        backBtn.setForeground(new java.awt.Color(1, 1, 1));
+        backBtn.setText("ATRAS");
+        backBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
+
+        cleanBtn.setBackground(new java.awt.Color(0, 149, 136));
+        cleanBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
+        cleanBtn.setForeground(new java.awt.Color(1, 1, 1));
+        cleanBtn.setText("LIMPIAR");
+        cleanBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        cleanBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cleanBtnActionPerformed(evt);
+            }
+        });
+
+        titleLbl.setBackground(new java.awt.Color(254, 254, 254));
+        titleLbl.setFont(new java.awt.Font("Lato Black", 1, 35)); // NOI18N
+        titleLbl.setForeground(new java.awt.Color(1, 1, 1));
+        titleLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleLbl.setText("NEVILLE");
+        titleLbl.setToolTipText("");
+
+        infoButton.setText("?");
+        infoButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        infoButton.setFocusable(false);
+        infoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                infoButtonActionPerformed(evt);
+            }
+        });
+
+        ecuacionesBtn.setBackground(new java.awt.Color(0, 149, 136));
+        ecuacionesBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
+        ecuacionesBtn.setForeground(new java.awt.Color(1, 1, 1));
+        ecuacionesBtn.setText("INGRESAR DATOS");
+        ecuacionesBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        ecuacionesBtn.setFocusable(false);
+        ecuacionesBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ecuacionesBtnActionPerformed(evt);
+            }
+        });
+
+        calculateBtn.setBackground(new java.awt.Color(0, 149, 136));
+        calculateBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
+        calculateBtn.setForeground(new java.awt.Color(1, 1, 1));
+        calculateBtn.setText("CALCULAR");
+        calculateBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        calculateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calculateBtnActionPerformed(evt);
+            }
+        });
+
+        gaussTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        gaussTable.setColumnSelectionAllowed(true);
+        gaussTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(gaussTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(ecuacionesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(titleLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(infoButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cleanBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(titleLbl)
+                    .addComponent(infoButton))
+                .addGap(54, 54, 54)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ecuacionesBtn)
+                    .addComponent(calculateBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cleanBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backBtn, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void clearTable() {
+        DefaultTableModel bisectionTableModel = (DefaultTableModel) gaussTable.getModel();
+        bisectionTableModel.setRowCount(0);
+    }
+    
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_backBtnActionPerformed
+
+    private void cleanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanBtnActionPerformed
+        this.clearTable();
+        this.observations.setText("OBSERVACIONES:");
+    }//GEN-LAST:event_cleanBtnActionPerformed
+
+    private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
+        JOptionPane.showMessageDialog(this, "El método de pivoteo parcial lo que busca en cada iteración de la matriz es encontrar \n"
+            +                           "el número más \"grande\" (el número mayor sacando su valor absoluto) de cada fila y así \n"
+            +                           "definir el nuevo orden de la matriz estableciendo esta fila como primera, se tiene en \n"
+            +                           "cuenta que este número a encontrar debe estar en el punto de la diagonal que se está \n"
+            +                           "analizando, sin tener en cuenta en anterior previamente solucionado.\n" +
+            "Luego de hacer la búsqueda se trabaja la matriz sacando sus multiplicadores y haciendo \n"
+            +                           "el método de Gauss simple, pero, por cada iteración de solución de la matriz vuelve y se\n"
+            +                           "encuentra su número mayor absoluto en la fila de la diagonal que se está analizando.\n" +
+            "Se sigue este proceso hasta dar solución de la matriz.\n" +
+            "Este método busca reducir el error de propagación al tener como divisor del multiplicador\n"
+            +                            "número grande.");
+    }//GEN-LAST:event_infoButtonActionPerformed
+
+    private void ecuacionesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ecuacionesBtnActionPerformed
+        TotalEcuaciones totalecuacuaciones = new TotalEcuaciones();
+        totalecuacuaciones.setVisible(true);
+    }//GEN-LAST:event_ecuacionesBtnActionPerformed
+
+    private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
+        try {
+            BigDecimal[][] ecuaciones = contenedor.getEcuaciones();
+        } catch(Exception e) {
+            System.out.println(e.toString());
+        }
+    }//GEN-LAST:event_calculateBtnActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backBtn;
+    private javax.swing.JButton calculateBtn;
+    private javax.swing.JButton cleanBtn;
+    private javax.swing.JButton ecuacionesBtn;
+    private javax.swing.JTable gaussTable;
+    private javax.swing.JButton infoButton;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextPane observations;
+    private javax.swing.JLabel titleLbl;
     // End of variables declaration//GEN-END:variables
 }

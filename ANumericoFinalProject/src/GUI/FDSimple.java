@@ -70,7 +70,7 @@ public class FDSimple extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(1, 1, 1));
-        jLabel1.setText("Solucion por pivoteo parcial");
+        jLabel1.setText("Solucion por gaussiana simple");
 
         backBtn.setBackground(new java.awt.Color(26, 118, 210));
         backBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N

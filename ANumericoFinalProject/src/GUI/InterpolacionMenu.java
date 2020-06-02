@@ -224,7 +224,7 @@ public class InterpolacionMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_nevilleBtnActionPerformed
 
     private void newtonBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newtonBtnActionPerformed
-        Newton newton = new Newton();
+        InterpolacionNewton newton = new InterpolacionNewton();
         newton.setVisible(true);
     }//GEN-LAST:event_newtonBtnActionPerformed
 

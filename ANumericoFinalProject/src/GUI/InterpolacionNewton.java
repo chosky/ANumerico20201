@@ -59,16 +59,6 @@ public final class InterpolacionNewton extends javax.swing.JFrame {
         titleLbl.setBackground(new java.awt.Color(254, 254, 254));
         titleLbl.setFont(new java.awt.Font("Lato Black", 1, 35)); // NOI18N
         titleLbl.setForeground(new java.awt.Color(1, 1, 1));
-<<<<<<< HEAD
-        titleLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleLbl.setText("INTERPOLACIÓN NEWTON");
-        titleLbl.setToolTipText("");
-
-        infoButton.setText("?");
-        infoButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        infoButton.setFocusable(false);
-        infoButton.addActionListener(new java.awt.event.ActionListener() {
-=======
         titleLbl.setText("Interpolación Newton");
 
         backBtn.setBackground(new java.awt.Color(26, 118, 210));
@@ -77,7 +67,6 @@ public final class InterpolacionNewton extends javax.swing.JFrame {
         backBtn.setText("ATRAS");
         backBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
         backBtn.addActionListener(new java.awt.event.ActionListener() {
->>>>>>> 9d4738a597a945619eb623c3593431421c01c0a6
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 infoButtonActionPerformed(evt);
             }

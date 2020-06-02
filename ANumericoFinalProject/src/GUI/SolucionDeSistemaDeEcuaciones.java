@@ -19,7 +19,7 @@ public class SolucionDeSistemaDeEcuaciones extends javax.swing.JFrame {
     public SolucionDeSistemaDeEcuaciones() {
         
         this.setTitle("Solucion De Sistema De Ecuaciones");
-        this.setResizable(true);
+        this.setResizable(false);
         this.getContentPane().setBackground(Color.WHITE);
         initComponents();
     }
@@ -351,11 +351,12 @@ public class SolucionDeSistemaDeEcuaciones extends javax.swing.JFrame {
                                      
 
     private void doolittleBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doolittleBtnActionPerformed
-
+        Doolittle doolittle = new Doolittle();
+        doolittle.setVisible(true);
     }//GEN-LAST:event_doolittleBtnActionPerformed
 
     private void croultBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_croultBtnActionPerformed
-        Croult croult = new Croult();
+        Crout croult = new Crout();
         croult.setVisible(true);
     }//GEN-LAST:event_croultBtnActionPerformed
 

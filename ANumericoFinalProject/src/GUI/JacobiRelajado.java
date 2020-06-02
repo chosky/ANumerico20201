@@ -1,16 +1,25 @@
 package GUI;
 
+import java.math.BigDecimal;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Smith Alexis Carvajal Orozco
  */
 public class JacobiRelajado extends javax.swing.JFrame {
 
+    private final ContenedorEcuaciones contenedor;
+    
     /**
      * Creates new form JacobiRelajado
      */
     public JacobiRelajado() {
+        this.setResizable(false);
+        this.setTitle("Jacobi Relajado");
         initComponents();
+        contenedor = ContenedorEcuaciones.getContenedor();
     }
 
     /**
@@ -22,23 +31,222 @@ public class JacobiRelajado extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        backBtn = new javax.swing.JButton();
+        titleLbl = new javax.swing.JLabel();
+        infoButton = new javax.swing.JButton();
+        lamdaLbl = new javax.swing.JLabel();
+        lamdaTxt = new javax.swing.JTextField();
+        calculateBtn1 = new javax.swing.JButton();
+        ecuacionesBtn1 = new javax.swing.JButton();
+        cleanBtn1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        gaussSidelRelajadoTable = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        observations = new javax.swing.JTextPane();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        backBtn.setBackground(new java.awt.Color(26, 118, 210));
+        backBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
+        backBtn.setForeground(new java.awt.Color(1, 1, 1));
+        backBtn.setText("ATRAS");
+        backBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
+
+        titleLbl.setBackground(new java.awt.Color(254, 254, 254));
+        titleLbl.setFont(new java.awt.Font("Lato Black", 1, 35)); // NOI18N
+        titleLbl.setForeground(new java.awt.Color(1, 1, 1));
+        titleLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleLbl.setText("JACOBI RELAJADO");
+        titleLbl.setToolTipText("");
+
+        infoButton.setText("?");
+        infoButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        infoButton.setFocusable(false);
+        infoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                infoButtonActionPerformed(evt);
+            }
+        });
+
+        lamdaLbl.setFont(new java.awt.Font("Lato Black", 0, 24)); // NOI18N
+        lamdaLbl.setForeground(new java.awt.Color(1, 1, 1));
+        lamdaLbl.setText("Lamda: ");
+
+        lamdaTxt.setFont(new java.awt.Font("Lato Black", 0, 24)); // NOI18N
+        lamdaTxt.setForeground(new java.awt.Color(1, 1, 1));
+
+        calculateBtn1.setBackground(new java.awt.Color(0, 149, 136));
+        calculateBtn1.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
+        calculateBtn1.setForeground(new java.awt.Color(1, 1, 1));
+        calculateBtn1.setText("CALCULAR");
+        calculateBtn1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        calculateBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calculateBtn1ActionPerformed(evt);
+            }
+        });
+
+        ecuacionesBtn1.setBackground(new java.awt.Color(0, 149, 136));
+        ecuacionesBtn1.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
+        ecuacionesBtn1.setForeground(new java.awt.Color(1, 1, 1));
+        ecuacionesBtn1.setText("INGRESAR ECUACIONES");
+        ecuacionesBtn1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        ecuacionesBtn1.setFocusable(false);
+        ecuacionesBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ecuacionesBtn1ActionPerformed(evt);
+            }
+        });
+
+        cleanBtn1.setBackground(new java.awt.Color(0, 149, 136));
+        cleanBtn1.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
+        cleanBtn1.setForeground(new java.awt.Color(1, 1, 1));
+        cleanBtn1.setText("LIMPIAR");
+        cleanBtn1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        cleanBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cleanBtn1ActionPerformed(evt);
+            }
+        });
+
+        gaussSidelRelajadoTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        gaussSidelRelajadoTable.setColumnSelectionAllowed(true);
+        gaussSidelRelajadoTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(gaussSidelRelajadoTable);
+
+        observations.setEditable(false);
+        observations.setText("OBSERVACIONES:");
+        observations.setToolTipText("");
+        jScrollPane3.setViewportView(observations);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(cleanBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                        .addComponent(lamdaLbl)
+                        .addGap(2, 2, 2)
+                        .addComponent(lamdaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ecuacionesBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(calculateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addGap(12, 12, 12))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(15, 15, 15)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(infoButton))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(575, 575, 575)
+                            .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(15, 15, 15)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(ecuacionesBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(calculateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lamdaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lamdaLbl))
+                        .addGap(14, 14, 14))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(157, 157, 157)
+                        .addComponent(cleanBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                .addGap(5, 5, 5))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(6, 6, 6)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(titleLbl)
+                        .addComponent(infoButton))
+                    .addGap(426, 530, Short.MAX_VALUE)
+                    .addComponent(backBtn)
+                    .addGap(6, 6, 6)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_backBtnActionPerformed
+
+    private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
+        JOptionPane.showMessageDialog(this, "asdf");
+    }//GEN-LAST:event_infoButtonActionPerformed
+
+    private void calculateBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtn1ActionPerformed
+        try {
+            BigDecimal[][] ecuaciones = contenedor.getEcuaciones();
+        } catch(Exception e) {
+            System.out.println(e.toString());
+        }
+    }//GEN-LAST:event_calculateBtn1ActionPerformed
+
+    private void ecuacionesBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ecuacionesBtn1ActionPerformed
+        TotalEcuaciones totalecuacuaciones = new TotalEcuaciones();
+        totalecuacuaciones.setVisible(true);
+    }//GEN-LAST:event_ecuacionesBtn1ActionPerformed
+
+    private void cleanBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanBtn1ActionPerformed
+        this.clearTable();
+        this.observations.setText("OBSERVACIONES:");
+    }//GEN-LAST:event_cleanBtn1ActionPerformed
+
+    private void clearTable() {
+        DefaultTableModel gaussSeidelRelajadoTableModel = (DefaultTableModel) gaussSidelRelajadoTable.getModel();
+        gaussSeidelRelajadoTableModel.setRowCount(0);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backBtn;
+    private javax.swing.JButton calculateBtn1;
+    private javax.swing.JButton cleanBtn1;
+    private javax.swing.JButton ecuacionesBtn1;
+    private javax.swing.JTable gaussSidelRelajadoTable;
+    private javax.swing.JButton infoButton;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lamdaLbl;
+    private javax.swing.JTextField lamdaTxt;
+    private javax.swing.JTextPane observations;
+    private javax.swing.JLabel titleLbl;
     // End of variables declaration//GEN-END:variables
 }

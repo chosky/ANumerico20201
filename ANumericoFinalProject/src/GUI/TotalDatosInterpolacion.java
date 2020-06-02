@@ -28,7 +28,7 @@ public class TotalDatosInterpolacion extends javax.swing.JFrame {
     public TotalDatosInterpolacion() {
         
         indice = 0;
-        this.setTitle("Lectura de ecuaciones");
+        this.setTitle("Ingresar total datos interpolación");
         this.setResizable(true);
         this.getContentPane().setBackground(Color.WHITE);
         initComponents();
@@ -68,7 +68,7 @@ public class TotalDatosInterpolacion extends javax.swing.JFrame {
         titleLbl.setBackground(new java.awt.Color(254, 254, 254));
         titleLbl.setFont(new java.awt.Font("Lato Black", 1, 35)); // NOI18N
         titleLbl.setForeground(new java.awt.Color(1, 1, 1));
-        titleLbl.setText("Ingresar total ecuaciones");
+        titleLbl.setText("Ingresar total datos interpolación");
 
         backBtn.setBackground(new java.awt.Color(26, 118, 210));
         backBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
@@ -83,7 +83,7 @@ public class TotalDatosInterpolacion extends javax.swing.JFrame {
 
         initialValueLbl.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         initialValueLbl.setForeground(new java.awt.Color(1, 1, 1));
-        initialValueLbl.setText("# Ecuaciones");
+        initialValueLbl.setText("# datos");
 
         totalecu.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         totalecu.setForeground(new java.awt.Color(1, 1, 1));
@@ -133,7 +133,7 @@ public class TotalDatosInterpolacion extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
+                .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -177,7 +177,7 @@ public class TotalDatosInterpolacion extends javax.swing.JFrame {
              backBtnActionPerformed(evt);
              
         }else{
-            showErrorMessage("El campo del numero de ecuaciones no puede estar vacio, porfavor ingrese un numero y vuelva a intentrarlo");
+            showErrorMessage("El campo del numero de datos no puede estar vacio, porfavor ingrese un numero y vuelva a intentrarlo");
         }
        
     }//GEN-LAST:event_createbuttonActionPerformed

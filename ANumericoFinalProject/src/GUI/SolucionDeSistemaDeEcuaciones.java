@@ -371,7 +371,8 @@ public class SolucionDeSistemaDeEcuaciones extends javax.swing.JFrame {
     }//GEN-LAST:event_luPivoteoBtnActionPerformed
 
     private void luSimpleBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_luSimpleBtnActionPerformed
-
+        FDSimple fDSimple = new FDSimple();
+        fDSimple.setVisible(true);
     }//GEN-LAST:event_luSimpleBtnActionPerformed
 
     private void jacobiRelajadoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jacobiRelajadoBtnActionPerformed

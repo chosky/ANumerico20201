@@ -154,7 +154,7 @@ public class Cholesky extends javax.swing.JFrame {
         titleLbl.setFont(new java.awt.Font("Lato Black", 1, 35)); // NOI18N
         titleLbl.setForeground(new java.awt.Color(1, 1, 1));
         titleLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleLbl.setText("CROUT");
+        titleLbl.setText("CHOLESKY");
         titleLbl.setToolTipText("");
 
         infoButton.setText("?");

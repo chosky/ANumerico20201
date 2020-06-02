@@ -15,7 +15,10 @@ public class InterpolacionMenu extends javax.swing.JFrame {
      * Creates new form InterpolacionMenu
      */
     public InterpolacionMenu() {
+        this.setResizable(false);
+        this.setTitle("Interpolación");
         initComponents();
+        
     }
 
     /**

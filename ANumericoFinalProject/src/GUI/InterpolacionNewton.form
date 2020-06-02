@@ -121,9 +121,13 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="1" green="1" red="1" type="rgb"/>
         </Property>
+<<<<<<< HEAD
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="INTERPOLACI&#xd3;N NEWTON"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
+=======
+        <Property name="text" type="java.lang.String" value="Interpolaci&#xf3;n Newton"/>
+>>>>>>> 9d4738a597a945619eb623c3593431421c01c0a6
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="infoButton">

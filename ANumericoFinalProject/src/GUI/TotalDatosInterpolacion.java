@@ -5,10 +5,8 @@
  */
 package GUI;
 
-import Parser.MathFunctionsParser;
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,20 +14,21 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Amboraes 
  */
-public class TotalEcuaciones extends javax.swing.JFrame {
+public class TotalDatosInterpolacion extends javax.swing.JFrame {
 
     /**
-     *
+     * 
      */
     
-    List<String> ecuaciones;
+    BigDecimal x[];
+    BigDecimal xn[];
     int indice,numecuaciones;
 
     
-    public TotalEcuaciones() {
-        this.ecuaciones = new ArrayList<>();
+    public TotalDatosInterpolacion() {
+        
         indice = 0;
-        this.setTitle("Lectura de ecuaciones");
+        this.setTitle("Ingresar total datos interpolación");
         this.setResizable(true);
         this.getContentPane().setBackground(Color.WHITE);
         initComponents();
@@ -69,7 +68,7 @@ public class TotalEcuaciones extends javax.swing.JFrame {
         titleLbl.setBackground(new java.awt.Color(254, 254, 254));
         titleLbl.setFont(new java.awt.Font("Lato Black", 1, 35)); // NOI18N
         titleLbl.setForeground(new java.awt.Color(1, 1, 1));
-        titleLbl.setText("Ingresar total ecuaciones");
+        titleLbl.setText("Ingresar total datos interpolación");
 
         backBtn.setBackground(new java.awt.Color(26, 118, 210));
         backBtn.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
@@ -84,7 +83,7 @@ public class TotalEcuaciones extends javax.swing.JFrame {
 
         initialValueLbl.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         initialValueLbl.setForeground(new java.awt.Color(1, 1, 1));
-        initialValueLbl.setText("# Ecuaciones");
+        initialValueLbl.setText("# datos");
 
         totalecu.setFont(new java.awt.Font("Lato Black", 0, 15)); // NOI18N
         totalecu.setForeground(new java.awt.Color(1, 1, 1));
@@ -134,7 +133,7 @@ public class TotalEcuaciones extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
+                .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -167,19 +166,18 @@ public class TotalEcuaciones extends javax.swing.JFrame {
 
     private void infoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(dialog, "Favor ingresar el numero de ecuaciones que desea ingresar");
+        JOptionPane.showMessageDialog(dialog, "Favor ingresar el numero de datos que desea ingresar");
     }//GEN-LAST:event_infoActionPerformed
 
     private void createbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createbuttonActionPerformed
-      
         String totalecuaciones = totalecu.getText();
         if(totalecuaciones.equalsIgnoreCase("")!=true){
-             IngresarEcuaciones ingresar = new IngresarEcuaciones(Integer.valueOf(totalecuaciones));
-             ingresar.setVisible(true);
+             IngresarDatosInterpolacion ingresarDatosInterpolacion = new IngresarDatosInterpolacion(Integer.valueOf(totalecuaciones));
+             ingresarDatosInterpolacion.setVisible(true);
              backBtnActionPerformed(evt);
              
         }else{
-            showErrorMessage("El campo del numero de ecuaciones no puede estar vacio, porfavor ingrese un numero y vuelva a intentrarlo");
+            showErrorMessage("El campo del numero de datos no puede estar vacio, porfavor ingrese un numero y vuelva a intentrarlo");
         }
        
     }//GEN-LAST:event_createbuttonActionPerformed

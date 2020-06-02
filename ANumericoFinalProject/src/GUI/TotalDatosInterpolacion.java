@@ -5,10 +5,8 @@
  */
 package GUI;
 
-import Parser.MathFunctionsParser;
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,18 +14,19 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Amboraes 
  */
-public class TotalEcuaciones extends javax.swing.JFrame {
+public class TotalDatosInterpolacion extends javax.swing.JFrame {
 
     /**
-     *
+     * 
      */
     
-    List<String> ecuaciones;
+    BigDecimal x[];
+    BigDecimal xn[];
     int indice,numecuaciones;
 
     
-    public TotalEcuaciones() {
-        this.ecuaciones = new ArrayList<>();
+    public TotalDatosInterpolacion() {
+        
         indice = 0;
         this.setTitle("Lectura de ecuaciones");
         this.setResizable(true);
@@ -167,15 +166,14 @@ public class TotalEcuaciones extends javax.swing.JFrame {
 
     private void infoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(dialog, "Favor ingresar el numero de ecuaciones que desea ingresar");
+        JOptionPane.showMessageDialog(dialog, "Favor ingresar el numero de datos que desea ingresar");
     }//GEN-LAST:event_infoActionPerformed
 
     private void createbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createbuttonActionPerformed
-      
         String totalecuaciones = totalecu.getText();
         if(totalecuaciones.equalsIgnoreCase("")!=true){
-             IngresarEcuaciones ingresar = new IngresarEcuaciones(Integer.valueOf(totalecuaciones));
-             ingresar.setVisible(true);
+             IngresarDatosInterpolacion ingresarDatosInterpolacion = new IngresarDatosInterpolacion(Integer.valueOf(totalecuaciones));
+             ingresarDatosInterpolacion.setVisible(true);
              backBtnActionPerformed(evt);
              
         }else{

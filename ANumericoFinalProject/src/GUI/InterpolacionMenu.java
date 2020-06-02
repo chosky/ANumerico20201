@@ -242,7 +242,8 @@ public class InterpolacionMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void ingrasarDatosBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingrasarDatosBtnActionPerformed
-        
+        TotalDatosInterpolacion totalDatosInterpolacion = new TotalDatosInterpolacion();
+        totalDatosInterpolacion.setVisible(true);
     }//GEN-LAST:event_ingrasarDatosBtnActionPerformed
 
 

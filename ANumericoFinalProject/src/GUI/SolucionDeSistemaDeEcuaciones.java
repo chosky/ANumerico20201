@@ -395,9 +395,10 @@ public class SolucionDeSistemaDeEcuaciones extends javax.swing.JFrame {
     }//GEN-LAST:event_gaussSeidelRelajadoBtnActionPerformed
 
     private void choleskyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_choleskyBtnActionPerformed
-        // TODO add your handling code here:
+        Cholesky cholesky = new Cholesky();
+        cholesky.setVisible(true);
     }//GEN-LAST:event_choleskyBtnActionPerformed
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
     private javax.swing.JLabel backgroundImg;

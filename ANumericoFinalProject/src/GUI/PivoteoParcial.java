@@ -221,8 +221,6 @@ public class PivoteoParcial extends javax.swing.JFrame {
     private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
         try {
             BigDecimal[][] ecuaciones = contenedor.getEcuaciones();
-            BigDecimal[][] Ub = GaussMethods.Reduccion(ecuaciones, ecuaciones.length - 1);
-            BigDecimal[] X = GaussMethods.Sustitucion(Ub, ecuaciones.length - 1);
         } catch(Exception e) {
             System.out.println(e.toString());
         }
@@ -237,10 +235,6 @@ public class PivoteoParcial extends javax.swing.JFrame {
         this.clearTable();
         this.observations.setText("OBSERVACIONES:");
     }//GEN-LAST:event_cleanBtnActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

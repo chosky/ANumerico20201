@@ -26,19 +26,59 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4cca2608-0e6d-418f-a972-24cf36ec4589" name="Default Changelist" comment="" />
+    <list default="true" id="4cca2608-0e6d-418f-a972-24cf36ec4589" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/ANumericoFinalProject/src/GUI/IngresarDatosInterpolacion.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ANumericoFinalProject/src/GUI/IngresarDatosInterpolacion.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ANumericoFinalProject/src/GUI/TotalDatosInterpolacion.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ANumericoFinalProject/src/GUI/TotalDatosInterpolacion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ANumericoFinalProject/src/GUI/InterpolacionNewton.form" beforeDir="false" afterPath="$PROJECT_DIR$/ANumericoFinalProject/src/GUI/InterpolacionNewton.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ANumericoFinalProject/src/GUI/InterpolacionNewton.java" beforeDir="false" afterPath="$PROJECT_DIR$/ANumericoFinalProject/src/GUI/InterpolacionNewton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ANumericoFinalProject/src/GUI/TotalEcuaciones.form" beforeDir="false" afterPath="$PROJECT_DIR$/ANumericoFinalProject/src/GUI/TotalEcuaciones.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ANumericoFinalProject/src/GUI/TotalEcuaciones.java" beforeDir="false" afterPath="$PROJECT_DIR$/ANumericoFinalProject/src/GUI/TotalEcuaciones.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1ck82gUMxeLcGO65D4km8KnOjQa" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4cca2608-0e6d-418f-a972-24cf36ec4589" name="Default Changelist" comment="" />
+      <created>1591061024222</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1591061024222</updated>
+      <workItem from="1591061026469" duration="36000" />
+    </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1023" y="273" width="585" height="534" key="find.popup" timestamp="1591061056184">
+      <screen x="72" y="0" width="2488" height="1080" />
+    </state>
+    <state x="1023" y="273" width="585" height="534" key="find.popup/72.0.2488.1080@72.0.2488.1080" timestamp="1591061056184" />
   </component>
 </project>

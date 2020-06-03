@@ -4,12 +4,13 @@ package GUI;
  *
  * @author Jose David Henao Ocampo
  */
-public class SplinesLinealCubico extends javax.swing.JFrame {
+public class SplinesCubico extends javax.swing.JFrame {
 
     /**
      * Creates new form SplinesLineal
      */
-    public SplinesLinealCubico() {
+    DatosInterpolacion datosInterpolacion;
+    public SplinesCubico() {
         initComponents();
     }
 

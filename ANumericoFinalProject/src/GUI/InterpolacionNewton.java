@@ -11,17 +11,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public final class InterpolacionNewton extends javax.swing.JFrame {
 
-    private final ContenedorEcuaciones contenedor;
-    BigDecimal [][]ecuaciones;
+    DatosInterpolacion datosInterpolacion;
     String print = "";
-    int mayoresFilas[];
     
     public InterpolacionNewton() {
         this.setTitle("Interpolacion Newton");
         this.setResizable(true);
         this.getContentPane().setBackground(Color.WHITE);
         initComponents();
-        contenedor = ContenedorEcuaciones.getContenedor();
     }
 
     /**
@@ -206,7 +203,7 @@ public final class InterpolacionNewton extends javax.swing.JFrame {
 
     private void calculateBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtn1ActionPerformed
         try {
-            BigDecimal[][] ecuaciones = contenedor.getEcuaciones();
+           
         } catch(Exception e) {
             System.out.println(e.toString());
         }

@@ -420,11 +420,6 @@ public class Newton extends javax.swing.JFrame {
     public void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
-    
-    public void pintartabla(double[] valores){
-        
-        
-    }
    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

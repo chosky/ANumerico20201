@@ -9,6 +9,7 @@ public class Lagrange extends javax.swing.JFrame {
     /**
      * Creates new form SplinesLineal
      */
+    DatosInterpolacion datosInterpolacion;
     public Lagrange() {
         initComponents();
     }
@@ -26,7 +27,7 @@ public class Lagrange extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Splina cuadrado");
+        jLabel1.setText("Lagrange");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

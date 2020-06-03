@@ -1,6 +1,4 @@
 package GUI;
-import SolucionDeSistemas.GaussMethods;
-import java.math.BigDecimal;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -8,13 +6,12 @@ import javax.swing.table.DefaultTableModel;
  * @author Smith Alexis Carvajal Orozco
  */
 public class Neville extends javax.swing.JFrame {
-    private final ContenedorEcuaciones contenedor;
+    DatosInterpolacion datosInterpolacion;
     /**
      * Creates new form Neville
      */
     public Neville() {
         initComponents();
-        contenedor = ContenedorEcuaciones.getContenedor();
     }
 
     /**
@@ -211,7 +208,6 @@ public class Neville extends javax.swing.JFrame {
 
     private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
         try {
-            BigDecimal[][] ecuaciones = contenedor.getEcuaciones();
         } catch(Exception e) {
             System.out.println(e.toString());
         }

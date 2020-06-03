@@ -20,12 +20,12 @@ import javax.swing.JTextField;
  */
 public final class IngresarDatosInterpolacion extends javax.swing.JFrame {
 
-    BigDecimal[] x;
-    BigDecimal[]xn;
-    List<JTextField>input;
-    int totaldatos;
-    DatosInterpolacion datosInterpolacion;
-    String print = "";
+    private BigDecimal[] x;
+    private BigDecimal[]xn;
+    private List<JTextField>input;
+    private int totaldatos;
+    private DatosInterpolacion datosInterpolacion;
+    private String print = "";
 
 
     public IngresarDatosInterpolacion(int totaldata) {
@@ -237,7 +237,7 @@ public final class IngresarDatosInterpolacion extends javax.swing.JFrame {
         creartabla();
     }//GEN-LAST:event_creartablaActionPerformed
 
-    public void imprimir(){
+    private void imprimir(){
         print = "| x | xn |\n";
         for(int filas = 0;filas < totaldatos ; filas++){
             print+="|"+x[filas]+"|"+xn[filas]+"|\n";
@@ -246,7 +246,7 @@ public final class IngresarDatosInterpolacion extends javax.swing.JFrame {
        ShowSteps.setText(print);
     }
 
-    public void creartabla(){
+    private void creartabla(){
         if(input.isEmpty()){
             panel.setLayout(new GridLayout(totaldatos,2));
             panel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
@@ -262,7 +262,7 @@ public final class IngresarDatosInterpolacion extends javax.swing.JFrame {
 
     }
 
-    public void showErrorMessage(String message) {
+    private void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
 

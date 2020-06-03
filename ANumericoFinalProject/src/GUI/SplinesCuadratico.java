@@ -9,6 +9,7 @@ public class SplinesCuadratico extends javax.swing.JFrame {
     /**
      * Creates new form SplinesLineal
      */
+    DatosInterpolacion datosInterpolacion;
     public SplinesCuadratico() {
         initComponents();
     }

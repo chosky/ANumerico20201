@@ -9,6 +9,8 @@ public class SplinesLineal extends javax.swing.JFrame {
     /**
      * Creates new form SplinesLineal
      */
+    
+    DatosInterpolacion datosInterpolacion;
     public SplinesLineal() {
         initComponents();
     }

@@ -14,6 +14,8 @@ public class InterpolacionMenu extends javax.swing.JFrame {
     /**
      * Creates new form InterpolacionMenu
      */
+    
+    DatosInterpolacion datosInterpolacion;
     public InterpolacionMenu() {
         this.setResizable(false);
         this.setTitle("Interpolación");
@@ -215,7 +217,8 @@ public class InterpolacionMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_linealBtnActionPerformed
 
     private void lagrangeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lagrangeBtnActionPerformed
-
+        Lagrange lagrange = new Lagrange();
+        lagrange.setVisible(true);
     }//GEN-LAST:event_lagrangeBtnActionPerformed
 
     private void nevilleBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nevilleBtnActionPerformed
@@ -234,7 +237,7 @@ public class InterpolacionMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_cuadraticoBtnActionPerformed
 
     private void cubicoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cubicoBtnActionPerformed
-        SplinesLinealCubico splinesLinealCubico = new SplinesLinealCubico();
+        SplinesCubico splinesLinealCubico = new SplinesCubico();
         splinesLinealCubico.setVisible(true);
     }//GEN-LAST:event_cubicoBtnActionPerformed
 

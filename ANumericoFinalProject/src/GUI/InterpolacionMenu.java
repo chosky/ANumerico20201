@@ -229,7 +229,8 @@ public class InterpolacionMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_newtonBtnActionPerformed
 
     private void cuadraticoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cuadraticoBtnActionPerformed
-        
+        SplinesCuadratico splinesCuardado = new SplinesCuadratico();
+        splinesCuardado.setVisible(true);
     }//GEN-LAST:event_cuadraticoBtnActionPerformed
 
     private void cubicoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cubicoBtnActionPerformed

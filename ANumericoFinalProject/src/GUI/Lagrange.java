@@ -4,12 +4,12 @@ package GUI;
  *
  * @author Jose David Henao Ocampo
  */
-public class SplinesCuardado extends javax.swing.JFrame {
+public class Lagrange extends javax.swing.JFrame {
 
     /**
      * Creates new form SplinesLineal
      */
-    public SplinesCuardado() {
+    public Lagrange() {
         initComponents();
     }
 

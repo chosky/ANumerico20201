@@ -10,6 +10,8 @@ public class Lagrange extends javax.swing.JFrame {
      * Creates new form SplinesLineal
      */
     DatosInterpolacion datosInterpolacion;
+    double [][]tmp = new double[10][10];
+    int i = tmp.length;
     public Lagrange() {
         initComponents();
     }

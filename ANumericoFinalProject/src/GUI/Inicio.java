@@ -33,6 +33,7 @@ public class Inicio extends javax.swing.JFrame {
         yearLbl = new javax.swing.JLabel();
         informationBtn = new javax.swing.JButton();
         backgroundImg = new javax.swing.JLabel();
+        test = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(1, 1, 1));
@@ -98,6 +99,16 @@ public class Inicio extends javax.swing.JFrame {
         backgroundImg.setBackground(new java.awt.Color(0, 0, 0));
         backgroundImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/fondoInicio.PNG"))); // NOI18N
 
+        test.setBackground(new java.awt.Color(26, 118, 210));
+        test.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
+        test.setForeground(new java.awt.Color(5, 0, 0));
+        test.setText("test");
+        test.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                testActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -121,6 +132,8 @@ public class Inicio extends javax.swing.JFrame {
                                 .addComponent(yearLbl)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(informationBtn)
+                                .addGap(97, 97, 97)
+                                .addComponent(test, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(20, 20, 20)))))
@@ -138,7 +151,9 @@ public class Inicio extends javax.swing.JFrame {
                         .addComponent(solSisEcuBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(interpolationBtn)
-                        .addGap(74, 74, 74))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(test, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(yearLbl)
                         .addComponent(exitBtn)
@@ -173,6 +188,12 @@ public class Inicio extends javax.swing.JFrame {
         interpolacion.setVisible(true);
     }//GEN-LAST:event_interpolationBtnActionPerformed
 
+    private void testActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testActionPerformed
+        // TODO add your handling code here:
+        Cholesky cholesky = new Cholesky();
+        cholesky.setVisible(true);
+    }//GEN-LAST:event_testActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel backgroundImg;
     private javax.swing.JButton exitBtn;
@@ -180,6 +201,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JButton interpolationBtn;
     private javax.swing.JButton solEcuOneVarBtn;
     private javax.swing.JButton solSisEcuBtn;
+    private javax.swing.JButton test;
     private javax.swing.JLabel yearLbl;
     // End of variables declaration//GEN-END:variables
 

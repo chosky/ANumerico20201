@@ -12,6 +12,10 @@ import javax.swing.table.DefaultTableModel;
 public class Cholesky extends javax.swing.JFrame {
     
     private final ContenedorEcuaciones contenedor;
+    BigDecimal[][]L;
+    BigDecimal[][]U;
+    BigDecimal[][]A;
+    BigDecimal[]B;
 
     /**
      * Creates new form Cholesky
@@ -21,6 +25,7 @@ public class Cholesky extends javax.swing.JFrame {
         this.setTitle("Cholesky");
         initComponents();
         contenedor = ContenedorEcuaciones.getContenedor();
+        adecuarMatrices();
     }
 
     /**
@@ -267,6 +272,7 @@ public class Cholesky extends javax.swing.JFrame {
     private void calculateBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtn1ActionPerformed
         try {
             BigDecimal[][] ecuaciones = contenedor.getEcuaciones();
+            adecuarMatrices();
         } catch(Exception e) {
             System.out.println(e.toString());
         }
@@ -284,6 +290,90 @@ public class Cholesky extends javax.swing.JFrame {
     private void clearMatrizA() {
         DefaultTableModel bisectionTableModel = (DefaultTableModel) matrizA.getModel();
         bisectionTableModel.setRowCount(0);
+    }
+    
+    public void inicializarL(){
+        
+    }
+    public void adecuarMatrices(){
+        //BigDecimal[][]tmp = contenedor.ecuaciones;
+        BigDecimal[][]tmp = llenarprueba();
+        //System.out.println("Filas:"+tmp.length +"\n Columnas:"+tmp[0].length);
+        //System.out.println(BigDecimal.ONE);
+        if(tmp!=null){   
+            L = new BigDecimal[tmp.length][tmp[0].length-1];
+            U = new BigDecimal[tmp.length][tmp[0].length-1];
+            A = new BigDecimal[tmp.length][tmp[0].length-1];
+            B = new BigDecimal[tmp.length];
+            for(int filas = 0;filas<tmp.length;filas++){
+                for(int columnas = 0;columnas<tmp[0].length;columnas++){
+                    if(columnas==tmp[0].length-1){
+                       // System.out.println("Antes de llenar b");
+                        B[filas] = tmp[filas][columnas];
+                    }else{
+                        A[filas][columnas] = tmp[filas][columnas];
+                        if(filas >= columnas){
+                            //System.out.println("Antes de llenar L");
+                            L[filas][columnas] = BigDecimal.ONE;
+                            //System.out.println("Despues de llenar L:"+L[filas][columnas]);
+                        }else{
+                            L[filas][columnas] = BigDecimal.ZERO;
+                        }
+                        if(filas <= columnas){
+                           // System.out.println("Antes de llenar U");
+                            U[filas][columnas] = BigDecimal.ONE;
+                            //System.out.println("Despues de llenar U:"+U[filas][columnas]);
+                        }else{
+                            U[filas][columnas] = BigDecimal.ZERO;
+                        }
+                    }
+                }
+            }
+           // mostrar();
+        }else{
+            showErrorMessage("Porfavor primero ingrese los datos");
+        }
+    }
+    public void showErrorMessage(String message) {
+        JOptionPane.showMessageDialog(this, message);
+    }
+    public BigDecimal[][] llenarprueba(){
+        BigDecimal[][]tmp = new BigDecimal[4][5];
+        for(int i = 0; i< tmp.length;i++){
+            for(int j = 0;j<tmp[0].length;j++){
+                tmp[i][j]=BigDecimal.TEN;
+            }
+        }
+        return tmp;
+    }
+    
+    public void mostrar(){
+        System.out.println("Estamos en mostrar. filas L:"+L.length +" Columnas L:"+L[0].length);
+        String tmpL="";
+        String tmpU="";
+        String tmpA ="";
+        String tmpB="";
+        for(int i = 0;i<L.length;i++){
+            System.out.println("dentro del primer ciclo");
+            for(int j = 0;j<L[0].length;j++){
+               // System.out.println("dentro del segundo ciclo");
+              //  System.out.println("valor L:"+L[i][j]);
+                //System.out.println("Valor i:"+i+" Valor j:"+j);
+                tmpL = tmpL + L[i][j]+" ";
+               
+               // System.out.println("valor U:"+U[i][j]);
+                tmpU= tmpU+U[i][j]+" ";
+                tmpA= tmpA+A[i][j]+" ";
+            }
+            tmpL=tmpL +"\n";
+            tmpU=tmpU + "\n";
+            tmpA=tmpA + "\n";
+            tmpB+=B[i]+" ";
+        }
+       System.out.println("L: \n"+tmpL);
+       System.out.println("U: \n"+tmpU);
+       System.out.println("A: \n"+tmpA);
+       System.out.println("B: \n"+tmpB);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

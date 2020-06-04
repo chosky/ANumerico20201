@@ -1,5 +1,7 @@
 package GUI;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Jose David Henao Ocampo
@@ -9,8 +11,21 @@ public class SplinesCubico extends javax.swing.JFrame {
     /**
      * Creates new form SplinesLineal
      */
-    DatosInterpolacion datosInterpolacion;
+    private DatosInterpolacion datosInterpolacion;
+    private BigDecimal[]x;
+    private BigDecimal[]xn;
+    private int sinderivarpotencias[] = {3,2,1,0};
+    private int derivada1coeficientes[] = {3,2,1,0};
+    private int derivada1potencia[] = {2,1,0,0};
+    private int derivada2coeficientes[] = {6,2,0,0};
+    private int derivada2potencia[] = {2,1,0,0};
+    BigDecimal intervalos[][] = new BigDecimal[x.length-1][2];
+    
+    
     public SplinesCubico() {
+        datosInterpolacion = DatosInterpolacion.getDatosInterpolacion();
+        x = datosInterpolacion.getX();
+        xn = datosInterpolacion.getXn();
         initComponents();
     }
 
@@ -49,6 +64,19 @@ public class SplinesCubico extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void splineCubico(){
+        
+    }
+    
+    public void incializarintervalos(){
+        for(int i = 0 ;i<intervalos.length;i++){
+            for(int j = 0;j<intervalos[0].length;j++){
+                intervalos[i][j]= x[j-i];
+            }
+        }
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables

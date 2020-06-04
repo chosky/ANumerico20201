@@ -242,10 +242,10 @@ public final class IngresarEcuaciones extends javax.swing.JFrame {
         for(int filas = 0;filas < numecuaciones ; filas++){
             for(int columnas = 0;columnas < numecuaciones+1;columnas++){
                 if(columnas < 1){
-                    print += String.valueOf(ecuaciones[filas][columnas]+"x"+(numecuaciones-1));
+                    print += String.valueOf(ecuaciones[filas][columnas]+"x"+(columnas+1));
                 }else{
                     if(columnas <= numecuaciones-1){
-                        print += String.valueOf(" + "+ecuaciones[filas][columnas]+"x"+(numecuaciones-1-columnas));
+                        print += String.valueOf(" + "+ecuaciones[filas][columnas]+"x"+(columnas+1));
                     }else{
                         print += String.valueOf(" = "+ecuaciones[filas][columnas] +"\n");
                     }

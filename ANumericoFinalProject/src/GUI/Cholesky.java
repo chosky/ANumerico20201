@@ -2,6 +2,7 @@
 package GUI;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -273,6 +274,7 @@ public class Cholesky extends javax.swing.JFrame {
         try {
             BigDecimal[][] ecuaciones = contenedor.getEcuaciones();
             adecuarMatrices();
+            cholesky();
         } catch(Exception e) {
             System.out.println(e.toString());
         }
@@ -291,13 +293,39 @@ public class Cholesky extends javax.swing.JFrame {
         DefaultTableModel bisectionTableModel = (DefaultTableModel) matrizA.getModel();
         bisectionTableModel.setRowCount(0);
     }
-    
-    public void inicializarL(){
-        
+    public void cholesky(){
+        int n = L.length;
+        BigDecimal suma1,suma2,suma3;
+        double tmp=0;
+        for(int k = 0 ;k<n;k++){
+            suma1 = BigDecimal.ZERO;
+            for(int p = 0;p< k-1;p++){
+                suma1 = suma1.add(L[k][p].multiply(U[p][k]));
+            }
+            //tmp = Math.sqrt(A[k][k].doubleValue()-suma1.doubleValue());
+            L[k][k] = A[k][k].subtract(suma1).sqrt(MathContext.DECIMAL128);
+           // L[k][k] = BigDecimal.valueOf(tmp);
+            for(int i = k+1;i<n;i++){
+                suma2 = BigDecimal.ZERO;
+                for(int p = 0; p<=k;p++){
+                    suma2 = suma2.add(L[i][k].multiply(U[p][k]));
+                }
+                L[i][k] = A[i][k].subtract(suma2).divide(U[k][k],MathContext.DECIMAL128);
+            }
+            for(int j = k+1;j<n;j++){
+                suma3 = BigDecimal.ZERO;
+                for(int p = 0;p<=k;p++){
+                    suma3 = suma3.add(L[k][p].multiply(U[p][k]));
+                }
+                U[k][k] = A[k][j].subtract(suma3).divide(L[k][k],MathContext.DECIMAL128);
+            }
+        }
+        mostrar();
     }
+    
     public void adecuarMatrices(){
-        //BigDecimal[][]tmp = contenedor.ecuaciones;
-        BigDecimal[][]tmp = llenarprueba();
+        BigDecimal[][]tmp = contenedor.ecuaciones;
+       // BigDecimal[][]tmp = llenarprueba();
         //System.out.println("Filas:"+tmp.length +"\n Columnas:"+tmp[0].length);
         //System.out.println(BigDecimal.ONE);
         if(tmp!=null){   
@@ -329,7 +357,7 @@ public class Cholesky extends javax.swing.JFrame {
                     }
                 }
             }
-           // mostrar();
+            mostrar();
         }else{
             showErrorMessage("Porfavor primero ingrese los datos");
         }
@@ -348,13 +376,13 @@ public class Cholesky extends javax.swing.JFrame {
     }
     
     public void mostrar(){
-        System.out.println("Estamos en mostrar. filas L:"+L.length +" Columnas L:"+L[0].length);
+        //System.out.println("Estamos en mostrar. filas L:"+L.length +" Columnas L:"+L[0].length);
         String tmpL="";
         String tmpU="";
         String tmpA ="";
         String tmpB="";
         for(int i = 0;i<L.length;i++){
-            System.out.println("dentro del primer ciclo");
+           // System.out.println("dentro del primer ciclo");
             for(int j = 0;j<L[0].length;j++){
                // System.out.println("dentro del segundo ciclo");
               //  System.out.println("valor L:"+L[i][j]);

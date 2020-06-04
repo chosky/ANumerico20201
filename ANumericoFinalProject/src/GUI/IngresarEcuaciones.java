@@ -7,6 +7,7 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public final class IngresarEcuaciones extends javax.swing.JFrame {
         this.getContentPane().setBackground(Color.WHITE);
         contenedor = ContenedorEcuaciones.getContenedor();
         initComponents();
+        creartabla();
     }
 
     /**
@@ -57,7 +59,6 @@ public final class IngresarEcuaciones extends javax.swing.JFrame {
         info = new javax.swing.JButton();
         PanelContainer = new javax.swing.JScrollPane();
         panel = new javax.swing.JPanel();
-        creartabla = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         ShowSteps = new javax.swing.JTextPane();
 
@@ -133,17 +134,6 @@ public final class IngresarEcuaciones extends javax.swing.JFrame {
 
         PanelContainer.setViewportView(panel);
 
-        creartabla.setBackground(new java.awt.Color(0, 149, 136));
-        creartabla.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
-        creartabla.setForeground(new java.awt.Color(1, 1, 1));
-        creartabla.setText("Crear Tabla");
-        creartabla.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
-        creartabla.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                creartablaActionPerformed(evt);
-            }
-        });
-
         jScrollPane1.setViewportView(ShowSteps);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -157,10 +147,8 @@ public final class IngresarEcuaciones extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(creartabla, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
                                 .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cleanBtn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -185,7 +173,6 @@ public final class IngresarEcuaciones extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(creartabla, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(calculateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cleanBtn))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -232,11 +219,6 @@ public final class IngresarEcuaciones extends javax.swing.JFrame {
     private void cleanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanBtnActionPerformed
 
     }//GEN-LAST:event_cleanBtnActionPerformed
-
-    private void creartablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creartablaActionPerformed
-        // TODO add your handling code here:
-        creartabla();
-    }//GEN-LAST:event_creartablaActionPerformed
     
     public void imprimir(){
         for(int filas = 0;filas < numecuaciones ; filas++){
@@ -257,11 +239,13 @@ public final class IngresarEcuaciones extends javax.swing.JFrame {
     }
         
     public void creartabla(){
-        if(input.size()==0){
+        if(input.isEmpty()){
             panel.setLayout(new GridLayout(numecuaciones,numecuaciones+1));
             panel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+            Dimension panelSize = panel.getSize();
             for(int i = 0; i < numecuaciones*(numecuaciones+1);i++){
                 JTextField ecuacion = new JTextField();
+                ecuacion.setPreferredSize(new Dimension((panelSize.width/(numecuaciones + 1)),(panelSize.width/(numecuaciones + 1))));
                 panel.add(ecuacion);
                 input.add(ecuacion);
             }
@@ -284,7 +268,6 @@ public final class IngresarEcuaciones extends javax.swing.JFrame {
     private javax.swing.JButton backBtn;
     private javax.swing.JButton calculateBtn;
     private javax.swing.JButton cleanBtn;
-    private javax.swing.JButton creartabla;
     private javax.swing.JDialog dialog;
     private javax.swing.JButton info;
     private javax.swing.JScrollPane jScrollPane1;

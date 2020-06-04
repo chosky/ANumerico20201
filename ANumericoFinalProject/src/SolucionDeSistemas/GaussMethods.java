@@ -8,6 +8,11 @@ package SolucionDeSistemas;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
+class BuscarMayor {
+    BigDecimal mayor;
+    int fila;
+}
+
 /**
  *
  * @author Atabord
@@ -34,17 +39,60 @@ public class GaussMethods {
     public static BigDecimal[][] Reduccion(BigDecimal[][] Ab, int n, int k){
         for(int i = k+1; i <= n; i++) {
             BigDecimal mult = Ab[i][k].divide(Ab[k][k], MathContext.DECIMAL128);
-            System.out.println("mult fila"+ i + " "+mult);
+            //System.out.println("mult fila"+ i + " "+mult);
             for(int j = k; j <= n+1; j++) {
                 Ab[i][j] = Ab[i][j].subtract(mult.multiply(Ab[k][j]));
+                System.out.print(Ab[i][j] + " ");
+            }
+            System.out.print("\n");
+        }
+        return Ab;
+    }
+    
+    private static BuscarMayor BuscarMayorEnColumna(BigDecimal[][] Ab, int k, int n){
+        BuscarMayor object = new BuscarMayor();
+        BigDecimal mayor = Ab[k][k];
+        int filaM = k;
+        for(int m = k; m <= n; m ++){
+            if(Math.abs(Ab[m][k].doubleValue()) > Math.abs(mayor.doubleValue())){
+                mayor = Ab[m][k];
+                filaM = m;
             }
         }
+        object.mayor = mayor;
+        object.fila = filaM;
+        return object;
+    }
+    
+    public static BigDecimal[][] CambiarFila(BigDecimal[][] Ab, int k, int filaM){
+        BigDecimal[] Aux = Ab[k];
+        Ab[k] = Ab[filaM];
+        Ab[filaM] = Aux;
+        System.out.println("Se intercambio la fila " + k + "  por la fila " + filaM);
         return Ab;
     }
     
     public static BigDecimal[][] GaussSimple(BigDecimal[][] Ab, int n) {
         for(int k = 0; k <= n-1; k++) {
-            System.out.println("Etapa " + k);
+            System.out.println("Etapa " + (k+1));
+            Ab = Reduccion(Ab, n, k);
+        }
+        return Ab;
+    }
+    
+    public static BigDecimal[][] PivoteoParcial(BigDecimal[][]Ab, int n) {
+        for (int k = 0; k <= n-1; k++) {
+            System.out.println("Etapa " + (k+1));
+            BuscarMayor buscarMayor = BuscarMayorEnColumna(Ab, k, n);
+            BigDecimal mayor = buscarMayor.mayor;
+            int filaM = buscarMayor.fila;
+            System.out.println("Mayor: "+ mayor + " filaMayor: "+ filaM);
+            if(mayor == BigDecimal.ZERO) {
+                throw new ArithmeticException("El sistema tiene infinitas/cero soluciones");
+            }
+            if(k != filaM) {
+                Ab = CambiarFila(Ab, k, filaM);
+            }
             Ab = Reduccion(Ab, n, k);
         }
         return Ab;

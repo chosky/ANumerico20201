@@ -214,9 +214,10 @@ public final class IngresarDatosInterpolacion extends javax.swing.JFrame {
         }*/
         //System.out.println("total ecuaciones: "+input.size()+" tamaño matriz: "+(totaldatos*(totaldatos+1)));
         int cont = 0;
+        System.out.println("");
         for(int i = 0;i < totaldatos*2 ; i++){
             if(i<totaldatos){
-                x[i]=BigDecimal.valueOf(Double.valueOf(input.get(cont).getText()));
+                x[i]=BigDecimal.valueOf(Double.valueOf(input.get(i).getText()));
             }else{
                 xn[i-totaldatos] = BigDecimal.valueOf(Double.valueOf(input.get(i).getText()));
             }

@@ -248,7 +248,7 @@ public final class IngresarDatosInterpolacion extends javax.swing.JFrame {
 
     private void creartabla(){
         if(input.isEmpty()){
-            panel.setLayout(new GridLayout(totaldatos,2));
+            panel.setLayout(new GridLayout(2,totaldatos));
             panel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
             for(int i = 0; i < totaldatos*2;i++){
                 JTextField ecuacion = new JTextField();

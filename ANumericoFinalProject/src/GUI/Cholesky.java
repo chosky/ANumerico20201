@@ -296,28 +296,30 @@ public class Cholesky extends javax.swing.JFrame {
     public void cholesky(){
         int n = L.length;
         BigDecimal suma1,suma2,suma3;
-        double tmp=0;
-        for(int k = 0 ;k<n;k++){
+        
+        for(int k = 0; k < n; k++){
             suma1 = BigDecimal.ZERO;
-            for(int p = 0;p< k-1;p++){
+            for(int p = 0; p < k; p++){
                 suma1 = suma1.add(L[k][p].multiply(U[p][k]));
             }
-            //tmp = Math.sqrt(A[k][k].doubleValue()-suma1.doubleValue());
+            
             L[k][k] = A[k][k].subtract(suma1).sqrt(MathContext.DECIMAL128);
-           // L[k][k] = BigDecimal.valueOf(tmp);
-            for(int i = k+1;i<n;i++){
+            U[k][k] = L[k][k];
+            
+            for(int i = k; i < n; i++){
                 suma2 = BigDecimal.ZERO;
-                for(int p = 0; p<=k;p++){
-                    suma2 = suma2.add(L[i][k].multiply(U[p][k]));
+                
+                for(int p = 0; p < k; p++){
+                    suma2 = suma2.add(L[i][p].multiply(U[p][k]));
                 }
-                L[i][k] = A[i][k].subtract(suma2).divide(U[k][k],MathContext.DECIMAL128);
+                L[i][k] = A[i][k].subtract(suma2).divide(L[k][k],MathContext.DECIMAL128);
             }
-            for(int j = k+1;j<n;j++){
+            for(int j = k ;j < n; j++){
                 suma3 = BigDecimal.ZERO;
-                for(int p = 0;p<=k;p++){
-                    suma3 = suma3.add(L[k][p].multiply(U[p][k]));
+                for(int p = 0; p < k; p++){
+                    suma3 = suma3.add(L[k][p].multiply(U[p][j]));
                 }
-                U[k][k] = A[k][j].subtract(suma3).divide(L[k][k],MathContext.DECIMAL128);
+                U[k][j] = A[k][j].subtract(suma3).divide(L[k][k],MathContext.DECIMAL128);
             }
         }
         mostrar();
@@ -325,9 +327,6 @@ public class Cholesky extends javax.swing.JFrame {
     
     public void adecuarMatrices(){
         BigDecimal[][]tmp = contenedor.ecuaciones;
-       // BigDecimal[][]tmp = llenarprueba();
-        //System.out.println("Filas:"+tmp.length +"\n Columnas:"+tmp[0].length);
-        //System.out.println(BigDecimal.ONE);
         if(tmp!=null){   
             L = new BigDecimal[tmp.length][tmp[0].length-1];
             U = new BigDecimal[tmp.length][tmp[0].length-1];
@@ -336,24 +335,11 @@ public class Cholesky extends javax.swing.JFrame {
             for(int filas = 0;filas<tmp.length;filas++){
                 for(int columnas = 0;columnas<tmp[0].length;columnas++){
                     if(columnas==tmp[0].length-1){
-                       // System.out.println("Antes de llenar b");
                         B[filas] = tmp[filas][columnas];
                     }else{
                         A[filas][columnas] = tmp[filas][columnas];
-                        if(filas >= columnas){
-                            //System.out.println("Antes de llenar L");
-                            L[filas][columnas] = BigDecimal.ONE;
-                            //System.out.println("Despues de llenar L:"+L[filas][columnas]);
-                        }else{
-                            L[filas][columnas] = BigDecimal.ZERO;
-                        }
-                        if(filas <= columnas){
-                           // System.out.println("Antes de llenar U");
-                            U[filas][columnas] = BigDecimal.ONE;
-                            //System.out.println("Despues de llenar U:"+U[filas][columnas]);
-                        }else{
-                            U[filas][columnas] = BigDecimal.ZERO;
-                        }
+                        L[filas][columnas] = BigDecimal.ZERO;
+                        U[filas][columnas] = BigDecimal.ONE;
                     }
                 }
             }
@@ -376,20 +362,14 @@ public class Cholesky extends javax.swing.JFrame {
     }
     
     public void mostrar(){
-        //System.out.println("Estamos en mostrar. filas L:"+L.length +" Columnas L:"+L[0].length);
         String tmpL="";
         String tmpU="";
         String tmpA ="";
         String tmpB="";
         for(int i = 0;i<L.length;i++){
-           // System.out.println("dentro del primer ciclo");
             for(int j = 0;j<L[0].length;j++){
-               // System.out.println("dentro del segundo ciclo");
-              //  System.out.println("valor L:"+L[i][j]);
-                //System.out.println("Valor i:"+i+" Valor j:"+j);
                 tmpL = tmpL + L[i][j]+" ";
                
-               // System.out.println("valor U:"+U[i][j]);
                 tmpU= tmpU+U[i][j]+" ";
                 tmpA= tmpA+A[i][j]+" ";
             }

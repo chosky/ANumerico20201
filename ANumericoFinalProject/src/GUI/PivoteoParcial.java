@@ -201,13 +201,13 @@ public class PivoteoParcial extends javax.swing.JFrame {
     
     private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
         JOptionPane.showMessageDialog(this, "El método de pivoteo parcial lo que busca en cada iteración de la matriz es encontrar \n"
-                +                           "el número más \"grande\" (el número mayor sacando su valor absoluto) de cada fila y así \n"
-                +                           "definir el nuevo orden de la matriz estableciendo esta fila como primera, se tiene en \n"
+                +                           "el número más \"grande\" (el número mayor sacando su valor absoluto) de cada columna y así \n"
+                +                           "definir el nuevo orden de la matriz estableciendo su fila como la primera, se tiene en \n"
                 +                           "cuenta que este número a encontrar debe estar en el punto de la diagonal que se está \n"
-                +                           "analizando, sin tener en cuenta en anterior previamente solucionado.\n" +
+                +                           "analizando, sin tener en cuenta las filas y columnas previas.\n" +
                                             "Luego de hacer la búsqueda se trabaja la matriz sacando sus multiplicadores y haciendo \n"
                 +                           "el método de Gauss simple, pero, por cada iteración de solución de la matriz vuelve y se\n"
-                +                           "encuentra su número mayor absoluto en la fila de la diagonal que se está analizando.\n" +
+                +                           "busca el maximo valor absoluto de la columna actual.\n" +
                                             "Se sigue este proceso hasta dar solución de la matriz.\n" +
                                             "Este método busca reducir el error de propagación al tener como divisor del multiplicador\n"
                +                            "número grande.");
@@ -221,6 +221,8 @@ public class PivoteoParcial extends javax.swing.JFrame {
     private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
         try {
             BigDecimal[][] ecuaciones = contenedor.getEcuaciones();
+            BigDecimal[][] Ub = GaussMethods.PivoteoParcial(ecuaciones, ecuaciones.length -1);
+            BigDecimal[] X = GaussMethods.Sustitucion(Ub, ecuaciones.length - 1);
         } catch(Exception e) {
             System.out.println(e.toString());
         }

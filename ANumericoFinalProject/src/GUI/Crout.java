@@ -353,35 +353,19 @@ public class Crout extends javax.swing.JFrame {
         }
         mostrar();
     }
-    /*
-    public void sustitucionProgresiva(){
-        int n = L.length-1;
-        for(int i = 0; i <= n; i++){
-         BigDecimal  acumulador = BigDecimal.ZERO;
-           for (int p = 0; p < i; p++){
-               acumulador = acumulador.add(L[i][p]).multiply(Z[p]);
-               System.out.println("el acumulador dio " + acumulador );
-           }
-           Z[i] = (B[i]).subtract(acumulador).divide(L[i][i],MathContext.DECIMAL128);
-        System.out.println("Z"+(i+1)+": "+Z[i]);
-      
-        } 
-    }
-    */
-    
+   
     public void Sustitucion() {
         int n = U.length-1 ;
-       // if(U[n][n] == BigDecimal.ZERO){
-         //   throw new ArithmeticException("El sistema tiene infinitas/cero soluciones");
-        //}
-        //BigDecimal[] X = new BigDecimal[n+1];
+        if(U[n][n] == BigDecimal.ZERO){
+            throw new ArithmeticException("El sistema tiene infinitas/cero soluciones");
+        }
+        BigDecimal[] X = new BigDecimal[n+1];
         X[n]= Z[n].divide(U[n][n], MathContext.DECIMAL128);
         System.out.println("X"+(n+1)+ "= "+ X[n]);
         for(int i = n-1; i >= 0; i--) { 
             BigDecimal sumatoria = BigDecimal.ZERO;
             for(int j = i+1; j <= n; j++){
                 sumatoria = sumatoria.add(U[i][j].multiply(X[j]));
-                System.out.println("i "+i+"j "+j);
             }
             if(U[i][i] == BigDecimal.ZERO){
                 throw new ArithmeticException("El sistema tiene infinitas soluciones");
@@ -393,10 +377,10 @@ public class Crout extends javax.swing.JFrame {
     
     public void Progresiva() {
         int n = L.length-1 ;
-       // if(U[n][n] == BigDecimal.ZERO){
-         //   throw new ArithmeticException("El sistema tiene infinitas/cero soluciones");
-        //}
-        //BigDecimal[] X = new BigDecimal[n+1];
+        if(U[n][n] == BigDecimal.ZERO){
+           throw new ArithmeticException("El sistema tiene infinitas/cero soluciones");
+        }
+        BigDecimal[] X = new BigDecimal[n+1];
         Z[0]= B[0].divide(L[0][0], MathContext.DECIMAL128);
         System.out.println("Z1 = "+ Z[0]);
         for(int i = 1; i <= n; i++) { 
@@ -412,38 +396,16 @@ public class Crout extends javax.swing.JFrame {
         }   
     }
     
-    /*
-    public void sustitucionRegreciba(){
-        int n = U.length-1;
-        for(int i = n-1; i >= 0;){
-         BigDecimal  acumulador = BigDecimal.ZERO;
-           for (int p = i; p < n;){
-               acumulador = acumulador.add(U[i][p]).multiply(X[p]);
-               p++;
-               System.out.println("acumulador en regresiva dio " + acumulador );
-           }
-           X[i] = (Z[i]).subtract(acumulador).divide(U[i][i],MathContext.DECIMAL128);
-        System.out.println("X"+i+": "+X[i]);
-        i--;
-        }
-    }
-    */
     
     public void mostrar(){
-        //System.out.println("Estamos en mostrar. filas L:"+L.length +" Columnas L:"+L[0].length);
         String tmpL="";
         String tmpU="";
         String tmpA ="";
         String tmpB="";
         for(int i = 0;i<L.length;i++){
-           // System.out.println("dentro del primer ciclo");
             for(int j = 0;j<L[0].length;j++){
-               // System.out.println("dentro del segundo ciclo");
-              //  System.out.println("valor L:"+L[i][j]);
-                //System.out.println("Valor i:"+i+" Valor j:"+j);
                 tmpL = tmpL + L[i][j]+" ";
                
-               // System.out.println("valor U:"+U[i][j]);
                 tmpU= tmpU+U[i][j]+" ";
                 tmpA= tmpA+A[i][j]+" ";
             }

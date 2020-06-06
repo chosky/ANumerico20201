@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PivoteoParcial extends javax.swing.JFrame {
     private final ContenedorEcuaciones contenedor;
+    private BigDecimal[][] _ecuaciones;
     /**
      * Creates new form PivoteoParcial
      */
@@ -43,7 +44,6 @@ public class PivoteoParcial extends javax.swing.JFrame {
         cleanBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(675, 610));
 
         titleLbl.setBackground(new java.awt.Color(254, 254, 254));
         titleLbl.setFont(new java.awt.Font("Lato Black", 1, 35)); // NOI18N
@@ -183,11 +183,11 @@ public class PivoteoParcial extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cleanBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(backBtn, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(backBtn)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -195,8 +195,26 @@ public class PivoteoParcial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void clearTable() {
-        DefaultTableModel bisectionTableModel = (DefaultTableModel) gaussTable.getModel();
-        bisectionTableModel.setRowCount(0);
+        DefaultTableModel pivoteoTableModel = (DefaultTableModel) gaussTable.getModel();
+        pivoteoTableModel.setRowCount(0);
+    }
+    
+    private void initTable() {
+        String[] columnNames = new String[_ecuaciones.length + 1];
+        columnNames[0] = "n";
+        for(int i=1; i <= this._ecuaciones.length; i++){
+            columnNames[i] = "X"+i;
+        }
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        this.gaussTable.setModel(model);
+    }
+    
+    private void mostrarResultado(BigDecimal[] X){
+        String text = "Resultado: \n";
+        for(int i = 0; i < X.length; i++){
+            text += "X"+(i+1)+ "= "+ X[i]+ "\n";
+        }
+        this.observations.setText(text);
     }
     
     private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
@@ -220,9 +238,11 @@ public class PivoteoParcial extends javax.swing.JFrame {
 
     private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
         try {
-            BigDecimal[][] ecuaciones = contenedor.getEcuaciones();
-            BigDecimal[][] Ub = GaussMethods.PivoteoParcial(ecuaciones, ecuaciones.length -1);
-            BigDecimal[] X = GaussMethods.Sustitucion(Ub, ecuaciones.length - 1);
+            this._ecuaciones = contenedor.getEcuaciones();
+            initTable();
+            BigDecimal[][] Ub = GaussMethods.PivoteoParcial(_ecuaciones, _ecuaciones.length -1, gaussTable);
+            BigDecimal[] X = GaussMethods.Sustitucion(Ub, _ecuaciones.length - 1);
+            mostrarResultado(X);
         } catch(Exception e) {
             System.out.println(e.toString());
         }

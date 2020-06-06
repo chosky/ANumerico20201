@@ -17,6 +17,8 @@ import javax.swing.table.DefaultTableModel;
 public class GaussianaSimple extends javax.swing.JFrame {
 
     private final ContenedorEcuaciones contenedor;
+    private BigDecimal[][] _ecuaciones;
+
     /**
      * Creates new form GaussianaSimple
      */
@@ -198,11 +200,11 @@ public class GaussianaSimple extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(backBtn, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(backBtn)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -210,8 +212,26 @@ public class GaussianaSimple extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void clearTable() {
-        DefaultTableModel bisectionTableModel = (DefaultTableModel) gaussTable.getModel();
-        bisectionTableModel.setRowCount(0);
+        DefaultTableModel gaussTableModel = (DefaultTableModel) gaussTable.getModel();
+        gaussTableModel.setRowCount(0);
+    }
+    
+    private void initTable() {
+        String[] columnNames = new String[_ecuaciones.length + 1];
+        columnNames[0] = "n";
+        for(int i =1; i <= this._ecuaciones.length; i++){
+            columnNames[i] = "X"+i;
+        }
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        this.gaussTable.setModel(model);
+    }
+    
+    private void mostrarResultado(BigDecimal[] X){
+        String text = "Resultado: \n";
+        for(int i = 0; i < X.length; i++){
+            text += "X"+(i+1)+ "= "+ X[i]+ "\n";
+        }
+        this.observations.setText(text);
     }
     
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
@@ -230,9 +250,11 @@ public class GaussianaSimple extends javax.swing.JFrame {
 
     private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
         try {
-            BigDecimal[][] ecuaciones = contenedor.getEcuaciones();
-            BigDecimal[][] Ub = GaussMethods.GaussSimple(ecuaciones, ecuaciones.length - 1);
-            BigDecimal[] X = GaussMethods.Sustitucion(Ub, ecuaciones.length - 1);
+            this._ecuaciones = contenedor.getEcuaciones();
+            initTable();
+            BigDecimal[][] Ub = GaussMethods.GaussSimple(_ecuaciones, _ecuaciones.length - 1, gaussTable);
+            BigDecimal[] X = GaussMethods.Sustitucion(Ub, _ecuaciones.length - 1);
+            mostrarResultado(X);
         } catch(Exception e) {
             System.out.println(e.toString());
         }

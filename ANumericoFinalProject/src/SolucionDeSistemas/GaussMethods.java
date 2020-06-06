@@ -7,6 +7,8 @@ package SolucionDeSistemas;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 class BuscarMayor {
     BigDecimal mayor;
@@ -19,6 +21,22 @@ class BuscarMayor {
  */
 public class GaussMethods {
     
+    private static void mostrarEtapa(JTable table, int etapa, int n) {
+       DefaultTableModel model = (DefaultTableModel)table.getModel();
+       String[] row = new String[n];
+       row[0] = "Etapa "+ (etapa+1);
+       model.addRow(row);
+       table.setModel(model);
+    }
+    
+    private static void mostrarMatriz(JTable table, BigDecimal[][]Ab) {
+        DefaultTableModel model = (DefaultTableModel)table.getModel();
+        for(int i = 0; i < Ab.length; i++) {
+            model.addRow(Ab[i]);
+        }
+        model.addRow(new Object[Ab.length]);
+        table.setModel(model);
+    }
     
     public static BigDecimal[][] obtenerAumentada(BigDecimal[][] A, BigDecimal[] b) {
         BigDecimal[][] matrizAumentada = null;
@@ -39,12 +57,10 @@ public class GaussMethods {
     public static BigDecimal[][] Reduccion(BigDecimal[][] Ab, int n, int k){
         for(int i = k+1; i <= n; i++) {
             BigDecimal mult = Ab[i][k].divide(Ab[k][k], MathContext.DECIMAL128);
-            //System.out.println("mult fila"+ i + " "+mult);
             for(int j = k; j <= n+1; j++) {
-                Ab[i][j] = Ab[i][j].subtract(mult.multiply(Ab[k][j]));
-                System.out.print(Ab[i][j] + " ");
+                Ab[i][j] = Ab[i][j].subtract(mult.multiply(Ab[k][j], MathContext.DECIMAL128), MathContext.DECIMAL128);
             }
-            System.out.print("\n");
+            Ab[i][k] = BigDecimal.valueOf(Ab[i][k].intValue());
         }
         return Ab;
     }
@@ -68,25 +84,24 @@ public class GaussMethods {
         BigDecimal[] Aux = Ab[k];
         Ab[k] = Ab[filaM];
         Ab[filaM] = Aux;
-        System.out.println("Se intercambio la fila " + k + "  por la fila " + filaM);
         return Ab;
     }
     
-    public static BigDecimal[][] GaussSimple(BigDecimal[][] Ab, int n) {
+    public static BigDecimal[][] GaussSimple(BigDecimal[][] Ab, int n, JTable table) {
         for(int k = 0; k <= n-1; k++) {
-            System.out.println("Etapa " + (k+1));
+            mostrarEtapa(table, k, n);
             Ab = Reduccion(Ab, n, k);
+            mostrarMatriz(table, Ab);
         }
         return Ab;
     }
     
-    public static BigDecimal[][] PivoteoParcial(BigDecimal[][]Ab, int n) {
+    public static BigDecimal[][] PivoteoParcial(BigDecimal[][]Ab, int n, JTable table) {
         for (int k = 0; k <= n-1; k++) {
-            System.out.println("Etapa " + (k+1));
+            mostrarEtapa(table, k, n);
             BuscarMayor buscarMayor = BuscarMayorEnColumna(Ab, k, n);
             BigDecimal mayor = buscarMayor.mayor;
             int filaM = buscarMayor.fila;
-            System.out.println("Mayor: "+ mayor + " filaMayor: "+ filaM);
             if(mayor == BigDecimal.ZERO) {
                 throw new ArithmeticException("El sistema tiene infinitas/cero soluciones");
             }
@@ -94,6 +109,7 @@ public class GaussMethods {
                 Ab = CambiarFila(Ab, k, filaM);
             }
             Ab = Reduccion(Ab, n, k);
+            mostrarMatriz(table, Ab);
         }
         return Ab;
     }
@@ -135,7 +151,6 @@ public class GaussMethods {
         }
         BigDecimal[] X = new BigDecimal[n+1];
         X[n]= Ab[n][n+1].divide(Ab[n][n], MathContext.DECIMAL128);
-        System.out.println("X"+(n+1)+ "= "+ X[n]);
         for(int i = n-1; i >= 0; i--) { 
             BigDecimal sumatoria = BigDecimal.ZERO;
             for(int j = i+1; j <= n; j++){
@@ -145,7 +160,6 @@ public class GaussMethods {
                 throw new ArithmeticException("El sistema tiene infinitas soluciones");
             }
             X[i] = (Ab[i][n+1].subtract(sumatoria)).divide(Ab[i][i], MathContext.DECIMAL128);
-            System.out.println("X"+(i+1)+ "= "+ X[i]);
         }
         return X;
     }

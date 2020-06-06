@@ -17,8 +17,9 @@ import javax.swing.table.DefaultTableModel;
 public final class Escalonado extends javax.swing.JFrame {
 
     
+    private final ContenedorEcuaciones contenedor;
+    BigDecimal [][] _ecuaciones;
     
-    BigDecimal [][]ecuaciones;
     String print = "";
     int mayoresFilas[];
 
@@ -27,7 +28,7 @@ public final class Escalonado extends javax.swing.JFrame {
         this.setTitle("Pivoteo Escalonado");
         this.setResizable(true);
         this.getContentPane().setBackground(Color.WHITE);
-        ecuaciones = ContenedorEcuaciones.getContenedor().getEcuaciones();
+        contenedor = ContenedorEcuaciones.getContenedor();
         initComponents();
     }
 
@@ -329,6 +330,24 @@ public final class Escalonado extends javax.swing.JFrame {
     }
     
     public void imprimir(String str){
+    }
+    
+    private void initTable() {
+        String[] columnNames = new String[_ecuaciones.length + 1];
+        columnNames[0] = "n";
+        for(int i =1; i <= this._ecuaciones.length; i++){
+            columnNames[i] = "X"+i;
+        }
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        this.gaussTable.setModel(model);
+    }
+    
+    private void mostrarResultado(BigDecimal[] X){
+        String text = "Resultado: \n";
+        for(int i = 0; i < X.length; i++){
+            text += "X"+(i+1)+ "= "+ X[i]+ "\n";
+        }
+        this.observations.setText(text);
     }
    
     

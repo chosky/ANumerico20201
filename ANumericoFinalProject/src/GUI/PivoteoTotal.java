@@ -13,6 +13,7 @@ public class PivoteoTotal extends javax.swing.JFrame {
     private final ContenedorEcuaciones contenedor;
     BigDecimal[][]A;
     BigDecimal[]B;
+    private BigDecimal[][] _ecuaciones;
     int n = A.length;
     int k = 0;
     /**
@@ -224,6 +225,25 @@ public class PivoteoTotal extends javax.swing.JFrame {
         DefaultTableModel bisectionTableModel = (DefaultTableModel) gaussTable.getModel();
         bisectionTableModel.setRowCount(0);
     }
+    
+    private void initTable() {
+        String[] columnNames = new String[_ecuaciones.length + 1];
+        columnNames[0] = "n";
+        for(int i =1; i <= this._ecuaciones.length; i++){
+            columnNames[i] = "X"+i;
+        }
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        this.gaussTable.setModel(model);
+    }
+    
+    private void mostrarResultado(BigDecimal[] X){
+        String text = "Resultado: \n";
+        for(int i = 0; i < X.length; i++){
+            text += "X"+(i+1)+ "= "+ X[i]+ "\n";
+        }
+        this.observations.setText(text);
+    }
+    
     /*
     public BigDecimal[][] ordenamientoMatrizPivoteoTotal(BigDecimal A, BigDecimal B, int n, int k){
        int mayor = 0 ;

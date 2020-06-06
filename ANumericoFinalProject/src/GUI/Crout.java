@@ -1,6 +1,7 @@
 package GUI;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -11,7 +12,12 @@ import javax.swing.table.DefaultTableModel;
 public class Crout extends javax.swing.JFrame {
     
     private final ContenedorEcuaciones contenedor;
-
+    BigDecimal[][]L;
+    BigDecimal[][]U;
+    BigDecimal[][]A;
+    BigDecimal[]B;
+    BigDecimal[]X;
+    BigDecimal[]Z;
     /**
      * Creates new form Crout
      */
@@ -254,7 +260,7 @@ public class Crout extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
-        JOptionPane.showMessageDialog(this, "");
+        JOptionPane.showMessageDialog(this, " ");
     }//GEN-LAST:event_infoButtonActionPerformed
 
     private void ecuacionesBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ecuacionesBtn1ActionPerformed
@@ -275,11 +281,183 @@ public class Crout extends javax.swing.JFrame {
     private void calculateBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtn1ActionPerformed
         try {
             BigDecimal[][] ecuaciones = contenedor.getEcuaciones();
+            adecuarMatrices();
+            crout();
+            //sustitucionProgresiva();
+            //sustitucionRegreciba();
+            Progresiva();
+            Sustitucion();
         } catch(Exception e) {
             System.out.println(e.toString());
         }
     }//GEN-LAST:event_calculateBtn1ActionPerformed
 
+    public void adecuarMatrices(){
+        BigDecimal[][]tmp = contenedor.ecuaciones;
+       if(tmp!=null){   
+            L = new BigDecimal[tmp.length][tmp[0].length-1];
+            U = new BigDecimal[tmp.length][tmp[0].length-1];
+            A = new BigDecimal[tmp.length][tmp[0].length-1];
+            B = new BigDecimal[tmp.length];
+            Z = new BigDecimal[tmp.length];
+            X = new BigDecimal[tmp.length];
+            
+            
+            
+            for(int filas = 0;filas<tmp.length;filas++){
+                for(int columnas = 0;columnas<tmp[0].length;columnas++){
+                    if(columnas==tmp[0].length-1){
+                        B[filas] = tmp[filas][columnas];
+                    }else {
+                        A[filas][columnas] = tmp[filas][columnas];
+                        if(filas == columnas){
+                            U[filas][columnas] = BigDecimal.ONE;
+                            L[filas][columnas] = BigDecimal.ONE;
+                        }else {
+                            U[filas][columnas] = BigDecimal.ZERO;
+                            L[filas][columnas] = BigDecimal.ZERO;
+                        }
+                    }
+                }
+            }
+            mostrar();
+        }else{
+            showErrorMessage("Porfavor primero ingrese los datos");
+        }
+    }
+    
+    public void showErrorMessage(String message) {
+        JOptionPane.showMessageDialog(this, message);
+    }
+    
+    public void crout(){
+        int n = L.length;
+        BigDecimal suma1,suma2;
+        double tmp=0;
+        for(int d = 0 ;d<n;d++){
+            suma1 = BigDecimal.ZERO;
+            for(int j = d; j< n;j++){
+                for(int s = 0; s < j; s++){
+                    suma1 = suma1.add(L[j][s].multiply(U[s][d]));
+                }
+               L[j][d] = A[j][d].subtract(suma1);
+            }
+            suma2 = BigDecimal.ZERO;
+            for(int j = d+1;j<n;j++){
+                for(int p = 0; p<d; p++){
+                    suma2 = suma2.add(L[d][p].multiply(U[p][j]));
+                }
+                U[d][j] = A[d][j].subtract(suma2).divide(L[d][d],MathContext.DECIMAL128);
+            }
+            
+        }
+        mostrar();
+    }
+    /*
+    public void sustitucionProgresiva(){
+        int n = L.length-1;
+        for(int i = 0; i <= n; i++){
+         BigDecimal  acumulador = BigDecimal.ZERO;
+           for (int p = 0; p < i; p++){
+               acumulador = acumulador.add(L[i][p]).multiply(Z[p]);
+               System.out.println("el acumulador dio " + acumulador );
+           }
+           Z[i] = (B[i]).subtract(acumulador).divide(L[i][i],MathContext.DECIMAL128);
+        System.out.println("Z"+(i+1)+": "+Z[i]);
+      
+        } 
+    }
+    */
+    
+    public void Sustitucion() {
+        int n = U.length-1 ;
+       // if(U[n][n] == BigDecimal.ZERO){
+         //   throw new ArithmeticException("El sistema tiene infinitas/cero soluciones");
+        //}
+        //BigDecimal[] X = new BigDecimal[n+1];
+        X[n]= Z[n].divide(U[n][n], MathContext.DECIMAL128);
+        System.out.println("X"+(n+1)+ "= "+ X[n]);
+        for(int i = n-1; i >= 0; i--) { 
+            BigDecimal sumatoria = BigDecimal.ZERO;
+            for(int j = i+1; j <= n; j++){
+                sumatoria = sumatoria.add(U[i][j].multiply(X[j]));
+                System.out.println("i "+i+"j "+j);
+            }
+            if(U[i][i] == BigDecimal.ZERO){
+                throw new ArithmeticException("El sistema tiene infinitas soluciones");
+            }
+            X[i] = (Z[i].subtract(sumatoria)).divide(U[i][i], MathContext.DECIMAL128);
+            System.out.println("X"+(i+1)+ "= "+ X[i]);
+        }   
+    }
+    
+    public void Progresiva() {
+        int n = L.length-1 ;
+       // if(U[n][n] == BigDecimal.ZERO){
+         //   throw new ArithmeticException("El sistema tiene infinitas/cero soluciones");
+        //}
+        //BigDecimal[] X = new BigDecimal[n+1];
+        Z[0]= B[0].divide(L[0][0], MathContext.DECIMAL128);
+        System.out.println("Z1 = "+ Z[0]);
+        for(int i = 1; i <= n; i++) { 
+            BigDecimal sumatoria = BigDecimal.ZERO;
+            for(int j = 0; j < i; j++){
+                sumatoria = sumatoria.add(L[i][j].multiply(Z[j]));
+            }
+            if(L[i][i] == BigDecimal.ZERO){
+                throw new ArithmeticException("El sistema tiene infinitas soluciones");
+            }
+            Z[i] = (B[i].subtract(sumatoria)).divide(L[i][i], MathContext.DECIMAL128);
+            System.out.println("Z"+(i+1)+ "= "+ Z[i]);
+        }   
+    }
+    
+    /*
+    public void sustitucionRegreciba(){
+        int n = U.length-1;
+        for(int i = n-1; i >= 0;){
+         BigDecimal  acumulador = BigDecimal.ZERO;
+           for (int p = i; p < n;){
+               acumulador = acumulador.add(U[i][p]).multiply(X[p]);
+               p++;
+               System.out.println("acumulador en regresiva dio " + acumulador );
+           }
+           X[i] = (Z[i]).subtract(acumulador).divide(U[i][i],MathContext.DECIMAL128);
+        System.out.println("X"+i+": "+X[i]);
+        i--;
+        }
+    }
+    */
+    
+    public void mostrar(){
+        //System.out.println("Estamos en mostrar. filas L:"+L.length +" Columnas L:"+L[0].length);
+        String tmpL="";
+        String tmpU="";
+        String tmpA ="";
+        String tmpB="";
+        for(int i = 0;i<L.length;i++){
+           // System.out.println("dentro del primer ciclo");
+            for(int j = 0;j<L[0].length;j++){
+               // System.out.println("dentro del segundo ciclo");
+              //  System.out.println("valor L:"+L[i][j]);
+                //System.out.println("Valor i:"+i+" Valor j:"+j);
+                tmpL = tmpL + L[i][j]+" ";
+               
+               // System.out.println("valor U:"+U[i][j]);
+                tmpU= tmpU+U[i][j]+" ";
+                tmpA= tmpA+A[i][j]+" ";
+            }
+            tmpL=tmpL +"\n";
+            tmpU=tmpU + "\n";
+            tmpA=tmpA + "\n";
+            tmpB+=B[i]+" ";
+        }
+       System.out.println("L: \n"+tmpL);
+       System.out.println("U: \n"+tmpU);
+       System.out.println("A: \n"+tmpA);
+       System.out.println("B: \n"+tmpB);
+    }
+    
     private void clearMatrizA() {
         DefaultTableModel bisectionTableModel = (DefaultTableModel) matrizA.getModel();
         bisectionTableModel.setRowCount(0);

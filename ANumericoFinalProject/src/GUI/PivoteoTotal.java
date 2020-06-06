@@ -11,7 +11,10 @@ import javax.swing.table.DefaultTableModel;
 public class PivoteoTotal extends javax.swing.JFrame {
 
     private final ContenedorEcuaciones contenedor;
-    
+    BigDecimal[][]A;
+    BigDecimal[]B;
+    int n = A.length;
+    int k = 0;
     /**
      * Creates new form PivoteoTotal
      */
@@ -221,7 +224,65 @@ public class PivoteoTotal extends javax.swing.JFrame {
         DefaultTableModel bisectionTableModel = (DefaultTableModel) gaussTable.getModel();
         bisectionTableModel.setRowCount(0);
     }
+    /*
+    public BigDecimal[][] ordenamientoMatrizPivoteoTotal(BigDecimal A, BigDecimal B, int n, int k){
+       int mayor = 0 ;
+       int filaMayor = k;
+       int columnaMayor = k;
+       for(int r = k;r <= n-1; r++){
+           for(int s = k;s <= n; s++){
+                if(A[r][s] >= mayor) {
+                    filaMayor = r;
+                    columnaMayor = s;
+                }
+            }
+        }
+        if(mayor == 0){
+             //aca imprimimos en observaciones
+        }else if(filaMayor != k){
+            A = intercambiarColumnas(BigDecimal A, int columnaMayor, int k);
+            A, B = intercambiarFilas(BigDecimal A, BigDecimal B, int filaMayor, int k);
+            marcas = intercambiarMarcas(int marcas, int columnaMayor, int k);
+        }
+        return A,B marcas; 
+    }
     
+    public void pivoteoTotal(BigDecimal A, BigDecimal B, int n){
+    int marcas[];
+        for(int i = 0; i <= n-1; i++){
+        A, B, marcas = ordenamientoMatrizPivoteoTotal(BigDecimal A, BigDecimal B, int n, int i);
+        A, B = reduccion(BigDecimal A, BigDecimal B, int n, int i)
+        }
+          // imprimir  la matriz reducida
+    sustitucion (BigDecimal A, BigDecimal B, int n, int marcas);
+    
+    }
+    
+    public void sustitucion (BigDecimal A, BigDecimal B, int n, int i){
+        
+        
+    }
+    public void reduccion(){
+    
+    }
+    
+    
+    public BigDecimal[][] intercambiarColumnas(BigDecimal A, BigDecimal B, int columnaMayor, int k){
+        int columnaTemporal = 0;
+        columnaTemporal = A[columnaMayor];
+        A[columnaMayor] = A[k];
+        A[k] = columnatemporal;
+        return A;
+    }
+    public BigDecimal[][] intercambiarFilas(){
+        
+        return A;
+    }
+    public int intercambiarMarcas(int marcas){
+      
+        return marcas;
+    }
+    */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
     private javax.swing.JButton calculateBtn1;

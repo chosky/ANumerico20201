@@ -17,6 +17,8 @@ public class Doolittle extends javax.swing.JFrame {
     BigDecimal[][]U;
     BigDecimal[][]A;
     BigDecimal[]B;
+    BigDecimal[]X;
+    BigDecimal[]Z;
     /**
      * Creates new form Doolottle
      */
@@ -297,6 +299,8 @@ public class Doolittle extends javax.swing.JFrame {
             U = new BigDecimal[tmp.length][tmp[0].length-1];
             A = new BigDecimal[tmp.length][tmp[0].length-1];
             B = new BigDecimal[tmp.length];
+            X = new BigDecimal[tmp.length];
+            Z = new BigDecimal[tmp.length];
             
             
             for(int filas = 0;filas<tmp.length;filas++){
@@ -324,7 +328,7 @@ public class Doolittle extends javax.swing.JFrame {
     }
     
     public void doolittle(){
-        int n = L.length;
+        int n = L.length-1;
         BigDecimal suma1,suma2,suma3;
         double tmp=0;
         for(int k = 0; k < n; k++){
@@ -349,6 +353,48 @@ public class Doolittle extends javax.swing.JFrame {
             }
         }
         mostrar();
+    }
+    
+    public void Sustitucion() {
+        int n = U.length-1 ;
+        if(U[n][n] == BigDecimal.ZERO){
+            throw new ArithmeticException("El sistema tiene infinitas/cero soluciones");
+        }
+        BigDecimal[] X = new BigDecimal[n+1];
+        X[n]= Z[n].divide(U[n][n], MathContext.DECIMAL128);
+        System.out.println("X"+(n+1)+ "= "+ X[n]);
+        for(int i = n-1; i >= 0; i--) { 
+            BigDecimal sumatoria = BigDecimal.ZERO;
+            for(int j = i+1; j <= n; j++){
+                sumatoria = sumatoria.add(U[i][j].multiply(X[j]));
+            }
+            if(U[i][i] == BigDecimal.ZERO){
+                throw new ArithmeticException("El sistema tiene infinitas soluciones");
+            }
+            X[i] = (Z[i].subtract(sumatoria)).divide(U[i][i], MathContext.DECIMAL128);
+            System.out.println("X"+(i+1)+ "= "+ X[i]);
+        }   
+    }
+    
+    public void Progresiva() {
+        int n = L.length-1 ;
+        if(U[n][n] == BigDecimal.ZERO){
+           throw new ArithmeticException("El sistema tiene infinitas/cero soluciones");
+        }
+        BigDecimal[] X = new BigDecimal[n+1];
+        Z[0]= B[0].divide(L[0][0], MathContext.DECIMAL128);
+        System.out.println("Z1 = "+ Z[0]);
+        for(int i = 1; i <= n; i++) { 
+            BigDecimal sumatoria = BigDecimal.ZERO;
+            for(int j = 0; j < i; j++){
+                sumatoria = sumatoria.add(L[i][j].multiply(Z[j]));
+            }
+            if(L[i][i] == BigDecimal.ZERO){
+                throw new ArithmeticException("El sistema tiene infinitas soluciones");
+            }
+            Z[i] = (B[i].subtract(sumatoria)).divide(L[i][i], MathContext.DECIMAL128);
+            System.out.println("Z"+(i+1)+ "= "+ Z[i]);
+        }   
     }
     
     public void mostrar(){

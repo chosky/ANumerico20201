@@ -7,6 +7,8 @@ package SolucionDeSistemas;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
+import java.util.Arrays;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -238,7 +240,7 @@ public class GaussMethods {
     public static BigDecimal[][] pivoteoEscalonado(BigDecimal[][] Ab, int n, JTable table) {
 	BigDecimal[] mayoresFilas;
 	mayoresFilas = buscarMayoresFilas(Ab, n);
-	for (int k = 0; k < n; k++) {
+        for (int k = 0; k < n; k++) {
             mostrarEtapa(table, k, n);
             BuscarMayor buscarMayor = buscarMayorEnMayoresFilas(Ab, k, n, mayoresFilas);
             BigDecimal mayor = buscarMayor.mayor;
@@ -256,14 +258,15 @@ public class GaussMethods {
     }
 
     public static BigDecimal[] buscarMayoresFilas(BigDecimal[][] Ab, int n) {
-	BigDecimal[] mayoresFilas = new BigDecimal[n];
+	BigDecimal[] mayoresFilas = new BigDecimal[n + 1];
+        Arrays.fill(mayoresFilas, BigDecimal.ZERO);
         BigDecimal mayor = Ab[0][0];
-        for(int i = 0; i < n; i ++){
-	    for(int j = 0; j < n; j++) {
-	    	if(Math.abs(Ab[i][j].doubleValue()) > Math.abs(mayor.doubleValue())){
+        for(int i = 0; i <= n; i ++){
+            mayor = BigDecimal.ZERO;
+	    for(int j = 0; j <= n; j++) {
+                if(Math.abs(Ab[i][j].doubleValue()) > Math.abs(mayor.doubleValue())){
                     mayor = Ab[i][j];
                     mayoresFilas[i] = mayor.abs();
-                    System.out.println(mayoresFilas[i]);
             	}
 	    } 
         }
@@ -272,13 +275,13 @@ public class GaussMethods {
 
     public static BuscarMayor buscarMayorEnMayoresFilas(BigDecimal[][] Ab, int k, int n, BigDecimal[] mayoresFilas) {
 	BuscarMayor object = new BuscarMayor();
-        BigDecimal mayor = Ab[k][k];
+        BigDecimal mayor = BigDecimal.ZERO;
         int filaM = k;
-        for(int i = 0; i < n; i ++) {
-	        System.out.println(mayoresFilas[i]);
-                System.out.println(Ab[k][i]);
-            if(Math.abs(mayoresFilas[i].divide(Ab[k][i]).doubleValue()) > Math.abs(mayor.doubleValue())){
-                mayor = Ab[k][i];
+        for(int i = k; i <= n; i++) {
+            if(mayoresFilas[i].doubleValue() == 0) {
+                throw new ArithmeticException("El sistema tiene infinitas/cero soluciones");
+            } else if((Ab[i][k].setScale(2)).divide(mayoresFilas[i], 2, RoundingMode.HALF_DOWN).abs().compareTo(mayor) == 1){
+                mayor = (Ab[i][k].setScale(2)).divide(mayoresFilas[i], 2, RoundingMode.HALF_DOWN).abs();
                 filaM = i;
             }
         }

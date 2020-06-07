@@ -252,10 +252,11 @@ public final class Escalonado extends javax.swing.JFrame {
     
     private void initTable() {
         String[] columnNames = new String[_ecuaciones.length + 1];
-        columnNames[0] = "n";
+        columnNames[0] = "X1";
         for(int i =1; i <= this._ecuaciones.length; i++){
             columnNames[i] = "X"+i;
         }
+        columnNames[_ecuaciones.length] = "b";
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         this.gaussTable.setModel(model);
     }

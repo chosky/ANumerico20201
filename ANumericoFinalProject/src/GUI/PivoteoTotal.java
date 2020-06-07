@@ -1,5 +1,6 @@
 package GUI;
 
+import SolucionDeSistemas.GaussMethods;
 import java.math.BigDecimal;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -11,11 +12,7 @@ import javax.swing.table.DefaultTableModel;
 public class PivoteoTotal extends javax.swing.JFrame {
 
     private final ContenedorEcuaciones contenedor;
-    BigDecimal[][]A;
-    BigDecimal[]B;
-    private BigDecimal[][] _ecuaciones;
-    int n = A.length;
-    int k = 0;
+    BigDecimal [][] _ecuaciones;
     /**
      * Creates new form PivoteoTotal
      */
@@ -209,11 +206,15 @@ public class PivoteoTotal extends javax.swing.JFrame {
     }//GEN-LAST:event_ecuacionesBtn1ActionPerformed
 
     private void calculateBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtn1ActionPerformed
-        try {
-            BigDecimal[][] ecuaciones = contenedor.getEcuaciones();
-        } catch(Exception e) {
-            System.out.println(e.toString());
-        }
+        //try {
+            this._ecuaciones = contenedor.getEcuaciones();
+            initTable();
+            BigDecimal[][] Ub = GaussMethods.pivoteoTotal(_ecuaciones, _ecuaciones.length - 1, gaussTable);
+            BigDecimal[] X = GaussMethods.Sustitucion(Ub, _ecuaciones.length - 1);
+            mostrarResultado(X);
+        //} catch(Exception e) {
+          //  this.observations.setText(e.toString());
+        //}
     }//GEN-LAST:event_calculateBtn1ActionPerformed
 
     private void cleanBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanBtn1ActionPerformed
@@ -244,65 +245,7 @@ public class PivoteoTotal extends javax.swing.JFrame {
         this.observations.setText(text);
     }
     
-    /*
-    public BigDecimal[][] ordenamientoMatrizPivoteoTotal(BigDecimal A, BigDecimal B, int n, int k){
-       int mayor = 0 ;
-       int filaMayor = k;
-       int columnaMayor = k;
-       for(int r = k;r <= n-1; r++){
-           for(int s = k;s <= n; s++){
-                if(A[r][s] >= mayor) {
-                    filaMayor = r;
-                    columnaMayor = s;
-                }
-            }
-        }
-        if(mayor == 0){
-             //aca imprimimos en observaciones
-        }else if(filaMayor != k){
-            A = intercambiarColumnas(BigDecimal A, int columnaMayor, int k);
-            A, B = intercambiarFilas(BigDecimal A, BigDecimal B, int filaMayor, int k);
-            marcas = intercambiarMarcas(int marcas, int columnaMayor, int k);
-        }
-        return A,B marcas; 
-    }
     
-    public void pivoteoTotal(BigDecimal A, BigDecimal B, int n){
-    int marcas[];
-        for(int i = 0; i <= n-1; i++){
-        A, B, marcas = ordenamientoMatrizPivoteoTotal(BigDecimal A, BigDecimal B, int n, int i);
-        A, B = reduccion(BigDecimal A, BigDecimal B, int n, int i)
-        }
-          // imprimir  la matriz reducida
-    sustitucion (BigDecimal A, BigDecimal B, int n, int marcas);
-    
-    }
-    
-    public void sustitucion (BigDecimal A, BigDecimal B, int n, int i){
-        
-        
-    }
-    public void reduccion(){
-    
-    }
-    
-    
-    public BigDecimal[][] intercambiarColumnas(BigDecimal A, BigDecimal B, int columnaMayor, int k){
-        int columnaTemporal = 0;
-        columnaTemporal = A[columnaMayor];
-        A[columnaMayor] = A[k];
-        A[k] = columnatemporal;
-        return A;
-    }
-    public BigDecimal[][] intercambiarFilas(){
-        
-        return A;
-    }
-    public int intercambiarMarcas(int marcas){
-      
-        return marcas;
-    }
-    */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
     private javax.swing.JButton calculateBtn1;

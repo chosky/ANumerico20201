@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 class BuscarMayor {
     BigDecimal mayor;
+    int columna;
     int fila;
 }
 
@@ -85,6 +86,26 @@ public class GaussMethods {
         Ab[k] = Ab[filaM];
         Ab[filaM] = Aux;
         return Ab;
+    }
+    
+    public static BigDecimal[][] cambiarColumna(BigDecimal[][] Ab, int k, int columnaM, int[] marcas){
+        BigDecimal aux[];
+        aux = new BigDecimal[Ab.length-1];        
+        for (int i = 1; i <= k; i++) {
+            aux[i] = Ab[i][columnaM];
+            Ab[i][columnaM] = Ab[i][k];
+            Ab[i][k] = aux[i];
+            
+	}
+	return Ab;
+    }
+    
+    public static int[] cambiarMarcas(int[] marcas, int k, int columnaM){
+        int aux = marcas[columnaM];
+        marcas[columnaM] = marcas[k];
+        marcas[k] = aux;
+        
+        return marcas;
     }
     
     public static BigDecimal[][] GaussSimple(BigDecimal[][] Ab, int n, JTable table) {
@@ -163,4 +184,107 @@ public class GaussMethods {
         }
         return X;
     }
+    
+    public static BuscarMayor buscarMayorEnMatriz(BigDecimal[][] Ab, int k, int n){
+        BuscarMayor object = new BuscarMayor();
+        BigDecimal mayor = Ab[k][k];
+        int columnaM = k;
+        int filaM = k;
+        for(int m = k; m <= n; m ++){
+            for(int i = k; i <= n ; i++){
+                if(Math.abs(Ab[m][i].doubleValue()) > Math.abs(mayor.doubleValue())){
+                   mayor = Ab[m][i];
+                   filaM = m;
+                   columnaM = i;
+                }   
+            }
+            
+        }
+        object.mayor = mayor;
+        object.fila = filaM;
+        object.columna = columnaM;
+        return object;
+    }
+            
+    public static BigDecimal[][] pivoteoTotal(BigDecimal[][]Ab, int n, JTable table){
+        int marcas[];
+        marcas = new int[n];
+        for(int i = 0; i < n; i++){
+            marcas[i]= i;
+        }
+        for (int k = 0; k < n; k++) {
+            mostrarEtapa(table, k, n);
+            BuscarMayor buscarMayor = buscarMayorEnMatriz(Ab, k, n);
+            
+            BigDecimal mayor = buscarMayor.mayor;
+            int filaM = buscarMayor.fila;
+            int columnaM = buscarMayor.columna;
+            if(mayor == BigDecimal.ZERO) {
+                throw new ArithmeticException("El sistema tiene infinitas/cero soluciones");
+            }
+            if(k != filaM) {
+                Ab = CambiarFila(Ab, k, filaM);
+            }
+            if(k != columnaM){
+                Ab = cambiarColumna(Ab, k, columnaM, marcas);
+                marcas = cambiarMarcas(marcas, k, columnaM);
+            }                
+            Ab = Reduccion(Ab, n, k);
+            mostrarMatriz(table, Ab);
+        }
+        return Ab;
+    }
+    
+    public static BigDecimal[][] pivoteoEscalonado(BigDecimal[][] Ab, int n, JTable table) {
+	BigDecimal[] mayoresFilas;
+	mayoresFilas = buscarMayoresFilas(Ab, n);
+	for (int k = 0; k < n; k++) {
+            mostrarEtapa(table, k, n);
+            BuscarMayor buscarMayor = buscarMayorEnMayoresFilas(Ab, k, n, mayoresFilas);
+            BigDecimal mayor = buscarMayor.mayor;
+            int filaM = buscarMayor.fila;
+            if(mayor == BigDecimal.ZERO) {
+                throw new ArithmeticException("El sistema tiene infinitas/cero soluciones");
+            }
+            if(k != filaM) {
+                Ab = CambiarFila(Ab, k, filaM);
+            }
+            Ab = Reduccion(Ab, n, k);
+            mostrarMatriz(table, Ab);
+        }
+        return Ab;
+    }
+
+    public static BigDecimal[] buscarMayoresFilas(BigDecimal[][] Ab, int n) {
+	BigDecimal[] mayoresFilas = new BigDecimal[n];
+        BigDecimal mayor = Ab[0][0];
+        for(int i = 0; i < n; i ++){
+	    for(int j = 0; j < n; j++) {
+	    	if(Math.abs(Ab[i][j].doubleValue()) > Math.abs(mayor.doubleValue())){
+                    mayor = Ab[i][j];
+                    mayoresFilas[i] = mayor.abs();
+                    System.out.println(mayoresFilas[i]);
+            	}
+	    } 
+        }
+        return mayoresFilas;
+    }
+
+    public static BuscarMayor buscarMayorEnMayoresFilas(BigDecimal[][] Ab, int k, int n, BigDecimal[] mayoresFilas) {
+	BuscarMayor object = new BuscarMayor();
+        BigDecimal mayor = Ab[k][k];
+        int filaM = k;
+        for(int i = 0; i < n; i ++) {
+	        System.out.println(mayoresFilas[i]);
+                System.out.println(Ab[k][i]);
+            if(Math.abs(mayoresFilas[i].divide(Ab[k][i]).doubleValue()) > Math.abs(mayor.doubleValue())){
+                mayor = Ab[k][i];
+                filaM = i;
+            }
+        }
+        object.mayor = mayor;
+        object.fila = filaM;
+        return object;
+    }
+    
 }

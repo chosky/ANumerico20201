@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import SolucionDeSistemas.GaussMethods;
 import java.awt.Color;
 import java.math.BigDecimal;
 import javax.swing.JOptionPane;
@@ -12,17 +13,12 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Amboraes 
+ * @author Jose David Henao Ocampo
  */
 public final class Escalonado extends javax.swing.JFrame {
-
     
     private final ContenedorEcuaciones contenedor;
     BigDecimal [][] _ecuaciones;
-    
-    String print = "";
-    int mayoresFilas[];
-
     
     public Escalonado() {
         this.setTitle("Pivoteo Escalonado");
@@ -219,11 +215,15 @@ public final class Escalonado extends javax.swing.JFrame {
     }//GEN-LAST:event_infoButtonActionPerformed
 
     private void calculateBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtn1ActionPerformed
-        try {
-
-        } catch(Exception e) {
-            System.out.println(e.toString());
-        }
+        //try {
+            this._ecuaciones = contenedor.getEcuaciones();
+            initTable();
+            BigDecimal[][] Ub = GaussMethods.pivoteoEscalonado(_ecuaciones, _ecuaciones.length - 1, gaussTable);
+            BigDecimal[] X = GaussMethods.Sustitucion(Ub, _ecuaciones.length - 1);
+            mostrarResultado(X);
+        //} catch(Exception e) {
+         //   this.observations.setText(e.toString());
+        //}
     }//GEN-LAST:event_calculateBtn1ActionPerformed
 
     private void ecuacionesBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ecuacionesBtn1ActionPerformed
@@ -248,88 +248,6 @@ public final class Escalonado extends javax.swing.JFrame {
     
     public void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
-    }
-    
-    public BigDecimal[][] ordenamientoMatrizPivoteoEscalonado(BigDecimal[][] Ab, int n, int k){
-        int mayorDividido[] = new int[(n-1)-k];
-        for(int i = 0; i < n-1-k;i++){
-            mayorDividido[i] = (int) (Math.abs(Ab[i+k][k].doubleValue())/mayoresFilas[i+k]);
-        }
-        int posmayor = max(mayorDividido);
-        Ab = intercambiarFilas(Ab,posmayor,k);
-        return Ab;
-    }
-    
-    public int max(int[] arr){
-        int max = arr[0];
-        int indice = 0;
-        for(int i = 1 ; i < arr.length;i++){
-            if(arr[i]>max){
-                max = arr[i];
-                indice = i;
-            }
-        }
-        return indice;
-    }
-   
-    public BigDecimal[][] intercambiarFilas(BigDecimal[][] Ab,int posmayor, int k){
-        BigDecimal[] filatemporal = Ab[posmayor];
-        Ab[posmayor] = Ab[k];
-        Ab[k] = filatemporal;
-        return Ab;
-    }
-    
-    public void pivoteoEscalonado(BigDecimal[][]Ab, int n){
-        hallarMayoresFilas(Ab, n);
-        for(int i = 0;i<n-1;i++){
-            Ab= ordenamientoMatrizPivoteoEscalonado(Ab,n,i);
-            Ab = reduccion(Ab,n,i);
-        }
-    }
-    public void hallarMayoresFilas(BigDecimal[][]Ab, int n){
-        mayoresFilas = new int[n-1];
-        int i = 0;
-        for(int r = 0; r < n-1; r++){
-            for(int s = 0;s<n;s++){
-                if(Math.abs(Ab[r][s].doubleValue())>mayoresFilas[i]){
-                    mayoresFilas[i]=Math.abs(Ab[r][s].intValue());
-                }
-            }
-            i++;
-        }
-    }
-    
-    public void sustitución(BigDecimal[][]Ab, int n){
-        BigDecimal X[] = new BigDecimal[n];
-        int acumulador;
-        for( int i = n-1;i>0;i--){
-           acumulador = 0;
-           for(int p = i+1;p<n;p++){
-               acumulador += Ab[i][p].intValue()*X[p].intValue();
-           }
-           X[i] = BigDecimal.valueOf((Ab[i][n+1].intValue()-acumulador)/Ab[i][i].intValue());
-           imprimir("X"+(i+1)+"="+X[i]);
-        }
-    }
-    
-    public BigDecimal[][] reduccion(BigDecimal[][]Ab,int n,int p){
-        double multiplicador = 0;
-        for(int k = p;p<n-1;k++){
-            if(Ab[k][k].intValue()==0){
-                imprimir("El sistema tiene infinitas soluciones");
-                break;
-            }
-            for(int i = k+1;i<n;i++){
-                multiplicador = Ab[i][k].doubleValue()/Ab[k][k].doubleValue();
-                for(int j = k;j<n+1;j++){
-                    Ab[i][j] = BigDecimal.valueOf(Ab[i][j].doubleValue()-multiplicador*Ab[k][j].intValue());
-                }
-            }
-        }
-        return Ab;
-    }
-    
-    public void imprimir(String str){
     }
     
     private void initTable() {

@@ -44,7 +44,7 @@ public class NewtonInterpolacion extends javax.swing.JFrame {
         observations = new javax.swing.JTextPane();
         backBtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         titleLbl.setBackground(new java.awt.Color(254, 254, 254));
         titleLbl.setFont(new java.awt.Font("Lato Black", 1, 35)); // NOI18N
@@ -222,20 +222,18 @@ public class NewtonInterpolacion extends javax.swing.JFrame {
         for(int i = 0; i < n; i++) {
             for(int j = 0; j < n; j++) {
                 matriz[i][j] = BigDecimal.ZERO;
-                System.out.println(matriz[i][j]);
             }
         }
         if(n >= 1) {
             if(xn.length == n) {
                 if(fxn.length == n) {
-                    for(int i = 0; i < n; i++) {
-                        for(int j = i; j < n; j++) {
+                    for(int i = 0; i < n-1; i++) {
+                        for(int j = i; j < n-1; j++) {
                             if(i == 0) {
                                 matriz[j][i] = fxn[j+1].subtract(fxn[j]).divide(xn[j+1].subtract(xn[j-i]));
                             } else {
-                                matriz[j][i] = matriz[j][i-1].subtract(matriz[j-1][i-1]).divide(xn[j].subtract(xn[j-i]));
+                                matriz[j][i] = matriz[j][i-1].subtract(matriz[j-1][i-1]).divide(xn[j+1].subtract(xn[j-i]));
                             }
-                            System.out.println(matriz[j][i]);
                         }
                     }
                     generarTabla(n, xn, fxn, matriz);
@@ -253,32 +251,51 @@ public class NewtonInterpolacion extends javax.swing.JFrame {
     
     private void calculatPolinomio(BigDecimal b0, BigDecimal[][] matriz, BigDecimal[] xn, int n){
         String polinomio = "";
-        for(int i = 0; i < n; i++) {
-            if(i == 0) {
-                polinomio += String.valueOf(b0);
-            } else {
-                for(int j = 1; j < i+1; j++) {
-                    polinomio += String.valueOf(matriz[i][i]) + " * " + "( x - " + String.valueOf(xn[j-1]) + ")";
+        polinomio += String.valueOf(b0) + " + ";
+        for(int i = 0; i < n - 1; i++) {
+            polinomio += String.valueOf(matriz[i][i]) + " * ";
+            for(int j = 0; j < i+1; j++) {
+                polinomio += "( x - " + String.valueOf(xn[j]) + ")";
+                if(j == i && i != n - 2) {
+                    polinomio += " + ";
+                } else if ( j != i){
+                    polinomio += " * ";
                 }
             }
         }
-        this.observations.setText("El polinomio de newton es: " + polinomio);
+        this.observations.setText("El polinomio de newton es: \n" + polinomio);
     }
     
     private void generarTabla(int n, BigDecimal[] xn, BigDecimal[] fxn, BigDecimal[][] matriz) {
-        String[] columnNames = new String[matriz.length + 3];
+        String[] columnNames = new String[matriz.length + 2];
         columnNames[0] = "n";
         columnNames[1] = "xn";
         columnNames[2] = "f(xn)";
-        for(int i =1; i <= matriz.length; i++){
-            columnNames[i+2] = "I:" + i+2;
+        for(int i =1; i <= matriz.length - 1; i++){
+            columnNames[i+2] = "I:" + (i);
         }
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         
+        int tmpX = 0;
         for(int i = 0; i < n; i++) {
-            for(int j = 0; j < n; j++) {
+            int tmpMat = 0;
+            for(int j = 0; j < columnNames.length; j++) {
+                if (j == 0) {
+                    columnNames[j] = String.valueOf(i);
+                } else if (j == 1) {
+                    columnNames[j] = String.valueOf(xn[tmpX]);
+                } else if (j == 2) {
+                    columnNames[j] = String.valueOf(fxn[tmpX]);
+                } else if (i == 0) {
+                    columnNames[j] = "0";
+                } else {
+                    columnNames[j] = String.valueOf(matriz[i-1][tmpMat]);
+                    tmpMat++;
+                }
                 
             }
+            tmpX++;
+            model.addRow(columnNames);
         }
         this.gaussTable.setModel(model);
     }

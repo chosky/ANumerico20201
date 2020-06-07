@@ -346,10 +346,14 @@ public class Muller extends javax.swing.JFrame {
 
     private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
         if(controlEntradaFuncionFx()) {
+            String func = functionTxt.getText();
             if (controlEntradaDatos()) {
                 metodoMuller(_x0, _x1, _x2, _tolerance, _n);
             } else {
                 showErrorMessage("Error en los datos de entrada");
+            }
+            if(contenedor.ecuacion.equalsIgnoreCase(func) == false){
+                contenedor.setEcuacion(func);
             }
 
         } else {

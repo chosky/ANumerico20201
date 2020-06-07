@@ -296,10 +296,15 @@ public class ReglaFalsa extends javax.swing.JFrame {
 
     private void calcularBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularBtnActionPerformed
         if(controlEntradaFuncion()) {
+            String func = functionTxt.getText();
+        
             if (controlEntradaDatos()) {
                 metodoReglaFalsa(_xi, _xs, _tolerance, _n);
             } else {
                 showErrorMessage("Error en los datos de entrada");
+            }
+            if(contenedor.ecuacion.equalsIgnoreCase(func) == false){
+                contenedor.setEcuacion(func);
             }
         } else {
             showErrorMessage("Error en la función, no se pudo graficar");

@@ -314,6 +314,7 @@ public class PuntoFijo extends javax.swing.JFrame {
 
     private void calcularBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularBtnActionPerformed
         if(controlEntradaFuncionFx()) {
+            String func = functionFxTxt.getText();
             if(controlEntradaFuncionGx()) {
                 if (controlEntradaDatos()) {
                     metodoPuntoFijo(_xi, _tolerance, _n);
@@ -321,6 +322,9 @@ public class PuntoFijo extends javax.swing.JFrame {
                     showErrorMessage("Error en los datos de entrada");
                 }
             } 
+            if(contenedor.ecuacion.equalsIgnoreCase(func) == false){
+                contenedor.setEcuacion(func);
+            }
         } else {
             showErrorMessage("Error en la función, no se pudo graficar");
         }

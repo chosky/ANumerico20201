@@ -279,6 +279,10 @@ public class Cholesky extends javax.swing.JFrame {
             cholesky();
             Progresiva();
             Sustitucion();
+            mostrarResultado();
+            mostrarMatrizA(A);
+            mostrarMatrizL(L);
+            mostrarMatrizU(U);
         } catch(Exception e) {
             System.out.println(e.toString());
         }
@@ -286,6 +290,8 @@ public class Cholesky extends javax.swing.JFrame {
 
     private void cleanBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanBtn1ActionPerformed
         this.clearMatrizA();
+        this.clearMatrizL();
+        this.clearMatrizU();
         this.observations.setText("OBSERVACIONES:");
     }//GEN-LAST:event_cleanBtn1ActionPerformed
 
@@ -297,6 +303,15 @@ public class Cholesky extends javax.swing.JFrame {
         DefaultTableModel bisectionTableModel = (DefaultTableModel) matrizA.getModel();
         bisectionTableModel.setRowCount(0);
     }
+    private void clearMatrizL() {
+        DefaultTableModel bisectionTableModel = (DefaultTableModel) matrizL.getModel();
+        bisectionTableModel.setRowCount(0);
+    }
+    private void clearMatrizU() {
+        DefaultTableModel bisectionTableModel = (DefaultTableModel) matrizU.getModel();
+        bisectionTableModel.setRowCount(0);
+    }
+    
     public void cholesky(){
         int n = L.length;
         BigDecimal suma1,suma2,suma3;
@@ -394,7 +409,6 @@ public class Cholesky extends javax.swing.JFrame {
         if(U[n][n] == BigDecimal.ZERO){
            throw new ArithmeticException("El sistema tiene infinitas/cero soluciones");
         }
-        BigDecimal[] X = new BigDecimal[n+1];
         Z[0]= B[0].divide(L[0][0], MathContext.DECIMAL128);
         System.out.println("Z1 = "+ Z[0]);
         for(int i = 1; i <= n; i++) { 
@@ -408,6 +422,56 @@ public class Cholesky extends javax.swing.JFrame {
             Z[i] = (B[i].subtract(sumatoria)).divide(L[i][i], MathContext.DECIMAL128);
             System.out.println("Z"+(i+1)+ "= "+ Z[i]);
         }   
+    }
+    
+    public void mostrarMatrizA(BigDecimal[][] A){
+        int n = A.length;
+        DefaultTableModel model = (DefaultTableModel) matrizA.getModel();
+        model.setRowCount(n);
+        model.setColumnCount(n);
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                matrizA.setValueAt(A[i][j], i, j);
+            }
+        }
+    
+    }
+    
+    public void mostrarMatrizL(BigDecimal[][] L){
+        int n = A.length;
+        DefaultTableModel model = (DefaultTableModel) matrizL.getModel();
+        model.setRowCount(n);
+        model.setColumnCount(n);
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                matrizL.setValueAt(L[i][j], i, j);
+            }
+        }
+    
+    }
+    
+    public void mostrarMatrizU(BigDecimal[][] U){
+        int n = A.length;
+        DefaultTableModel model = (DefaultTableModel) matrizU.getModel();
+        model.setRowCount(n);
+        model.setColumnCount(n);
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                matrizU.setValueAt(U[i][j], i, j);
+            }
+        }
+    
+    }
+    
+    private void mostrarResultado(){
+        String text = "Resultado: \n";
+        for(int j = 0; j < Z.length; j++){
+            text += "Z"+(j+1)+ "= "+ Z[j]+ "\n";
+        }
+        for(int i = 0; i < X.length; i++){
+            text += "X"+(i+1)+ "= "+ X[i]+ "\n";
+        }
+        this.observations.setText(text);
     }
     
     public void mostrar(){

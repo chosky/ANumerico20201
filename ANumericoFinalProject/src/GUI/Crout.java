@@ -1,5 +1,6 @@
 package GUI;
 
+import SolucionDeSistemas.GaussMethods;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import javax.swing.JOptionPane;
@@ -12,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 public class Crout extends javax.swing.JFrame {
     
     private final ContenedorEcuaciones contenedor;
+    //BigDecimal [][] _ecuaciones;
     BigDecimal[][]L;
     BigDecimal[][]U;
     BigDecimal[][]A;
@@ -275,18 +277,35 @@ public class Crout extends javax.swing.JFrame {
 
     private void cleanBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanBtn1ActionPerformed
         this.clearMatrizA();
+        this.clearMatrizL();
+        this.clearMatrizU();
         this.observations.setText("OBSERVACIONES:");
     }//GEN-LAST:event_cleanBtn1ActionPerformed
-
+    
+    private void clearMatrizA() {
+        DefaultTableModel bisectionTableModel = (DefaultTableModel) matrizA.getModel();
+        bisectionTableModel.setRowCount(0);
+    }
+    private void clearMatrizL() {
+        DefaultTableModel bisectionTableModel = (DefaultTableModel) matrizL.getModel();
+        bisectionTableModel.setRowCount(0);
+    }
+    private void clearMatrizU() {
+        DefaultTableModel bisectionTableModel = (DefaultTableModel) matrizU.getModel();
+        bisectionTableModel.setRowCount(0);
+    }
+    
     private void calculateBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtn1ActionPerformed
         try {
             BigDecimal[][] ecuaciones = contenedor.getEcuaciones();
             adecuarMatrices();
             crout();
-            //sustitucionProgresiva();
-            //sustitucionRegreciba();
             Progresiva();
             Sustitucion();
+            mostrarResultado();
+            mostrarMatrizA(A);
+            mostrarMatrizL(L);
+            mostrarMatrizU(U);
         } catch(Exception e) {
             System.out.println(e.toString());
         }
@@ -353,27 +372,6 @@ public class Crout extends javax.swing.JFrame {
         mostrar();
     }
    
-    public void Sustitucion() {
-        int n = U.length-1 ;
-        if(U[n][n] == BigDecimal.ZERO){
-            throw new ArithmeticException("El sistema tiene infinitas/cero soluciones");
-        }
-        BigDecimal[] X = new BigDecimal[n+1];
-        X[n]= Z[n].divide(U[n][n], MathContext.DECIMAL128);
-        System.out.println("X"+(n+1)+ "= "+ X[n]);
-        for(int i = n-1; i >= 0; i--) { 
-            BigDecimal sumatoria = BigDecimal.ZERO;
-            for(int j = i+1; j <= n; j++){
-                sumatoria = sumatoria.add(U[i][j].multiply(X[j]));
-            }
-            if(U[i][i] == BigDecimal.ZERO){
-                throw new ArithmeticException("El sistema tiene infinitas soluciones");
-            }
-            X[i] = (Z[i].subtract(sumatoria)).divide(U[i][i], MathContext.DECIMAL128);
-            System.out.println("X"+(i+1)+ "= "+ X[i]);
-        }   
-    }
-    
     public void Progresiva() {
         int n = L.length-1 ;
         if(U[n][n] == BigDecimal.ZERO){
@@ -395,6 +393,73 @@ public class Crout extends javax.swing.JFrame {
         }   
     }
     
+    public void Sustitucion() {
+        int n = U.length-1 ;
+        if(U[n][n] == BigDecimal.ZERO){
+            throw new ArithmeticException("El sistema tiene infinitas/cero soluciones");
+        }
+        //BigDecimal[] X = new BigDecimal[n+1];
+        X[n]= Z[n].divide(U[n][n], MathContext.DECIMAL128);
+        System.out.println("X"+(n+1)+ "= "+ X[n]);
+        for(int i = n-1; i >= 0; i--) { 
+            BigDecimal sumatoria = BigDecimal.ZERO;
+            for(int j = i+1; j <= n; j++){
+                sumatoria = sumatoria.add(U[i][j].multiply(X[j]));
+            }
+            if(U[i][i] == BigDecimal.ZERO){
+                throw new ArithmeticException("El sistema tiene infinitas soluciones");
+            }
+            X[i] = (Z[i].subtract(sumatoria)).divide(U[i][i], MathContext.DECIMAL128);
+            System.out.println("X"+(i+1)+ "= "+ X[i]);
+        }   
+    }
+    
+    public void mostrarMatrizA(BigDecimal[][] A){
+        int n = A.length;
+        DefaultTableModel model = (DefaultTableModel) matrizA.getModel();
+        model.setRowCount(n);
+        model.setColumnCount(n);
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                matrizA.setValueAt(A[i][j], i, j);
+            }
+        }
+    }
+    
+    public void mostrarMatrizL(BigDecimal[][] L){
+        int n = A.length;
+        DefaultTableModel model = (DefaultTableModel) matrizL.getModel();
+        model.setRowCount(n);
+        model.setColumnCount(n);
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                matrizL.setValueAt(L[i][j], i, j);
+            }
+        }
+    }
+    
+    public void mostrarMatrizU(BigDecimal[][] U){
+        int n = A.length;
+        DefaultTableModel model = (DefaultTableModel) matrizU.getModel();
+        model.setRowCount(n);
+        model.setColumnCount(n);
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                matrizU.setValueAt(U[i][j], i, j);
+            }
+        }
+    }
+    
+    private void mostrarResultado(){
+        String text = "Resultado: \n";
+        for(int j = 0; j < Z.length; j++){
+            text += "Z"+(j+1)+ "= "+ Z[j]+ "\n";
+        }
+        for(int i = 0; i < X.length; i++){
+            text += "X"+(i+1)+ "= "+ X[i]+ "\n";
+        }
+        this.observations.setText(text);
+    }
     
     public void mostrar(){
         String tmpL="";
@@ -419,10 +484,6 @@ public class Crout extends javax.swing.JFrame {
        System.out.println("B: \n"+tmpB);
     }
     
-    private void clearMatrizA() {
-        DefaultTableModel bisectionTableModel = (DefaultTableModel) matrizA.getModel();
-        bisectionTableModel.setRowCount(0);
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;

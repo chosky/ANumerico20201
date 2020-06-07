@@ -276,6 +276,10 @@ public class Doolittle extends javax.swing.JFrame {
             doolittle();
             Progresiva();
             Sustitucion();
+            mostrarResultado(X, Z);
+            mostrarMatrizA(A);
+            mostrarMatrizL(L);
+            mostrarMatrizU(U);
         } catch(Exception e) {
             System.out.println(e.toString());
         }
@@ -283,6 +287,8 @@ public class Doolittle extends javax.swing.JFrame {
 
     private void cleanBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanBtn1ActionPerformed
         this.clearMatrizA();
+        this.clearMatrizL();
+        this.clearMatrizU();
         this.observations.setText("OBSERVACIONES:");
     }//GEN-LAST:event_cleanBtn1ActionPerformed
 
@@ -294,6 +300,17 @@ public class Doolittle extends javax.swing.JFrame {
         DefaultTableModel bisectionTableModel = (DefaultTableModel) matrizA.getModel();
         bisectionTableModel.setRowCount(0);
     }
+    
+    private void clearMatrizL() {
+        DefaultTableModel bisectionTableModel = (DefaultTableModel) matrizL.getModel();
+        bisectionTableModel.setRowCount(0);
+    }
+    
+    private void clearMatrizU() {
+        DefaultTableModel bisectionTableModel = (DefaultTableModel) matrizU.getModel();
+        bisectionTableModel.setRowCount(0);
+    }
+    
     public void adecuarMatrices(){
         BigDecimal[][]tmp = contenedor.ecuaciones;
        if(tmp!=null){   
@@ -361,7 +378,6 @@ public class Doolittle extends javax.swing.JFrame {
         if(U[n][n] == BigDecimal.ZERO){
             throw new ArithmeticException("El sistema tiene infinitas/cero soluciones");
         }
-        BigDecimal[] X = new BigDecimal[n+1];
         X[n]= Z[n].divide(U[n][n], MathContext.DECIMAL128);
         System.out.println("X"+(n+1)+ "= "+ X[n]);
         for(int i = n-1; i >= 0; i--) { 
@@ -396,6 +412,53 @@ public class Doolittle extends javax.swing.JFrame {
             Z[i] = (B[i].subtract(sumatoria)).divide(L[i][i], MathContext.DECIMAL128);
             System.out.println("Z"+(i+1)+ "= "+ Z[i]);
         }   
+    }
+    
+    public void mostrarMatrizA(BigDecimal[][] A){
+        int n = A.length;
+        DefaultTableModel model = (DefaultTableModel) matrizA.getModel();
+        model.setRowCount(n);
+        model.setColumnCount(n);
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                matrizA.setValueAt(A[i][j], i, j);
+            }
+        }
+    }
+    
+    public void mostrarMatrizL(BigDecimal[][] L){
+        int n = A.length;
+        DefaultTableModel model = (DefaultTableModel) matrizL.getModel();
+        model.setRowCount(n);
+        model.setColumnCount(n);
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                matrizL.setValueAt(L[i][j], i, j);
+            }
+        }
+    }
+    
+    public void mostrarMatrizU(BigDecimal[][] U){
+        int n = A.length;
+        DefaultTableModel model = (DefaultTableModel) matrizU.getModel();
+        model.setRowCount(n);
+        model.setColumnCount(n);
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                matrizU.setValueAt(U[i][j], i, j);
+            }
+        }
+    }
+    
+    private void mostrarResultado(BigDecimal[] X, BigDecimal[] Z){
+        String text = "Resultado: \n";
+        for(int j = 0; j < Z.length; j++){
+            text += "Z"+(j+1)+ "= "+ Z[j]+ "\n";
+        }
+        for(int i = 0; i < X.length; i++){
+            text += "X"+(i+1)+ "= "+ X[i]+ "\n";
+        }
+        this.observations.setText(text);
     }
     
     public void mostrar(){

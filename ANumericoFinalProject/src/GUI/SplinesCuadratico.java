@@ -1,5 +1,10 @@
 package GUI;
 
+import java.awt.Color;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Jose David Henao Ocampo
@@ -10,10 +15,71 @@ public class SplinesCuadratico extends javax.swing.JFrame {
      * Creates new form SplinesLineal
      */
     DatosInterpolacion datosInterpolacion;
+    int valorespotenciasinderivar[]= {2,1,0};
+    List<String> variables;
     public SplinesCuadratico() {
+        this.setTitle("Splines cuadratico");
+        this.setResizable(true);
+        this.getContentPane().setBackground(Color.WHITE);
+        datosInterpolacion = DatosInterpolacion.getDatosInterpolacion();
+        variables = new ArrayList<>();
         initComponents();
+        
     }
-
+    
+    private void calcularecuaciones(BigDecimal cotinf, BigDecimal cotsup, BigDecimal valory1,BigDecimal valory2, String variable){
+        String tmp1 = "";
+        String tmp2 = "";
+        int cont = 2;
+        for (int i = 0; i < valorespotenciasinderivar.length; i++){
+            if(cont == 0){
+                tmp1+=cotinf.pow(valorespotenciasinderivar[i])+variable+cont;
+                tmp2+=cotsup.pow(valorespotenciasinderivar[i])+variable+cont;
+            }else{
+                tmp1+=cotinf.pow(valorespotenciasinderivar[i])+variable+cont+"+";
+                tmp2+=cotsup.pow(valorespotenciasinderivar[i])+variable+cont+"+";
+            }
+            cont--;
+        }
+        tmp1+="="+valory1;
+        tmp2+="="+valory2;
+        System.out.println(tmp1);
+        System.out.println(tmp2);
+    }
+    
+    private void calcularecuacionesderivada(BigDecimal interseccion, String variable1, String variable2){
+        String tmp1 = "";
+        String tmp2 = "";
+        int cont = 2;
+        for(int i = 0; i < 2; i++){
+            if(cont == 1){
+                tmp1+=variable1+cont;
+                tmp2+=variable2+cont;
+            }else{
+                tmp1+=interseccion.multiply(BigDecimal.valueOf(2))+variable1+cont+"+";
+                tmp2+=interseccion.multiply(BigDecimal.valueOf(2))+variable2+cont+"+";
+            }
+            cont--;
+        }
+        tmp1+="="+tmp2;
+        System.out.println(tmp1);
+        System.out.println("a2=0");
+    }
+    
+    public void popularvariables(){
+        variables.add("a");
+        variables.add("b");
+        variables.add("c");
+        variables.add("d");
+        variables.add("e");
+        variables.add("f");
+        variables.add("g");
+        variables.add("h");
+        variables.add("i");
+        variables.add("j");
+        variables.add("k");
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -24,32 +90,88 @@ public class SplinesCuadratico extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        calculate = new javax.swing.JButton();
+        salir = new javax.swing.JButton();
+        results = new java.awt.TextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Splina cuadrado");
+
+        calculate.setText("Calcular");
+        calculate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calculateActionPerformed(evt);
+            }
+        });
+
+        salir.setText("Salir");
+        salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(calculate)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(salir)
+                .addGap(46, 46, 46))
+            .addGroup(layout.createSequentialGroup()
                 .addGap(126, 126, 126)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(170, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(results, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(262, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(calculate)
+                    .addComponent(salir))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(results, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_salirActionPerformed
+
+    private void calculateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateActionPerformed
+        // TODO add your handling code here:
+        popularvariables();
+        BigDecimal x[] = datosInterpolacion.getX();
+        BigDecimal y[] = datosInterpolacion.getXn();
+        int totalecuaciones = x.length-1;
+        for( int i = 0; i < totalecuaciones; i++){
+            calcularecuaciones(x[i], x[i+1], y[i], y[i+1], variables.get(i));
+            if(i%2!=0){
+                calcularecuacionesderivada(x[i], variables.get(i-1), variables.get(i));
+            }
+        }
+    }//GEN-LAST:event_calculateActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton calculate;
     private javax.swing.JLabel jLabel1;
+    private java.awt.TextArea results;
+    private javax.swing.JButton salir;
     // End of variables declaration//GEN-END:variables
 }

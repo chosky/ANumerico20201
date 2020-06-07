@@ -39,18 +39,26 @@ public class SplinesCubico extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        calcular = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("SPLINES CUBICO");
+
+        calcular.setText("Calcular");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(124, 124, 124)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(124, 124, 124)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(calcular)))
                 .addContainerGap(196, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -58,7 +66,9 @@ public class SplinesCubico extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(443, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(calcular)
+                .addContainerGap(405, Short.MAX_VALUE))
         );
 
         pack();
@@ -78,6 +88,7 @@ public class SplinesCubico extends javax.swing.JFrame {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton calcular;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

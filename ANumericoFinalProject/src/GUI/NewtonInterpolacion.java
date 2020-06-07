@@ -20,7 +20,7 @@ public class NewtonInterpolacion extends javax.swing.JFrame {
         this.setTitle("Interpolacion Newton");
         this.setResizable(true);
         this.getContentPane().setBackground(Color.WHITE);
-        datosInterpolacion.getDatosInterpolacion();
+        datosInterpolacion = DatosInterpolacion.getDatosInterpolacion();
         initComponents();
     }
 

@@ -19,6 +19,7 @@ public class Muller extends javax.swing.JFrame {
     private double _tolerance;
     private int _n;
     private MathFunctionsParser functionFx;
+    ContenedorEcuacion contenedor = ContenedorEcuacion.getContenedor();
     
     /**
      * Creates new form Muller
@@ -31,6 +32,9 @@ public class Muller extends javax.swing.JFrame {
         initComponents();
         this.observacionesTxt.setEditable(false);
         this.setResizable(false);
+        if(contenedor.getEcuacion()!=null){
+            functionTxt.setText(contenedor.ecuacion);
+        }
     }
 
     @SuppressWarnings("unchecked")

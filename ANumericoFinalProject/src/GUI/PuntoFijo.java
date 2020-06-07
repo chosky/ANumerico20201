@@ -18,6 +18,8 @@ public class PuntoFijo extends javax.swing.JFrame {
     private int _n;
     private MathFunctionsParser functionFx;
     private MathFunctionsParser functionGx;
+    ContenedorEcuacion contenedor = ContenedorEcuacion.getContenedor();
+    
     
     /**
      * Creates new form PuntoFijo
@@ -31,6 +33,9 @@ public class PuntoFijo extends javax.swing.JFrame {
         initComponents();
         this.observacionesTxt.setEditable(false);
         this.setResizable(false);
+        if(contenedor.getEcuacion()!=null){
+            functionFxTxt.setText(contenedor.ecuacion);
+        }
     }
 
     @SuppressWarnings("unchecked")

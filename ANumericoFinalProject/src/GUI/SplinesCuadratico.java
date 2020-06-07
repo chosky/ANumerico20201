@@ -17,12 +17,16 @@ public class SplinesCuadratico extends javax.swing.JFrame {
     DatosInterpolacion datosInterpolacion;
     int valorespotenciasinderivar[]= {2,1,0};
     List<String> variables;
+    List<String> ecuaciones;
+    List<String> ecuacionesderivada;
     public SplinesCuadratico() {
         this.setTitle("Splines cuadratico");
         this.setResizable(true);
         this.getContentPane().setBackground(Color.WHITE);
         datosInterpolacion = DatosInterpolacion.getDatosInterpolacion();
         variables = new ArrayList<>();
+        ecuaciones = new ArrayList<>();
+        ecuacionesderivada = new ArrayList<>();
         initComponents();
         
     }
@@ -43,6 +47,8 @@ public class SplinesCuadratico extends javax.swing.JFrame {
         }
         tmp1+="="+valory1;
         tmp2+="="+valory2;
+        ecuaciones.add(tmp1);
+        ecuaciones.add(tmp2);
         System.out.println(tmp1);
         System.out.println(tmp2);
     }
@@ -62,6 +68,8 @@ public class SplinesCuadratico extends javax.swing.JFrame {
             cont--;
         }
         tmp1+="="+tmp2;
+        ecuacionesderivada.add(tmp1);
+        ecuacionesderivada.add("a2=0");
         System.out.println(tmp1);
         System.out.println("a2=0");
     }
@@ -78,6 +86,14 @@ public class SplinesCuadratico extends javax.swing.JFrame {
         variables.add("i");
         variables.add("j");
         variables.add("k");
+    }
+    
+    public void imprimir(){
+       String tmp ="";
+       String tmp2="";
+       tmp = ecuaciones.stream().map((ecuacione) -> ecuacione+"\n").reduce(tmp, String::concat);
+       tmp2 = ecuacionesderivada.stream().map((ecuacione)->ecuacione+"\n").reduce(tmp2,String::concat);
+       results.setText(tmp+tmp2);
     }
     
     /**
@@ -166,6 +182,7 @@ public class SplinesCuadratico extends javax.swing.JFrame {
                 calcularecuacionesderivada(x[i], variables.get(i-1), variables.get(i));
             }
         }
+        imprimir();
     }//GEN-LAST:event_calculateActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

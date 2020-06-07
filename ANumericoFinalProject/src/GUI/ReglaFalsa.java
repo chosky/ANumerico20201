@@ -18,6 +18,8 @@ public class ReglaFalsa extends javax.swing.JFrame {
     private double _tolerance;
     private int _n;
     private MathFunctionsParser function;
+    ContenedorEcuacion contenedor = ContenedorEcuacion.getContenedor();
+    
     
     /**
      * Creates new form ReglaFalsa
@@ -29,6 +31,9 @@ public class ReglaFalsa extends javax.swing.JFrame {
         initComponents();
         this.observacionesTxt.setEditable(false);
         this.setResizable(false);
+        if(contenedor.getEcuacion()!=null){
+            functionTxt.setText(contenedor.ecuacion);
+        }
     }
 
     @SuppressWarnings("unchecked")

@@ -19,6 +19,8 @@ public class RaicesMultiples extends javax.swing.JFrame {
     private MathFunctionsParser functionFx;
     private MathFunctionsParser functionFdx;
     private MathFunctionsParser functionF2dx;
+    ContenedorEcuacion contenedor = ContenedorEcuacion.getContenedor();
+    
     
     /**
      * Creates new form RaicesMultiples
@@ -33,6 +35,13 @@ public class RaicesMultiples extends javax.swing.JFrame {
         initComponents();
         this.observacionesTxt.setEditable(false);
         this.setResizable(false);
+        if(contenedor.getEcuacion()!=null){
+            functionTxt.setText(contenedor.ecuacion);
+        }
+        
+        if(contenedor.derivada1 != null){
+           functionFdxTxt.setText(contenedor.derivada1);
+        }
     }
 
     @SuppressWarnings("unchecked")

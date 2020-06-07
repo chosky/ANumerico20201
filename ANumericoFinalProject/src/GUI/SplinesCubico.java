@@ -3,6 +3,7 @@ package GUI;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -123,13 +124,30 @@ public class SplinesCubico extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dialog = new javax.swing.JDialog();
         jLabel1 = new javax.swing.JLabel();
         calcular = new javax.swing.JButton();
         salir = new javax.swing.JButton();
         results = new java.awt.TextArea();
+        info = new javax.swing.JButton();
+        ingresardatos = new javax.swing.JButton();
+
+        javax.swing.GroupLayout dialogLayout = new javax.swing.GroupLayout(dialog.getContentPane());
+        dialog.getContentPane().setLayout(dialogLayout);
+        dialogLayout.setHorizontalGroup(
+            dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        dialogLayout.setVerticalGroup(
+            dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jLabel1.setBackground(new java.awt.Color(254, 254, 254));
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 35)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(1, 1, 1));
         jLabel1.setText("SPLINES CUBICO");
 
         calcular.setBackground(new java.awt.Color(0, 149, 136));
@@ -154,14 +172,32 @@ public class SplinesCubico extends javax.swing.JFrame {
             }
         });
 
+        info.setBackground(new java.awt.Color(0, 149, 136));
+        info.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
+        info.setForeground(new java.awt.Color(1, 1, 1));
+        info.setText("?");
+        info.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        info.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                infoActionPerformed(evt);
+            }
+        });
+
+        ingresardatos.setBackground(new java.awt.Color(0, 149, 136));
+        ingresardatos.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
+        ingresardatos.setForeground(new java.awt.Color(1, 1, 1));
+        ingresardatos.setText("Ingresar Datos");
+        ingresardatos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        ingresardatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ingresardatosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(124, 124, 124)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,9 +206,17 @@ public class SplinesCubico extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(calcular, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ingresardatos, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                        .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(salir, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(17, 17, 17))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,9 +226,11 @@ public class SplinesCubico extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(calcular, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(salir, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(salir, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ingresardatos, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(results, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
+                .addComponent(results, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -193,20 +239,25 @@ public class SplinesCubico extends javax.swing.JFrame {
 
     private void calcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularActionPerformed
         popularvariables();
-        int totalecuaciones = x.length-1;
-        for(int i = 0; i < totalecuaciones; i++){
-            ecuacionessinderivar(x[i], x[i+1], y[i], y[i+1], variables.get(i));
-            System.out.println("Valor i: "+i);
-            if(i%2!=0){
+        if(x==null){
+            JOptionPane.showMessageDialog(dialog,"Porfavor primero ingrese los datos de la"
+                    + " interpolación");
+        }else{
+            int totalecuaciones = x.length-1;
+            for(int i = 0; i < totalecuaciones; i++){
+                ecuacionessinderivar(x[i], x[i+1], y[i], y[i+1], variables.get(i));
                 //System.out.println("Valor i: "+i);
-                derivada1(x[i], variables.get(i-1), variables.get(i));
-                derivada1(x[i+1], variables.get(i), variables.get(i+1));
-                derivada2(x[i],variables.get(i-1), variables.get(i));
-                derivada2(x[i+1],variables.get(i), variables.get(i+1));
+                if(i%2!=0){
+                    //System.out.println("Valor i: "+i);
+                    derivada1(x[i], variables.get(i-1), variables.get(i));
+                    derivada1(x[i+1], variables.get(i), variables.get(i+1));
+                    derivada2(x[i],variables.get(i-1), variables.get(i));
+                    derivada2(x[i+1],variables.get(i), variables.get(i+1));
+                }
             }
-        }
         ultimasecuaciones(variables.get(0), variables.get(totalecuaciones-1));
         imprimir();
+        }
     }//GEN-LAST:event_calcularActionPerformed
 
     private void imprimir(){
@@ -224,9 +275,24 @@ public class SplinesCubico extends javax.swing.JFrame {
         this.setVisible(false);
         this.dispose();
     }//GEN-LAST:event_salirActionPerformed
+
+    private void infoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(dialog, "Este metodo calculara las ecuaciones que pasan por los puntos ingresados \n"
+            + "por medio de una iterpolación de datos, este metodo requiere que se le ingresen los x y los y para su debido funcionamiento");
+    }//GEN-LAST:event_infoActionPerformed
+
+    private void ingresardatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresardatosActionPerformed
+        // TODO add your handling code here:
+        TotalEcuaciones totalEcuaciones = new TotalEcuaciones();
+        totalEcuaciones.setVisible(true);
+    }//GEN-LAST:event_ingresardatosActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton calcular;
+    private javax.swing.JDialog dialog;
+    private javax.swing.JButton info;
+    private javax.swing.JButton ingresardatos;
     private javax.swing.JLabel jLabel1;
     private java.awt.TextArea results;
     private javax.swing.JButton salir;

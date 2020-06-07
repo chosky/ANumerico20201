@@ -177,15 +177,15 @@ public class NewtonInterpolacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
-        //try {
+        try {
            BigDecimal[] xn = datosInterpolacion.getX();
            BigDecimal[] fxn = datosInterpolacion.getXn();
            int n = xn.length;
            newtonMetodo(n, xn, fxn);
            
-        //} catch(Exception e) {
-        //    this.observations.setText(e.toString());
-        //}
+        } catch(Exception e) {
+            this.observations.setText(e.toString());
+        }
     }//GEN-LAST:event_calculateBtnActionPerformed
 
     private void ecuacionesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ecuacionesBtnActionPerformed

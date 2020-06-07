@@ -12,7 +12,6 @@ import javax.swing.table.DefaultTableModel;
 public class NewtonInterpolacion extends javax.swing.JFrame {
 
     DatosInterpolacion datosInterpolacion;
-    String print = "";
     
     /**
      * Creates new form NewtonInterpolacion
@@ -21,6 +20,7 @@ public class NewtonInterpolacion extends javax.swing.JFrame {
         this.setTitle("Interpolacion Newton");
         this.setResizable(true);
         this.getContentPane().setBackground(Color.WHITE);
+        datosInterpolacion.getDatosInterpolacion();
         initComponents();
     }
 
@@ -177,18 +177,15 @@ public class NewtonInterpolacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void calculateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtnActionPerformed
-        try {
+        //try {
            BigDecimal[] xn = datosInterpolacion.getX();
            BigDecimal[] fxn = datosInterpolacion.getXn();
            int n = xn.length;
-           BigDecimal[][] matriz = newtonMetodo(n, xn, fxn);
-           if(!matriz[0][0].equals(0)) {
-               //generarTabla(n, xn, fxn, matriz);
-               mostrar(matriz);
-           }
-        } catch(Exception e) {
-            this.observations.setText(e.toString());
-        }
+           newtonMetodo(n, xn, fxn);
+           
+        //} catch(Exception e) {
+        //    this.observations.setText(e.toString());
+        //}
     }//GEN-LAST:event_calculateBtnActionPerformed
 
     private void ecuacionesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ecuacionesBtnActionPerformed
@@ -216,8 +213,18 @@ public class NewtonInterpolacion extends javax.swing.JFrame {
         bisectionTableModel.setRowCount(0);
     }
     
-    private BigDecimal[][] newtonMetodo(int n, BigDecimal[] xn, BigDecimal[] fxn) {
+    public void showErrorMessage(String message) {
+        JOptionPane.showMessageDialog(this, message);
+    }
+    
+    private void newtonMetodo(int n, BigDecimal[] xn, BigDecimal[] fxn) {
         BigDecimal[][] matriz = new BigDecimal[n][n];
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                matriz[i][j] = BigDecimal.ZERO;
+                System.out.println(matriz[i][j]);
+            }
+        }
         if(n >= 1) {
             if(xn.length == n) {
                 if(fxn.length == n) {
@@ -228,8 +235,10 @@ public class NewtonInterpolacion extends javax.swing.JFrame {
                             } else {
                                 matriz[j][i] = matriz[j][i-1].subtract(matriz[j-1][i-1]).divide(xn[j].subtract(xn[j-i]));
                             }
+                            System.out.println(matriz[j][i]);
                         }
                     }
+                    generarTabla(n, xn, fxn, matriz);
                     calculatPolinomio(fxn[0], matriz, xn, n);
                 } else {
                     this.observations.setText("El tamaño de los puntos no corresponde con las iteraciones");
@@ -240,7 +249,6 @@ public class NewtonInterpolacion extends javax.swing.JFrame {
         } else {
             this.observations.setText("Las iteraciónes deben de ser mayores a 1");
         }
-        return matriz;
     }
     
     private void calculatPolinomio(BigDecimal b0, BigDecimal[][] matriz, BigDecimal[] xn, int n){
@@ -258,7 +266,21 @@ public class NewtonInterpolacion extends javax.swing.JFrame {
     }
     
     private void generarTabla(int n, BigDecimal[] xn, BigDecimal[] fxn, BigDecimal[][] matriz) {
+        String[] columnNames = new String[matriz.length + 3];
+        columnNames[0] = "n";
+        columnNames[1] = "xn";
+        columnNames[2] = "f(xn)";
+        for(int i =1; i <= matriz.length; i++){
+            columnNames[i+2] = "I:" + i+2;
+        }
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                
+            }
+        }
+        this.gaussTable.setModel(model);
     }
     
     public void mostrar(BigDecimal[][] matriz){

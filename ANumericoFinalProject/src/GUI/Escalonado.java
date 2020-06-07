@@ -215,15 +215,15 @@ public final class Escalonado extends javax.swing.JFrame {
     }//GEN-LAST:event_infoButtonActionPerformed
 
     private void calculateBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtn1ActionPerformed
-        //try {
+        try {
             this._ecuaciones = contenedor.getEcuaciones();
             initTable();
             BigDecimal[][] Ub = GaussMethods.pivoteoEscalonado(_ecuaciones, _ecuaciones.length - 1, gaussTable);
             BigDecimal[] X = GaussMethods.Sustitucion(Ub, _ecuaciones.length - 1);
             mostrarResultado(X);
-        //} catch(Exception e) {
-         //   this.observations.setText(e.toString());
-        //}
+        } catch(Exception e) {
+           this.observations.setText(e.toString());
+        }
     }//GEN-LAST:event_calculateBtn1ActionPerformed
 
     private void ecuacionesBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ecuacionesBtn1ActionPerformed

@@ -14,11 +14,12 @@ public class SplinesCuadratico extends javax.swing.JFrame {
     /**
      * Creates new form SplinesLineal
      */
-    DatosInterpolacion datosInterpolacion;
-    int valorespotenciasinderivar[]= {2,1,0};
-    List<String> variables;
-    List<String> ecuaciones;
-    List<String> ecuacionesderivada;
+    private DatosInterpolacion datosInterpolacion;
+    private int valorespotenciasinderivar[]= {2,1,0};
+    private List<String> variables;
+    private List<String> ecuaciones;
+    private List<String> ecuacionesderivada;
+    
     public SplinesCuadratico() {
         this.setTitle("Splines cuadratico");
         this.setResizable(true);
@@ -114,6 +115,9 @@ public class SplinesCuadratico extends javax.swing.JFrame {
 
         jLabel1.setText("Splina cuadrado");
 
+        calculate.setBackground(new java.awt.Color(0, 149, 136));
+        calculate.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
+        calculate.setForeground(new java.awt.Color(1, 1, 1));
         calculate.setText("Calcular");
         calculate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,6 +125,9 @@ public class SplinesCuadratico extends javax.swing.JFrame {
             }
         });
 
+        salir.setBackground(new java.awt.Color(0, 149, 136));
+        salir.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
+        salir.setForeground(new java.awt.Color(1, 1, 1));
         salir.setText("Salir");
         salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,18 +140,19 @@ public class SplinesCuadratico extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(calculate)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(salir)
-                .addGap(46, 46, 46))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(126, 126, 126)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(170, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(results, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(calculate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(salir, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(results, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -157,7 +165,7 @@ public class SplinesCuadratico extends javax.swing.JFrame {
                     .addComponent(calculate)
                     .addComponent(salir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(results, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                .addComponent(results, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

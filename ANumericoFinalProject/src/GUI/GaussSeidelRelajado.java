@@ -1,27 +1,81 @@
 package GUI;
 
+import java.awt.Color;
+import java.awt.ComponentOrientation;
+import java.awt.GridLayout;
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Jose David Henao Ocampo
+ * @author Smith Alexis Carvajal Orozco
  */
 public class GaussSeidelRelajado extends javax.swing.JFrame {
 
     private final ContenedorEcuaciones contenedor;
+    private BigDecimal _tolerance;
+    private BigDecimal _lambda;
+    private int _n;
+    private boolean relajado;
+    private String selectedNorma;
+    private BigDecimal[][] _ecuaciones;
+    private BigDecimal[] _xi;
+    private final List<JTextField>inputs;
+
     
     /**
-     * Creates new form GaussSeidelRelajado
+     * Creates new form G
+     * aussSeidelRelajado
      */
     public GaussSeidelRelajado() {
-        this.setResizable(false);
-        this.setTitle("Gauss Seidel Relajado");
+        this.inputs = new ArrayList<>();
+        init();
         initComponents();
         contenedor = ContenedorEcuaciones.getContenedor();
+        initialValuesTableInit();
+    }
+    
+    private void init(){
+        this.setResizable(false);
+        this.setTitle("Gauss Seidel Relajado");
+    }
+    
+    private void initialValuesTableInit() {
+        if( _ecuaciones != null && _ecuaciones.length > 0) {
+            initialValuesPanel.setLayout(new GridLayout(2, _ecuaciones.length));
+            initialValuesPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+            for(int i = 0; i < _ecuaciones.length; i++) {
+                JLabel header = new JLabel("X"+(i+1));
+                initialValuesPanel.add(header);
+            }
+            for(int i = 0; i < _ecuaciones.length; i++) {
+                JTextField input = new JTextField();
+                initialValuesPanel.add(input);
+                inputs.add(input);
+            }
+            initialValuesPanel.updateUI();
+        }
     }
 
+    private void initTable() {
+        String[] columnNames = new String[_ecuaciones.length + 2];
+        columnNames[0] = "n";
+        for(int i =1; i <= this._ecuaciones.length; i++){
+            columnNames[i] = "X"+i;
+        }
+        columnNames[_ecuaciones.length + 1] = "Dispersion";
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        this.gaussSeidelRelajadoTable.setModel(model);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,17 +86,29 @@ public class GaussSeidelRelajado extends javax.swing.JFrame {
     private void initComponents() {
 
         backBtn = new javax.swing.JButton();
+        titleLbl = new javax.swing.JLabel();
+        infoButton = new javax.swing.JButton();
+        lamdaLbl = new javax.swing.JLabel();
+        calculateBtn1 = new javax.swing.JButton();
+        ecuacionesBtn1 = new javax.swing.JButton();
+        cleanBtn1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        gaussSeidelRelajadoTable = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         observations = new javax.swing.JTextPane();
-        infoButton = new javax.swing.JButton();
-        titleLbl = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        gaussSidelRelajadoTable = new javax.swing.JTable();
-        ecuacionesBtn1 = new javax.swing.JButton();
-        calculateBtn1 = new javax.swing.JButton();
-        cleanBtn1 = new javax.swing.JButton();
-        lamdaLbl = new javax.swing.JLabel();
-        lamdaTxt = new javax.swing.JTextField();
+        relajadoCheckBox = new javax.swing.JCheckBox();
+        lamdaLbl2 = new javax.swing.JLabel();
+        lamdaLbl1 = new javax.swing.JLabel();
+        normaSelect = new javax.swing.JComboBox<>();
+        lamdaLbl3 = new javax.swing.JLabel();
+        toleranceLbl = new javax.swing.JLabel();
+        toleranceInput = new javax.swing.JTextField();
+        nLbl = new javax.swing.JLabel();
+        nInput = new javax.swing.JTextField();
+        lambdaInput = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        initialValuesPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -57,10 +123,12 @@ public class GaussSeidelRelajado extends javax.swing.JFrame {
             }
         });
 
-        observations.setEditable(false);
-        observations.setText("OBSERVACIONES:");
-        observations.setToolTipText("");
-        jScrollPane3.setViewportView(observations);
+        titleLbl.setBackground(new java.awt.Color(254, 254, 254));
+        titleLbl.setFont(new java.awt.Font("Lato Black", 1, 35)); // NOI18N
+        titleLbl.setForeground(new java.awt.Color(1, 1, 1));
+        titleLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleLbl.setText("Gauss Seidel");
+        titleLbl.setToolTipText("");
 
         infoButton.setText("?");
         infoButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -71,24 +139,20 @@ public class GaussSeidelRelajado extends javax.swing.JFrame {
             }
         });
 
-        titleLbl.setBackground(new java.awt.Color(254, 254, 254));
-        titleLbl.setFont(new java.awt.Font("Lato Black", 1, 35)); // NOI18N
-        titleLbl.setForeground(new java.awt.Color(1, 1, 1));
-        titleLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleLbl.setText("GAUSS SEIDEL RELAJADO");
-        titleLbl.setToolTipText("");
+        lamdaLbl.setFont(new java.awt.Font("Lato Black", 0, 18)); // NOI18N
+        lamdaLbl.setForeground(new java.awt.Color(1, 1, 1));
+        lamdaLbl.setText("Lamda: ");
 
-        gaussSidelRelajadoTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
+        calculateBtn1.setBackground(new java.awt.Color(0, 149, 136));
+        calculateBtn1.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
+        calculateBtn1.setForeground(new java.awt.Color(1, 1, 1));
+        calculateBtn1.setText("CALCULAR");
+        calculateBtn1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        calculateBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calculateBtn1ActionPerformed(evt);
             }
-        ));
-        gaussSidelRelajadoTable.setColumnSelectionAllowed(true);
-        gaussSidelRelajadoTable.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(gaussSidelRelajadoTable);
+        });
 
         ecuacionesBtn1.setBackground(new java.awt.Color(0, 149, 136));
         ecuacionesBtn1.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
@@ -99,17 +163,6 @@ public class GaussSeidelRelajado extends javax.swing.JFrame {
         ecuacionesBtn1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ecuacionesBtn1ActionPerformed(evt);
-            }
-        });
-
-        calculateBtn1.setBackground(new java.awt.Color(0, 149, 136));
-        calculateBtn1.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
-        calculateBtn1.setForeground(new java.awt.Color(1, 1, 1));
-        calculateBtn1.setText("CALCULAR");
-        calculateBtn1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
-        calculateBtn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                calculateBtn1ActionPerformed(evt);
             }
         });
 
@@ -124,74 +177,193 @@ public class GaussSeidelRelajado extends javax.swing.JFrame {
             }
         });
 
-        lamdaLbl.setFont(new java.awt.Font("Lato Black", 0, 24)); // NOI18N
-        lamdaLbl.setForeground(new java.awt.Color(1, 1, 1));
-        lamdaLbl.setText("Lamda: ");
+        gaussSeidelRelajadoTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        lamdaTxt.setFont(new java.awt.Font("Lato Black", 0, 24)); // NOI18N
-        lamdaTxt.setForeground(new java.awt.Color(1, 1, 1));
+            },
+            new String [] {
+
+            }
+        ));
+        gaussSeidelRelajadoTable.setColumnSelectionAllowed(true);
+        gaussSeidelRelajadoTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(gaussSeidelRelajadoTable);
+
+        observations.setEditable(false);
+        observations.setText("OBSERVACIONES:");
+        observations.setToolTipText("");
+        jScrollPane3.setViewportView(observations);
+
+        relajadoCheckBox.setSelected(true);
+        relajadoCheckBox.setText("jCheckBox1");
+        relajadoCheckBox.setPreferredSize(new java.awt.Dimension(21, 21));
+
+        lamdaLbl2.setFont(new java.awt.Font("Lato Black", 0, 18)); // NOI18N
+        lamdaLbl2.setForeground(new java.awt.Color(1, 1, 1));
+        lamdaLbl2.setText("Relajado:");
+
+        lamdaLbl1.setFont(new java.awt.Font("Lato Black", 0, 18)); // NOI18N
+        lamdaLbl1.setForeground(new java.awt.Color(1, 1, 1));
+        lamdaLbl1.setText("Norma:");
+
+        normaSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Infinita", "Euclidiana" }));
+
+        lamdaLbl3.setFont(new java.awt.Font("Lato Black", 0, 18)); // NOI18N
+        lamdaLbl3.setForeground(new java.awt.Color(1, 1, 1));
+        lamdaLbl3.setText("Valores iniciales");
+
+        toleranceLbl.setFont(new java.awt.Font("Lato Black", 0, 18)); // NOI18N
+        toleranceLbl.setForeground(new java.awt.Color(1, 1, 1));
+        toleranceLbl.setText("Tolerancia:");
+
+        toleranceInput.setFont(new java.awt.Font("Lato Black", 0, 24)); // NOI18N
+        toleranceInput.setForeground(new java.awt.Color(1, 1, 1));
+
+        nLbl.setFont(new java.awt.Font("Lato Black", 0, 18)); // NOI18N
+        nLbl.setForeground(new java.awt.Color(1, 1, 1));
+        nLbl.setText("Maximas iteraciones:");
+
+        nInput.setFont(new java.awt.Font("Lato Black", 0, 24)); // NOI18N
+        nInput.setForeground(new java.awt.Color(1, 1, 1));
+
+        lambdaInput.setFont(new java.awt.Font("Lato Black", 0, 24)); // NOI18N
+        lambdaInput.setForeground(new java.awt.Color(1, 1, 1));
+
+        jButton1.setText("Crear Tabla");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout initialValuesPanelLayout = new javax.swing.GroupLayout(initialValuesPanel);
+        initialValuesPanel.setLayout(initialValuesPanelLayout);
+        initialValuesPanelLayout.setHorizontalGroup(
+            initialValuesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 636, Short.MAX_VALUE)
+        );
+        initialValuesPanelLayout.setVerticalGroup(
+            initialValuesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        jScrollPane2.setViewportView(initialValuesPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(cleanBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
-                .addComponent(lamdaLbl)
-                .addGap(2, 2, 2)
-                .addComponent(lamdaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ecuacionesBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(calculateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(12, 12, 12))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cleanBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lamdaLbl2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(relajadoCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                                .addComponent(ecuacionesBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(47, 47, 47)
+                                .addComponent(calculateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(91, 91, 91)
+                                .addComponent(nLbl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(nInput, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(60, 60, 60)
+                                .addComponent(lamdaLbl1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(normaSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lamdaLbl3)
+                                .addGap(187, 187, 187)
+                                .addComponent(jButton1)
+                                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(toleranceLbl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(toleranceInput, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(74, 74, 74)
+                                .addComponent(lamdaLbl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lambdaInput, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(142, 142, 142))))))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(15, 15, 15)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
                             .addComponent(titleLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(infoButton))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(575, 575, 575)
                             .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGap(15, 15, 15)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(76, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lamdaLbl3)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addComponent(ecuacionesBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(calculateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lamdaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lamdaLbl)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(170, 170, 170)
-                        .addComponent(cleanBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(398, Short.MAX_VALUE))
+                    .addComponent(toleranceLbl)
+                    .addComponent(toleranceInput, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lambdaInput, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lamdaLbl)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lamdaLbl2)
+                        .addComponent(relajadoCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lamdaLbl1)
+                        .addComponent(normaSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(nLbl)
+                        .addComponent(nInput, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(calculateBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ecuacionesBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cleanBtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(6, 6, 6)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(titleLbl)
                         .addComponent(infoButton))
-                    .addGap(170, 170, 170)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(0, 0, Short.MAX_VALUE)
-                            .addComponent(backBtn))
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
+                    .addGap(426, 628, Short.MAX_VALUE)
+                    .addComponent(backBtn)
                     .addGap(6, 6, 6)))
         );
 
@@ -204,29 +376,154 @@ public class GaussSeidelRelajado extends javax.swing.JFrame {
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
-        JOptionPane.showMessageDialog(this, "");
+        JOptionPane.showMessageDialog(this, "Crear tabla, es un botón diseñado para que al ser presionado\n" +
+                                            "se puedan ingresar los valores iniciales del algoritmo de acuerdo \n"+
+                                            "a la cantidad de valores ingresados en la tabla de ecuaciones");
     }//GEN-LAST:event_infoButtonActionPerformed
+
+    private boolean validateForm() {
+        try {
+            this.relajado = this.relajadoCheckBox.isSelected();
+            this.selectedNorma = this.normaSelect.getSelectedItem().toString();
+            this._tolerance = new BigDecimal(this.toleranceInput.getText());
+            this._n = Integer.parseInt(this.nInput.getText());
+            if(this.relajado) {
+                this._lambda = new BigDecimal(this.lambdaInput.getText());
+            }
+            this._xi = new BigDecimal[_ecuaciones.length];
+            for(int i = 0; i < _xi.length; i++){
+                this._xi[i] = new BigDecimal(inputs.get(i).getText());
+            }
+        } catch (Exception e) {
+            this.observations.setForeground(Color.red);
+            this.observations.setText("Error: Por favor verifica que los campos no estén vacíos y tengan valores correctos");
+            return false;
+        }
+        this.observations.setForeground(Color.black);
+        this.observations.setText("OBSERVACIONES:");
+        return true;
+    }
+    
+    private BigDecimal[] CalcularGaussSeidel(BigDecimal[][] Ab, BigDecimal[] Xa, int n, BigDecimal lambda) {
+        BigDecimal[] Xn = Xa.clone();
+        for (int i = 0; i <= n; i++) {
+            BigDecimal sumatoria = BigDecimal.ZERO;
+            for(int j = 0; j <= n; j++) {
+                if(j != i) {
+                    sumatoria = sumatoria.add(Ab[i][j].multiply(Xn[j]));
+                }
+            }
+            if(Ab[i][i] == BigDecimal.ZERO){
+                throw new ArithmeticException("el sistema tiene multiples/cero soluciones");
+            }
+            Xn[i] = (Ab[i][n+1].subtract(sumatoria)).divide(Ab[i][i], MathContext.DECIMAL128);
+            if(this.relajado){
+                Xn[i] = lambda.multiply(Xn[i]).add(BigDecimal.ONE.subtract(lambda).multiply(Xa[i]));
+            }
+        }
+        return Xn;
+    }
+    
+    private BigDecimal norma(BigDecimal[] xn, BigDecimal[] xa) {
+        if(this.selectedNorma.equals("Infinita")){
+            //max(abs(xn-xa))
+            BigDecimal mayor = BigDecimal.ZERO;
+            for(int i = 0; i <= xn.length - 1; i++){
+                BigDecimal resta = xn[i].subtract(xa[i]).abs();
+                if(mayor.compareTo(resta) == -1){
+                    mayor = resta;
+                }
+            }
+            return mayor;
+        }
+        //raiz(sumatoria((xn-xi)^2))
+        BigDecimal sumatoria = BigDecimal.ZERO;
+        for(int i = 0; i <= xn.length - 1; i++) {
+            sumatoria = sumatoria.add((xn[i].subtract(xa[i])).pow(2));
+        }
+        //return sumatoria.sqrt(MathContext.DECIMAL128); //for java 9+
+        return BigDecimal.valueOf(Math.sqrt(sumatoria.doubleValue())); //for java 8-
+    }
+    
+    private void GaussSeidel(BigDecimal[][]Ab, BigDecimal[] xi, BigDecimal tolerance, int n, BigDecimal lambda) {
+        if (_n <= 0) {
+            this.observations.setText("las iteraciones deben ser mayor a cero");
+        }
+        else if (tolerance.compareTo(BigDecimal.ZERO) == -1) {
+            this.observations.setText("la tolerancia debe ser positiva");
+        }
+        else{
+            int cont = 0;
+            BigDecimal dispersion = tolerance.add(BigDecimal.ONE);
+            fillTable(cont, xi, dispersion);
+            while (dispersion.compareTo(tolerance) == 1 && cont < n) { //mientras dispersion sea mayor a la tolerancia
+                BigDecimal[] Aux = xi.clone();
+                xi = CalcularGaussSeidel(Ab, xi, xi.length - 1, lambda);
+                dispersion = norma(xi, Aux);
+                cont++;
+                fillTable(cont, xi, dispersion);
+            }
+            if (dispersion.compareTo(tolerance) == -1 || dispersion.compareTo(tolerance) == 0) {
+                this.observations.setText("xn se aproxima con una tolerancia: " + tolerance+ " en la iteración "+cont);
+                for(int i = 0; i < xi.length; i++){
+                    this.observations.setText(this.observations.getText()+"\n"+"x"+(i+1)+ "= "+ xi[i]);
+                }
+            }
+            else {
+                this.observations.setText( "fracaso en " + n + " iteraciones");
+            }
+        }
+    }
+    
+    private void fillTable(int n, BigDecimal[]xn, BigDecimal dispersion){
+        DefaultTableModel gaussSeidelTableModel = (DefaultTableModel) gaussSeidelRelajadoTable.getModel();
+        Object[] row = new Object[xn.length + 2];
+        row[0] = n;
+        for(int i = 1; i <= xn.length; i++) {
+            row[i] = xn[i-1];
+        }
+        row[xn.length+1] = dispersion;
+        gaussSeidelTableModel.addRow(row);
+    }
+
+    private void calculateBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtn1ActionPerformed
+        try {
+            this._ecuaciones = contenedor.getEcuaciones();
+            if(this.validateForm()) {
+                try {
+                    initTable();
+                    GaussSeidel(this._ecuaciones, this._xi, this._tolerance, this._n, this._lambda);
+                } catch (Exception e) {
+                    observations.setText("Error: " + e.getMessage());
+                }
+            }
+        } catch(Exception e) {
+            System.out.println(e.toString());
+        }
+    }//GEN-LAST:event_calculateBtn1ActionPerformed
 
     private void ecuacionesBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ecuacionesBtn1ActionPerformed
         TotalEcuaciones totalecuacuaciones = new TotalEcuaciones();
         totalecuacuaciones.setVisible(true);
     }//GEN-LAST:event_ecuacionesBtn1ActionPerformed
 
-    private void calculateBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtn1ActionPerformed
-        try {
-            BigDecimal[][] ecuaciones = contenedor.getEcuaciones();
-        } catch(Exception e) {
-            System.out.println(e.toString());
-        }
-    }//GEN-LAST:event_calculateBtn1ActionPerformed
-
     private void cleanBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanBtn1ActionPerformed
         this.clearTable();
         this.observations.setText("OBSERVACIONES:");
     }//GEN-LAST:event_cleanBtn1ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            this._ecuaciones = contenedor.getEcuaciones();
+            this.initialValuesTableInit();
+        } catch(Exception e) {
+            System.out.println(e.toString());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void clearTable() {
-        DefaultTableModel gaussSeidelRelajadoTableModel = (DefaultTableModel) gaussSidelRelajadoTable.getModel();
+        DefaultTableModel gaussSeidelRelajadoTableModel = (DefaultTableModel) gaussSeidelRelajadoTable.getModel();
         gaussSeidelRelajadoTableModel.setRowCount(0);
     }
 
@@ -235,13 +532,25 @@ public class GaussSeidelRelajado extends javax.swing.JFrame {
     private javax.swing.JButton calculateBtn1;
     private javax.swing.JButton cleanBtn1;
     private javax.swing.JButton ecuacionesBtn1;
-    private javax.swing.JTable gaussSidelRelajadoTable;
+    private javax.swing.JTable gaussSeidelRelajadoTable;
     private javax.swing.JButton infoButton;
+    private javax.swing.JPanel initialValuesPanel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextField lambdaInput;
     private javax.swing.JLabel lamdaLbl;
-    private javax.swing.JTextField lamdaTxt;
+    private javax.swing.JLabel lamdaLbl1;
+    private javax.swing.JLabel lamdaLbl2;
+    private javax.swing.JLabel lamdaLbl3;
+    private javax.swing.JTextField nInput;
+    private javax.swing.JLabel nLbl;
+    private javax.swing.JComboBox<String> normaSelect;
     private javax.swing.JTextPane observations;
+    private javax.swing.JCheckBox relajadoCheckBox;
     private javax.swing.JLabel titleLbl;
+    private javax.swing.JTextField toleranceInput;
+    private javax.swing.JLabel toleranceLbl;
     // End of variables declaration//GEN-END:variables
 }

@@ -9,10 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -435,7 +432,7 @@ public class JacobiRelajado extends javax.swing.JFrame {
         //raiz(sumatoria((xn-xi)^2))
         BigDecimal sumatoria = BigDecimal.ZERO;
         for(int i = 0; i <= xn.length - 1; i++) {
-            sumatoria = sumatoria.add(xn[i].subtract(xa[i]).pow(2));
+            sumatoria = sumatoria.add((xn[i].subtract(xa[i])).pow(2));
         }
         //return sumatoria.sqrt(MathContext.DECIMAL128); //for java 9+
         return BigDecimal.valueOf(Math.sqrt(sumatoria.doubleValue())); //for java 8-
@@ -468,13 +465,13 @@ public class JacobiRelajado extends javax.swing.JFrame {
                 if(this.relajado){
                     xn = aplicarRelajacion(xn, xi, lambda, xn.length - 1);
                 }
-                xi = xn;
+                xi = xn.clone();
                 cont++;
                 fillTable(cont, xn, dispersion);
             }
             if (dispersion.compareTo(tolerance) == -1 || dispersion.compareTo(tolerance) == 0) {
-                this.observations.setText("xn se aproxima con una tolerancia: " + tolerance);
-                for(int i = 0; i <= xn.length; i++){
+                this.observations.setText("xn se aproxima con una tolerancia: " + tolerance+ " en la iteración "+cont);
+                for(int i = 0; i < xn.length; i++){
                     this.observations.setText(this.observations.getText()+"\n"+"x"+(i+1)+ "= "+ xn[i]);
                 }
             }

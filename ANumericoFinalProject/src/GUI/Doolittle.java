@@ -274,6 +274,8 @@ public class Doolittle extends javax.swing.JFrame {
             BigDecimal[][] ecuaciones = contenedor.getEcuaciones();
             adecuarMatrices();
             doolittle();
+            Progresiva();
+            Sustitucion();
         } catch(Exception e) {
             System.out.println(e.toString());
         }
@@ -299,8 +301,9 @@ public class Doolittle extends javax.swing.JFrame {
             U = new BigDecimal[tmp.length][tmp[0].length-1];
             A = new BigDecimal[tmp.length][tmp[0].length-1];
             B = new BigDecimal[tmp.length];
-            X = new BigDecimal[tmp.length];
             Z = new BigDecimal[tmp.length];
+            X = new BigDecimal[tmp.length];
+            
             
             
             for(int filas = 0;filas<tmp.length;filas++){
@@ -309,10 +312,11 @@ public class Doolittle extends javax.swing.JFrame {
                         B[filas] = tmp[filas][columnas];
                     }else {
                         A[filas][columnas] = tmp[filas][columnas];
-                        U[filas][columnas]=BigDecimal.ZERO;
                         if(filas == columnas){
+                            U[filas][columnas] = BigDecimal.ONE;
                             L[filas][columnas] = BigDecimal.ONE;
                         }else {
+                            U[filas][columnas] = BigDecimal.ZERO;
                             L[filas][columnas] = BigDecimal.ZERO;
                         }
                     }
@@ -323,37 +327,34 @@ public class Doolittle extends javax.swing.JFrame {
             showErrorMessage("Porfavor primero ingrese los datos");
         }
     }
+    
     public void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
     
     public void doolittle(){
-        int n = L.length-1;
-        BigDecimal suma1,suma2,suma3;
-        double tmp=0;
-        for(int k = 0; k < n; k++){
-            suma1 = BigDecimal.ZERO;
-            for(int p = 0; p < k; p++){
-                suma1 = suma1.add(L[k][p]).multiply(U[p][k]);
+        int n = L.length;
+        BigDecimal suma1,suma2;
+        for(int d = 0 ;d<n;d++){
+            for(int j = d; j< n;j++){
+                suma1 = BigDecimal.ZERO;
+                for(int s = 0; s < j; s++){
+                    suma1 = suma1.add(L[d][s].multiply(U[s][j]));
+                }
+                U[d][j] = A[d][j].subtract(suma1);
             }
-            U[k][k] = A[k][k].subtract(suma1);
-            for(int i = k+1; i < n; i++){
+            for(int j = d+1;j<n;j++){
                 suma2 = BigDecimal.ZERO;
-                for(int p = 0; p < k; p++){
-                    suma2 = suma2.add(L[i][p]).multiply(U[p][k]);
+                for(int p = 0; p<d; p++){
+                    suma2 = suma2.add(L[j][p].multiply(U[p][d]));
                 }
-            L[i][k] = A[i][k].subtract(suma2).divide(U[k][k],MathContext.DECIMAL128);
+                L[j][d] = A[j][d].subtract(suma2).divide(U[d][d],MathContext.DECIMAL128);
             }
-            for(int j = k+1; j<n; j++){
-                suma3 = BigDecimal.ZERO;
-                for(int p = 0; p < k; p++){
-                    suma3 = suma3.add(L[k][p]).multiply(U[p][j]);
-                }
-            U[k][j] = A[k][j].subtract(suma3).divide(L[k][k],MathContext.DECIMAL128);
-            }
+            
         }
         mostrar();
     }
+    
     
     public void Sustitucion() {
         int n = U.length-1 ;

@@ -183,7 +183,8 @@ public class NewtonInterpolacion extends javax.swing.JFrame {
            int n = xn.length;
            BigDecimal[][] matriz = newtonMetodo(n, xn, fxn);
            if(!matriz[0][0].equals(0)) {
-               generarTabla(n, xn, fxn, matriz);
+               //generarTabla(n, xn, fxn, matriz);
+               mostrar(matriz);
            }
         } catch(Exception e) {
             this.observations.setText(e.toString());
@@ -191,8 +192,8 @@ public class NewtonInterpolacion extends javax.swing.JFrame {
     }//GEN-LAST:event_calculateBtnActionPerformed
 
     private void ecuacionesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ecuacionesBtnActionPerformed
-        TotalEcuaciones totalecuacuaciones = new TotalEcuaciones();
-        totalecuacuaciones.setVisible(true);
+        TotalDatosInterpolacion totalDatos = new TotalDatosInterpolacion();
+        totalDatos.setVisible(true);
     }//GEN-LAST:event_ecuacionesBtnActionPerformed
 
     private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
@@ -258,6 +259,18 @@ public class NewtonInterpolacion extends javax.swing.JFrame {
     
     private void generarTabla(int n, BigDecimal[] xn, BigDecimal[] fxn, BigDecimal[][] matriz) {
         
+    }
+    
+    public void mostrar(BigDecimal[][] matriz){
+        String tmpL="";
+        for(int i = 0;i<matriz.length;i++){
+            for(int j = 0;j<matriz[0].length;j++){
+                tmpL = tmpL + matriz[i][j]+" ";
+               
+            }
+            tmpL=tmpL +"\n";
+        }
+       System.out.println("L: \n"+tmpL);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

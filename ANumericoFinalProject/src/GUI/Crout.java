@@ -333,17 +333,16 @@ public class Crout extends javax.swing.JFrame {
     public void crout(){
         int n = L.length;
         BigDecimal suma1,suma2;
-        double tmp=0;
         for(int d = 0 ;d<n;d++){
-            suma1 = BigDecimal.ZERO;
             for(int j = d; j< n;j++){
+                suma1 = BigDecimal.ZERO;
                 for(int s = 0; s < j; s++){
                     suma1 = suma1.add(L[j][s].multiply(U[s][d]));
                 }
                L[j][d] = A[j][d].subtract(suma1);
             }
-            suma2 = BigDecimal.ZERO;
             for(int j = d+1;j<n;j++){
+                suma2 = BigDecimal.ZERO;
                 for(int p = 0; p<d; p++){
                     suma2 = suma2.add(L[d][p].multiply(U[p][j]));
                 }

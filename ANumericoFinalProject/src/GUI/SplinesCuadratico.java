@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,11 +15,12 @@ public class SplinesCuadratico extends javax.swing.JFrame {
     /**
      * Creates new form SplinesLineal
      */
-    DatosInterpolacion datosInterpolacion;
-    int valorespotenciasinderivar[]= {2,1,0};
-    List<String> variables;
-    List<String> ecuaciones;
-    List<String> ecuacionesderivada;
+    private DatosInterpolacion datosInterpolacion;
+    private int valorespotenciasinderivar[]= {2,1,0};
+    private List<String> variables;
+    private List<String> ecuaciones;
+    private List<String> ecuacionesderivada;
+    
     public SplinesCuadratico() {
         this.setTitle("Splines cuadratico");
         this.setResizable(true);
@@ -105,15 +107,35 @@ public class SplinesCuadratico extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dialog = new javax.swing.JDialog();
         jLabel1 = new javax.swing.JLabel();
         calculate = new javax.swing.JButton();
         salir = new javax.swing.JButton();
         results = new java.awt.TextArea();
+        info = new javax.swing.JButton();
+        ingresardatos = new javax.swing.JButton();
+
+        javax.swing.GroupLayout dialogLayout = new javax.swing.GroupLayout(dialog.getContentPane());
+        dialog.getContentPane().setLayout(dialogLayout);
+        dialogLayout.setHorizontalGroup(
+            dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        dialogLayout.setVerticalGroup(
+            dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Splina cuadrado");
+        jLabel1.setBackground(new java.awt.Color(254, 254, 254));
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 35)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(1, 1, 1));
+        jLabel1.setText("SPLINES CUADRATICO");
 
+        calculate.setBackground(new java.awt.Color(0, 149, 136));
+        calculate.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
+        calculate.setForeground(new java.awt.Color(1, 1, 1));
         calculate.setText("Calcular");
         calculate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,10 +143,35 @@ public class SplinesCuadratico extends javax.swing.JFrame {
             }
         });
 
+        salir.setBackground(new java.awt.Color(0, 149, 136));
+        salir.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
+        salir.setForeground(new java.awt.Color(1, 1, 1));
         salir.setText("Salir");
         salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 salirActionPerformed(evt);
+            }
+        });
+
+        info.setBackground(new java.awt.Color(0, 149, 136));
+        info.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
+        info.setForeground(new java.awt.Color(1, 1, 1));
+        info.setText("?");
+        info.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        info.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                infoActionPerformed(evt);
+            }
+        });
+
+        ingresardatos.setBackground(new java.awt.Color(0, 149, 136));
+        ingresardatos.setFont(new java.awt.Font("Lato Black", 1, 15)); // NOI18N
+        ingresardatos.setForeground(new java.awt.Color(1, 1, 1));
+        ingresardatos.setText("Ingresar Datos");
+        ingresardatos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        ingresardatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ingresardatosActionPerformed(evt);
             }
         });
 
@@ -133,19 +180,21 @@ public class SplinesCuadratico extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(calculate)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(salir)
-                .addGap(46, 46, 46))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(126, 126, 126)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(170, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(results, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(calculate)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(ingresardatos, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(salir, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(results, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,11 +202,14 @@ public class SplinesCuadratico extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(calculate)
-                    .addComponent(salir))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(salir)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(calculate)
+                        .addComponent(ingresardatos, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(info, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(results, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                .addComponent(results, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -175,18 +227,38 @@ public class SplinesCuadratico extends javax.swing.JFrame {
         popularvariables();
         BigDecimal x[] = datosInterpolacion.getX();
         BigDecimal y[] = datosInterpolacion.getXn();
-        int totalecuaciones = x.length-1;
-        for( int i = 0; i < totalecuaciones; i++){
-            calcularecuaciones(x[i], x[i+1], y[i], y[i+1], variables.get(i));
-            if(i%2!=0){
-                calcularecuacionesderivada(x[i], variables.get(i-1), variables.get(i));
+        if(x==null){
+            JOptionPane.showMessageDialog(dialog,"Porfavor primero ingrese los datos de la"
+                    + " interpolación");
+        }else{
+            int totalecuaciones = x.length-1;
+            for( int i = 0; i < totalecuaciones; i++){
+                calcularecuaciones(x[i], x[i+1], y[i], y[i+1], variables.get(i));
+                if(i%2!=0){
+                    calcularecuacionesderivada(x[i], variables.get(i-1), variables.get(i));
+                }
             }
+            imprimir();            
         }
-        imprimir();
     }//GEN-LAST:event_calculateActionPerformed
+
+    private void infoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(dialog, "Este metodo calculara las ecuaciones que pasan por los puntos ingresados \n"
+            + "por medio de una iterpolación de datos, este metodo requiere que se le ingresen los x y los y para su debido funcionamiento");
+    }//GEN-LAST:event_infoActionPerformed
+
+    private void ingresardatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresardatosActionPerformed
+        // TODO add your handling code here:
+        TotalEcuaciones totalEcuaciones = new TotalEcuaciones();
+        totalEcuaciones.setVisible(true);
+    }//GEN-LAST:event_ingresardatosActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton calculate;
+    private javax.swing.JDialog dialog;
+    private javax.swing.JButton info;
+    private javax.swing.JButton ingresardatos;
     private javax.swing.JLabel jLabel1;
     private java.awt.TextArea results;
     private javax.swing.JButton salir;

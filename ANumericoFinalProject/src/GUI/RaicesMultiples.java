@@ -19,6 +19,8 @@ public class RaicesMultiples extends javax.swing.JFrame {
     private MathFunctionsParser functionFx;
     private MathFunctionsParser functionFdx;
     private MathFunctionsParser functionF2dx;
+    ContenedorEcuacion contenedor = ContenedorEcuacion.getContenedor();
+    
     
     /**
      * Creates new form RaicesMultiples
@@ -33,6 +35,13 @@ public class RaicesMultiples extends javax.swing.JFrame {
         initComponents();
         this.observacionesTxt.setEditable(false);
         this.setResizable(false);
+        if(contenedor.getEcuacion()!=null){
+            functionTxt.setText(contenedor.ecuacion);
+        }
+        
+        if(contenedor.derivada1 != null){
+           functionFdxTxt.setText(contenedor.derivada1);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -317,7 +326,9 @@ public class RaicesMultiples extends javax.swing.JFrame {
 
     private void calcularBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularBtnActionPerformed
         if(controlEntradaFuncionFx()) {
+            String func = functionTxt.getText();
             if(controlEntradaFuncionFdx()) {
+                String derivadafun = functionFdxTxt.getText();
                 if(controlEntradaFuncionF2dx()) {
                     if (controlEntradaDatos()) {
                         metodoRaicesMultiples(_xi, _tolerance, _n);
@@ -325,6 +336,12 @@ public class RaicesMultiples extends javax.swing.JFrame {
                         showErrorMessage("Error en los datos de entrada");
                     }
                 }
+                if(contenedor.derivada1.equalsIgnoreCase(derivadafun) == false){
+                    contenedor.setDerivada1(derivadafun);
+                }
+            }
+            if(contenedor.ecuacion.equalsIgnoreCase(func) == false){
+                contenedor.setEcuacion(func);
             }
         } else {
             showErrorMessage("Error en la función, no se pudo graficar");

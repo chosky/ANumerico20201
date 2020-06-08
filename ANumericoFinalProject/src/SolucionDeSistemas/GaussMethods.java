@@ -24,6 +24,8 @@ class BuscarMayor {
  */
 public class GaussMethods {
     
+    public static int[] marcas;
+    
     private static void mostrarEtapa(JTable table, int etapa, int n) {
        DefaultTableModel model = (DefaultTableModel)table.getModel();
        String[] row = new String[n];
@@ -90,23 +92,21 @@ public class GaussMethods {
         return Ab;
     }
     
-    public static BigDecimal[][] cambiarColumna(BigDecimal[][] Ab, int k, int columnaM, int[] marcas){
-        BigDecimal aux[];
-        aux = new BigDecimal[Ab.length-1];        
-        for (int i = 1; i <= k; i++) {
+    public static BigDecimal[][] cambiarColumna(BigDecimal[][] Ab, int k, int columnaM){
+        BigDecimal[] aux = new BigDecimal[Ab.length-1];
+        Arrays.fill(aux, BigDecimal.ZERO);
+        for (int i = 0; i < Ab.length - 1; i++) {
             aux[i] = Ab[i][columnaM];
             Ab[i][columnaM] = Ab[i][k];
             Ab[i][k] = aux[i];
-            
 	}
 	return Ab;
     }
     
-    public static int[] cambiarMarcas(int[] marcas, int k, int columnaM){
-        int aux = marcas[columnaM];
-        marcas[columnaM] = marcas[k];
-        marcas[k] = aux;
-        
+    public static int[] cambiarMarcas(int k, int columnaM, int[] marcas){
+        int aux = marcas[k];
+        marcas[k] = marcas[columnaM];
+        marcas[columnaM] = aux;
         return marcas;
     }
     
@@ -209,10 +209,9 @@ public class GaussMethods {
     }
             
     public static BigDecimal[][] pivoteoTotal(BigDecimal[][]Ab, int n, JTable table){
-        int marcas[];
-        marcas = new int[n];
-        for(int i = 0; i < n; i++){
-            marcas[i]= i;
+        int[] marcas = new int[n + 1];
+        for(int i = 0; i <= n; i++){
+            marcas[i]= i + 1;
         }
         for (int k = 0; k < n; k++) {
             mostrarEtapa(table, k, n);
@@ -228,12 +227,14 @@ public class GaussMethods {
                 Ab = CambiarFila(Ab, k, filaM);
             }
             if(k != columnaM){
-                Ab = cambiarColumna(Ab, k, columnaM, marcas);
-                marcas = cambiarMarcas(marcas, k, columnaM);
-            }                
+                Ab = cambiarColumna(Ab, k, columnaM);
+                marcas = cambiarMarcas(k, columnaM, marcas);
+            } 
+            
             Ab = Reduccion(Ab, n, k);
             mostrarMatriz(table, Ab);
         }
+        GaussMethods.marcas = marcas;
         return Ab;
     }
     

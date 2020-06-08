@@ -206,15 +206,16 @@ public class PivoteoTotal extends javax.swing.JFrame {
     }//GEN-LAST:event_ecuacionesBtn1ActionPerformed
 
     private void calculateBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateBtn1ActionPerformed
-        //try {
+        try {
             this._ecuaciones = contenedor.getEcuaciones();
             initTable();
             BigDecimal[][] Ub = GaussMethods.pivoteoTotal(_ecuaciones, _ecuaciones.length - 1, gaussTable);
             BigDecimal[] X = GaussMethods.Sustitucion(Ub, _ecuaciones.length - 1);
-            mostrarResultado(X);
-        //} catch(Exception e) {
-          //  this.observations.setText(e.toString());
-        //}
+            int[] marcas = GaussMethods.marcas;
+            mostrarResultado(X, marcas);
+        } catch(Exception e) {
+            this.observations.setText(e.toString());
+        }
     }//GEN-LAST:event_calculateBtn1ActionPerformed
 
     private void cleanBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanBtn1ActionPerformed
@@ -237,10 +238,10 @@ public class PivoteoTotal extends javax.swing.JFrame {
         this.gaussTable.setModel(model);
     }
     
-    private void mostrarResultado(BigDecimal[] X){
+    private void mostrarResultado(BigDecimal[] X, int[] marcas){
         String text = "Resultado: \n";
         for(int i = 0; i < X.length; i++){
-            text += "X"+(i+1)+ "= "+ X[i]+ "\n";
+            text += "X"+ marcas[i] + "= "+ X[i]+ "\n";
         }
         this.observations.setText(text);
     }

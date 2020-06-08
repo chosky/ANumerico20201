@@ -322,7 +322,7 @@ public class Cholesky extends javax.swing.JFrame {
                 suma1 = suma1.add(L[k][p].multiply(U[p][k]));
             }
             
-            //L[k][k] = A[k][k].subtract(suma1).sqrt(MathContext.DECIMAL128);
+            L[k][k] = A[k][k].subtract(suma1).sqrt(MathContext.DECIMAL128);
             U[k][k] = L[k][k];
             
             for(int i = k; i < n; i++){

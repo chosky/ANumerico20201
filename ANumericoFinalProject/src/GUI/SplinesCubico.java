@@ -284,7 +284,7 @@ public class SplinesCubico extends javax.swing.JFrame {
 
     private void ingresardatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresardatosActionPerformed
         // TODO add your handling code here:
-        TotalEcuaciones totalEcuaciones = new TotalEcuaciones();
+        TotalDatosInterpolacion totalEcuaciones = new TotalDatosInterpolacion();
         totalEcuaciones.setVisible(true);
     }//GEN-LAST:event_ingresardatosActionPerformed
     

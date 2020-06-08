@@ -58,7 +58,7 @@ public class Cholesky extends javax.swing.JFrame {
         titleLbl = new javax.swing.JLabel();
         infoButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         observations.setEditable(false);
         observations.setText("OBSERVACIONES:");

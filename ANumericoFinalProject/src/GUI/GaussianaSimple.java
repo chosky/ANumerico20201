@@ -60,7 +60,7 @@ public class GaussianaSimple extends javax.swing.JFrame {
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         titleLbl.setBackground(new java.awt.Color(254, 254, 254));
         titleLbl.setFont(new java.awt.Font("Lato Black", 1, 35)); // NOI18N

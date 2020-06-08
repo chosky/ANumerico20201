@@ -388,7 +388,6 @@ public class Cholesky extends javax.swing.JFrame {
         if(U[n][n] == BigDecimal.ZERO){
             throw new ArithmeticException("El sistema tiene infinitas/cero soluciones");
         }
-        BigDecimal[] X = new BigDecimal[n+1];
         X[n]= Z[n].divide(U[n][n], MathContext.DECIMAL128);
         System.out.println("X"+(n+1)+ "= "+ X[n]);
         for(int i = n-1; i >= 0; i--) { 

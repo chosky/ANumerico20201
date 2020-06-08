@@ -39,11 +39,16 @@ public class SplinesCuadratico extends javax.swing.JFrame {
         int cont = 2;
         for (int i = 0; i < valorespotenciasinderivar.length; i++){
             if(cont == 0){
-                tmp1+=cotinf.pow(valorespotenciasinderivar[i])+variable+cont;
-                tmp2+=cotsup.pow(valorespotenciasinderivar[i])+variable+cont;
+                tmp1+=" + "+cotinf.pow(valorespotenciasinderivar[i])+variable+cont;
+                tmp2+=" + "+cotsup.pow(valorespotenciasinderivar[i])+variable+cont;
             }else{
-                tmp1+=cotinf.pow(valorespotenciasinderivar[i])+variable+cont+"+";
-                tmp2+=cotsup.pow(valorespotenciasinderivar[i])+variable+cont+"+";
+                if(cotinf.pow(valorespotenciasinderivar[i]).signum()==1){
+                    tmp1+=" + "+cotinf.pow(valorespotenciasinderivar[i])+variable+cont;
+                    tmp2+=" + "+cotsup.pow(valorespotenciasinderivar[i])+variable+cont;
+                }else{
+                    tmp1+=" "+cotinf.pow(valorespotenciasinderivar[i])+variable+cont;
+                    tmp2+=" "+cotsup.pow(valorespotenciasinderivar[i])+variable+cont;
+                }
             }
             cont--;
         }
@@ -64,8 +69,13 @@ public class SplinesCuadratico extends javax.swing.JFrame {
                 tmp1+=variable1+cont;
                 tmp2+=variable2+cont;
             }else{
-                tmp1+=interseccion.multiply(BigDecimal.valueOf(2))+variable1+cont+"+";
-                tmp2+=interseccion.multiply(BigDecimal.valueOf(2))+variable2+cont+"+";
+                if(interseccion.multiply(BigDecimal.valueOf(2)).signum()==1){
+                    tmp1+=" + "+interseccion.multiply(BigDecimal.valueOf(2))+variable1+cont;
+                    tmp2+=" + "+interseccion.multiply(BigDecimal.valueOf(2))+variable2+cont;
+                }else{
+                    tmp1+=" "+interseccion.multiply(BigDecimal.valueOf(2))+variable1+cont;
+                    tmp2+=" "+interseccion.multiply(BigDecimal.valueOf(2))+variable2+cont;
+                }
             }
             cont--;
         }
@@ -250,7 +260,7 @@ public class SplinesCuadratico extends javax.swing.JFrame {
 
     private void ingresardatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresardatosActionPerformed
         // TODO add your handling code here:
-        TotalEcuaciones totalEcuaciones = new TotalEcuaciones();
+        TotalDatosInterpolacion totalEcuaciones = new TotalDatosInterpolacion();
         totalEcuaciones.setVisible(true);
     }//GEN-LAST:event_ingresardatosActionPerformed
 

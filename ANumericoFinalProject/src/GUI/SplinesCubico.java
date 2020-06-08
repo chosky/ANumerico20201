@@ -56,11 +56,17 @@ public class SplinesCubico extends javax.swing.JFrame {
         int cont = 3;
         for(int i = 0; i < valorespotenciassinderivar.length; i++){
             if(cont == 0){
-                tmp1+= cotinf.pow(valorespotenciassinderivar[i])+variable+cont;
-                tmp2+= cotsup.pow(valorespotenciassinderivar[i])+variable+cont;
+                tmp1+=" + "+ cotinf.pow(valorespotenciassinderivar[i])+variable+cont;
+                tmp2+=" + "+ cotsup.pow(valorespotenciassinderivar[i])+variable+cont;
             }else{
-                tmp1+= cotinf.pow(valorespotenciassinderivar[i])+variable+cont+" + ";
-                tmp2+= cotsup.pow(valorespotenciassinderivar[i])+variable+cont+" + ";
+                if(cotinf.pow(valorespotenciassinderivar[i]).signum()==1){
+                    tmp1+=" + "+ cotinf.pow(valorespotenciassinderivar[i])+variable+cont;
+                    tmp2+=" + "+ cotsup.pow(valorespotenciassinderivar[i])+variable+cont;
+                }else{
+                    tmp1+=" "+ cotinf.pow(valorespotenciassinderivar[i])+variable+cont;
+                    tmp2+=" "+ cotsup.pow(valorespotenciassinderivar[i])+variable+cont;
+                }
+                
             }
             cont--;
         }
@@ -76,11 +82,17 @@ public class SplinesCubico extends javax.swing.JFrame {
         int cont = 3;
         for(int i = 0; i < valorespotenciaderivada1.length; i++){
             if(cont == 1){
-                tmp1+= valormultiplicacionder1[i].multiply(interseccion.pow(valorespotenciaderivada1[i]))+var1+cont;
-                tmp2+= valormultiplicacionder1[i].multiply(interseccion.pow(valorespotenciaderivada1[i]))+var2+cont;
+                tmp1+= " + "+valormultiplicacionder1[i].multiply(interseccion.pow(valorespotenciaderivada1[i]))+var1+cont;
+                tmp2+= " + "+valormultiplicacionder1[i].multiply(interseccion.pow(valorespotenciaderivada1[i]))+var2+cont;
             }else{
-                tmp1+= valormultiplicacionder1[i].multiply(interseccion.pow(valorespotenciaderivada1[i]))+var1+cont+" + ";
-                tmp2+= valormultiplicacionder1[i].multiply(interseccion.pow(valorespotenciaderivada1[i]))+var2+cont+" + ";
+                if(interseccion.pow(valorespotenciaderivada1[i]).signum()==1){
+                    tmp1+= " + "+valormultiplicacionder1[i].multiply(interseccion.pow(valorespotenciaderivada1[i]))+var1+cont;
+                    tmp2+= " + "+valormultiplicacionder1[i].multiply(interseccion.pow(valorespotenciaderivada1[i]))+var2+cont;
+                }else{
+                    tmp1+=" "+valormultiplicacionder1[i].multiply(interseccion.pow(valorespotenciaderivada1[i]))+var1+cont;
+                    tmp2+=" "+valormultiplicacionder1[i].multiply(interseccion.pow(valorespotenciaderivada1[i]))+var2+cont;
+                }
+                
             }
             cont--;
         }
@@ -94,11 +106,16 @@ public class SplinesCubico extends javax.swing.JFrame {
         int cont = 3;
         for(int i = 0; i < 2; i++){
             if(cont == 2){
-                tmp1+=cont+var1+cont;
-                tmp2+=cont+var2+cont;
+                tmp1+=" + "+cont+var1+cont;
+                tmp2+=" + "+cont+var2+cont;
             }else{
-                tmp1+=interseccion.multiply(BigDecimal.valueOf(6))+var1+cont+" + ";
-                tmp2+=interseccion.multiply(BigDecimal.valueOf(6))+var2+cont+" + ";
+                if(interseccion.multiply(BigDecimal.valueOf(6)).signum()==1){
+                    tmp1+=" + "+interseccion.multiply(BigDecimal.valueOf(6))+var1+cont;
+                    tmp2+=" + "+interseccion.multiply(BigDecimal.valueOf(6))+var2+cont;
+                }else{
+                    tmp1+=" "+interseccion.multiply(BigDecimal.valueOf(6))+var1+cont;
+                    tmp2+=" "+interseccion.multiply(BigDecimal.valueOf(6))+var2+cont;
+                } 
             }
             cont--;
         }
@@ -284,8 +301,8 @@ public class SplinesCubico extends javax.swing.JFrame {
 
     private void ingresardatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresardatosActionPerformed
         // TODO add your handling code here:
-        TotalDatosInterpolacion totalEcuaciones = new TotalDatosInterpolacion();
-        totalEcuaciones.setVisible(true);
+        TotalDatosInterpolacion totalEcuaciones = new TotalDatosInterpolacion()
+;        totalEcuaciones.setVisible(true);
     }//GEN-LAST:event_ingresardatosActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
